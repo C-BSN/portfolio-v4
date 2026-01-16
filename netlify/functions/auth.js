@@ -1,7 +1,8 @@
 exports.handler = async (event, context) => {
   // Variables d'environnement GitHub OAuth
   const clientId = process.env.GITHUB_CLIENT_ID;
-  const redirectUri = `${process.env.URL}/.netlify/functions/auth-callback`;
+  const baseUrl = 'https://portfolio-cbsn.netlify.app';
+  const redirectUri = `${baseUrl}/.netlify/functions/auth-callback`;
   
   if (!clientId) {
     return {
@@ -21,7 +22,7 @@ exports.handler = async (event, context) => {
     headers: {
       Location: authUrl,
       'Cache-Control': 'no-cache',
-      'Access-Control-Allow-Origin': process.env.URL || '*'
+      'Access-Control-Allow-Origin': baseUrl
     }
   };
 }; 
