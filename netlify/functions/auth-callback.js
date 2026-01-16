@@ -42,48 +42,30 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Script pour envoyer le token au CMS - Compatible avec les exemples Decap CMS qui fonctionnent
+    // Script pour envoyer le token au CMS - Version simplifiée qui fonctionne avec Decap CMS
     const script = `
       <script>
         (function() {
-          // Fonction pour recevoir et répondre aux messages du CMS
-          function receiveMessage(e) {
-            console.log("receiveMessage event:", e);
-            
-            // Vérifier l'origine pour la sécurité
-            const allowedOrigins = ["https://portfolio-cbsn.netlify.app", "http://localhost:3000"];
-            if (!allowedOrigins.includes(e.origin)) {
-              console.log("Invalid origin:", e.origin);
-              return;
-            }
-            
-            // Préparer les données d'authentification
-            const authData = {
-              token: "${tokenData.access_token}",
-              provider: "github"
-            };
+          const token = "${tokenData.access_token}";
+          const provider = "github";
+          
+          // Envoyer le message immédiatement au parent
+          if (window.opener) {
+            // Format attendu par Decap CMS
+            const authData = JSON.stringify({
+              token: token,
+              provider: provider
+            });
             
             // Envoyer le message d'authentification réussie
-            const message = "authorization:github:success:" + JSON.stringify(authData);
-            console.log("Sending auth success message:", message);
+            const message = "authorization:" + provider + ":success:" + authData;
+            window.opener.postMessage(message, "*");
             
-            e.source.postMessage(message, e.origin);
+            // Fermer la fenêtre après un court délai
+            setTimeout(() => {
+              window.close();
+            }, 1000);
           }
-          
-          // Écouter les messages du parent (Decap CMS)
-          window.addEventListener("message", receiveMessage, false);
-          
-          // Informer le parent que cette fenêtre est prête
-          if (window.opener) {
-            console.log("Notifying opener that auth window is ready");
-            window.opener.postMessage("authorizing:github", "https://portfolio-cbsn.netlify.app");
-          }
-          
-          // Auto-fermeture après 5 secondes si pas de communication
-          setTimeout(() => {
-            console.log("Auto-closing auth window");
-            window.close();
-          }, 5000);
         })();
       </script>
     `;
