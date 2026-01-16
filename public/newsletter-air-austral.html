@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter RSE Air Austral</title>
+    <style>
+        /* Reset et base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        /* Container principal */
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="plane" patternUnits="userSpaceOnUse" width="50" height="50"><path d="M25 10 L35 25 L25 40 L15 25 Z" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23plane)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+        
+        .logo-container {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .logo img {
+            height: 60px;
+            width: auto;
+            filter: brightness(1.1) contrast(1.1);
+            drop-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .tagline {
+            font-size: 16px;
+            opacity: 0.95;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+            font-style: italic;
+        }
+        
+        /* Section intro */
+        .intro {
+            padding: 30px 20px;
+            text-align: center;
+            background-color: #f8fafc;
+            border-bottom: 3px solid #e2e8f0;
+        }
+        
+        .intro h1 {
+            font-size: 24px;
+            color: #3b82f6;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .intro p {
+            font-size: 16px;
+            color: #64748b;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        /* Sections projets */
+        .project-section {
+            padding: 40px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .project-section:last-of-type {
+            border-bottom: none;
+        }
+        
+        .project-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .project-title {
+            font-size: 22px;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .project-subtitle {
+            font-size: 14px;
+            color: #10b981;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .project-content {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .project-image {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .project-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .project-text {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .project-description {
+            font-size: 15px;
+            color: #475569;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .benefits {
+            margin-bottom: 25px;
+        }
+        
+        .benefits h4 {
+            font-size: 16px;
+            color: #3b82f6;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .benefits ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .benefits li {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 5px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .benefits li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #10b981;
+            font-weight: bold;
+        }
+        
+        /* Boutons CTA */
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #3b82f6 0%, #10b981 100%);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #1e293b;
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            margin-bottom: 20px;
+        }
+        
+        .footer h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #10b981;
+        }
+        
+        .footer p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-link {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 8px 15px;
+            background-color: #334155;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background-color: #10b981;
+        }
+        
+        .legal {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .project-content {
+                flex-direction: column;
+            }
+            
+            .project-image,
+            .project-text {
+                min-width: 100%;
+            }
+            
+            .header {
+                padding: 20px 15px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .intro,
+            .project-section {
+                padding: 25px 15px;
+            }
+            
+            .project-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="newsletter-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo">
+                    <img src="air-austral Blanc 2.png" alt="Air Austral Logo" />
+                </div>
+            </div>
+            <div class="tagline">C'est bien pour nous, pour vous et pour la planète</div>
+        </div>
+        
+        <!-- Section intro -->
+        <div class="intro">
+            <h1>Nouvelles Initiatives RSE</h1>
+            <p>Découvrez nos deux nouveaux dispositifs pour améliorer votre qualité de vie au travail tout en réduisant notre empreinte carbone.</p>
+        </div>
+        
+        <!-- Section Covoit'Air -->
+        <div class="project-section">
+            <div class="project-header">
+                <div class="project-subtitle">Nouvelle Plateforme</div>
+                <h2 class="project-title">Covoit'Air</h2>
+            </div>
+            
+            <div class="project-content">
+                <div class="project-image">
+                    <img src="https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759470981/Affiche_Air_Austral_-_Covoiturage_fzfrlt.jpg" alt="Affiche Covoit'Air - Covoiturage Air Austral">
+                </div>
+                
+                <div class="project-text">
+                    <p class="project-description">
+                        Rejoignez notre nouvelle plateforme de covoiturage interne ! Partagez vos trajets avec vos collègues, réduisez vos frais de transport et contribuez à la protection de l'environnement.
+                    </p>
+                    
+                    <div class="benefits">
+                        <h4>Vos avantages :</h4>
+                        <ul>
+                            <li>Économies sur les frais de transport</li>
+                            <li>Réduction du stress de conduite</li>
+                            <li>Renforcement des liens entre collègues</li>
+                            <li>Contribution à la réduction des émissions CO2</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="covoitair-app.html" target="_blank" class="cta-button">Découvrir Covoit'Air</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Section Travail Out Caz -->
+        <div class="project-section">
+            <div class="project-header">
+                <div class="project-subtitle">Nouveau Dispositif</div>
+                <h2 class="project-title">Travail Out Caz</h2>
+            </div>
+            
+            <div class="project-content">
+                <div class="project-image">
+                    <img src="https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759470818/Air_Austral_en5ooz.jpg" alt="Affiche Travail Out Caz - Télétravail Air Austral">
+                </div>
+                
+                <div class="project-text">
+                    <p class="project-description">
+                        Profitez de notre nouveau programme de télétravail ! Travaillez depuis chez vous certains jours de la semaine et bénéficiez d'un meilleur équilibre vie professionnelle/personnelle.
+                    </p>
+                    
+                    <div class="benefits">
+                        <h4>Vos avantages :</h4>
+                        <ul>
+                            <li>Meilleur équilibre vie pro/perso</li>
+                            <li>Réduction des temps de transport</li>
+                            <li>Augmentation de la productivité</li>
+                            <li>Flexibilité dans l'organisation du travail</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="travail-out-caz-form.html" target="_blank" class="cta-button">Faire ma demande</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <h3>Ensemble pour un avenir durable</h3>
+                <p>Ces initiatives s'inscrivent dans notre démarche RSE pour construire un Air Austral plus responsable et plus humain.</p>
+                
+                <div class="social-links">
+                    <a href="#" class="social-link">Intranet Air Austral</a>
+                    <a href="#" class="social-link">Portail RH</a>
+                    <a href="#" class="social-link">Actualités RSE</a>
+                </div>
+            </div>
+            
+            <div class="legal">
+                <p>© 2025 Air Austral - Tous droits réservés<br>
+                Cette newsletter est destinée exclusivement aux collaborateurs d'Air Austral<br>
+                Pour toute question : rse@air-austral.com</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

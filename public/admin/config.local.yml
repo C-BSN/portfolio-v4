@@ -1,0 +1,151 @@
+backend:
+  name: github
+  repo: CorentinBasson/portfolio
+  branch: main
+  base_url: http://localhost:8888
+  auth_endpoint: /.netlify/functions/auth
+
+# Mode local activé pour le développement (nécessite `npx decap-server`)
+local_backend: true
+
+# URL du site locale
+site_url: http://localhost:3000
+
+# Configuration du stockage des médias avec Cloudinary
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dcrgwzlnc
+    api_key: 772966115598952
+    multiple: true
+
+# Dossier de stockage des médias dans le repository (fallback pour PDF > 20MB)
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# Collections de contenu (copiées depuis la config de prod)
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Page d'accueil"
+        name: "homepage"
+        file: "content/pages/homepage.md"
+        fields:
+          - { label: "Titre principal", name: "title", widget: "string" }
+          - { label: "Sous-titre", name: "subtitle", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Image de fond", name: "hero_image", widget: "image", required: false }
+          - { label: "Texte du bouton CTA", name: "cta_text", widget: "string", default: "Voir mes réalisations" }
+          - { label: "Contenu", name: "body", widget: "markdown" }
+
+      - label: "À propos"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Sous-titre professionnel", name: "subtitle", widget: "string", default: "Graphiste Freelance" }
+          - { label: "Photo de profil", name: "profile_image", widget: "image" }
+          - { label: "Compétences", name: "skills", widget: "list", field: { label: "Compétence", name: "skill", widget: "string" } }
+          - label: "Statistiques"
+            name: "stats"
+            widget: "object"
+            fields:
+              - label: "Années d'expérience"
+                name: "years"
+                widget: "object"
+                fields:
+                  - { label: "Valeur", name: "value", widget: "string", default: "5+" }
+                  - { label: "Label", name: "label", widget: "string", default: "ANNÉES" }
+              - label: "Nombre de projets"
+                name: "projects"
+                widget: "object"
+                fields:
+                  - { label: "Valeur", name: "value", widget: "string", default: "50+" }
+                  - { label: "Label", name: "label", widget: "string", default: "PROJETS" }
+          - label: "Disponibilité"
+            name: "availability"
+            widget: "object"
+            fields:
+              - { label: "Disponible", name: "status", widget: "boolean", default: true }
+              - { label: "Message de statut", name: "message", widget: "string", default: "DISPONIBLE POUR NOUVEAUX PROJETS" }
+          - label: "Boutons d'action de la carte profil"
+            name: "cta_buttons"
+            widget: "object"
+            fields:
+              - label: "Bouton Contact"
+                name: "contact"
+                widget: "object"
+                fields:
+                  - { label: "Texte", name: "text", widget: "string", default: "CONTACT.INIT()" }
+                  - { label: "Email", name: "email", widget: "string" }
+                  - { label: "Icône", name: "icon", widget: "hidden", default: "mail" }
+              - label: "Bouton CV"
+                name: "cv"
+                widget: "object"
+                fields:
+                  - { label: "Texte", name: "text", widget: "string", default: "DOWNLOAD.CV()" }
+                  - { label: "Lien vers le CV", name: "file_url", widget: "file", allow_multiple: false }
+                  - { label: "Icône", name: "icon", widget: "hidden", default: "download" }
+          - label: "Call-to-Action final"
+            name: "final_cta"
+            widget: "object"
+            fields:
+              - { label: "Titre", name: "title", widget: "string", default: "PROJECT.INITIALIZE()" }
+              - { label: "Description ligne 1", name: "description_line1", widget: "string", default: "Ready to create something extraordinary together?" }
+              - { label: "Description ligne 2", name: "description_line2", widget: "string", default: "Initialize collaboration protocol..." }
+              - label: "Boutons"
+                name: "buttons"
+                widget: "object"
+                fields:
+                  - label: "Bouton Projets"
+                    name: "projects"
+                    widget: "object"
+                    fields:
+                      - { label: "Texte", name: "text", widget: "string", default: "VIEW.PROJECTS()" }
+                      - { label: "Lien", name: "link", widget: "string", default: "/projects" }
+                      - { label: "Icône", name: "icon", widget: "hidden", default: "external-link" }
+                  - label: "Bouton Contact"
+                    name: "contact"
+                    widget: "object"
+                    fields:
+                      - { label: "Texte", name: "text", widget: "string", default: "START.PROJECT()" }
+                      - { label: "Email", name: "email", widget: "string" }
+                      - { label: "Icône", name: "icon", widget: "hidden", default: "mail" }
+          - { label: "Contenu", name: "body", widget: "markdown" }
+
+  - name: "projects"
+    label: "Réalisations"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Ordre d'affichage", name: "ordre", widget: "number", value_type: "int", min: 1, default: 1, hint: "1 = affiché en premier, 2 = deuxième, etc." }
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de création", name: "date", widget: "datetime" }
+      - { label: "Annonceur", name: "annonceur", widget: "string", required: false }
+      - { label: "Contexte", name: "contexte", widget: "select", options: ["Alternance", "École", "Projet personnel", "Client", "Autre"] }
+      - { label: "Précision contexte", name: "contexte_autre", widget: "string", required: false, condition: { field: "contexte", value: "Autre" }, hint: "Ce champ est obligatoire quand 'Autre' est sélectionné" }
+      - { label: "Types de projet", name: "project_type", widget: "select", options: ["Identité visuelle", "Site web", "Print", "Packaging", "Illustration", "Autre"], multiple: true, min: 1, hint: "Sélectionnez un ou plusieurs types de projets" }
+      - { label: "Technologies/Outils", name: "tools", widget: "list", field: { label: "Outil", name: "tool", widget: "string" } }
+      - { label: "Image principale", name: "featured_image", widget: "image" }
+      - { label: "Galerie d'images", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Durée du projet", name: "duration", widget: "string", required: false }
+      - { label: "Statut", name: "status", widget: "select", options: ["En cours", "Terminé", "En pause"], default: "Terminé" }
+      - { label: "Portfolio PDF", name: "pdf_portfolio", widget: "file", required: false, hint: "Taille recommandée : moins de 20MB" }
+      - { label: "URL du projet", name: "project_url", widget: "string", required: false }
+      - { label: "Cibles", name: "cibles", widget: "text", required: false, hint: "Décrivez les cibles visées par ce projet" }
+      - { label: "Stratégie créative", name: "strategie_creative", widget: "text", required: false, hint: "Expliquez la stratégie créative utilisée" }
+      - { label: "Objectifs cognitifs", name: "objectifs_cognitifs", widget: "list", required: false, field: { label: "Objectif", name: "objectif", widget: "string" } }
+      - { label: "Objectifs affectifs", name: "objectifs_affectifs", widget: "list", required: false, field: { label: "Objectif", name: "objectif", widget: "string" } }
+      - { label: "Objectifs conatifs", name: "objectifs_conatifs", widget: "list", required: false, field: { label: "Objectif", name: "objectif", widget: "string" } }
+      - { label: "Preuves", name: "preuves", widget: "list", required: false, fields: [ { label: "Type", name: "type", widget: "select", options: ["Image", "URL", "PDF", "Video"] }, { label: "Description", name: "description", widget: "string" }, { label: "Fichier/Image", name: "file", widget: "image", required: false, condition: { field: "type", value: "Image" } }, { label: "PDF", name: "pdf", widget: "file", required: false, condition: { field: "type", value: "PDF" } }, { label: "URL", name: "url", widget: "string", required: false, condition: { field: "type", value: "URL" } }, { label: "URL YouTube", name: "youtube_url", widget: "string", required: false, condition: { field: "type", value: "Video" }, hint: "URL complète de la vidéo YouTube" } ] }
+      - { label: "Extrait", name: "excerpt", widget: "text" }
+      - { label: "Description complète", name: "body", widget: "markdown" }
+      - { label: "Publié", name: "published", widget: "boolean", default: true }
+
+editor:
+  preview: true
+
+publish_mode: editorial_workflow
+

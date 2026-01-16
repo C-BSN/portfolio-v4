@@ -1,0 +1,49 @@
+[build]
+  command = "pnpm build"
+  publish = "out"
+
+[build.environment]
+  NEXT_TELEMETRY_DISABLED = "1"
+
+# Configuration pour les redirects
+[[redirects]]
+  from = "/admin/*"
+  to = "/admin/index.html"
+  status = 200
+
+# Configuration pour Next.js static export
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Configuration pour les assets statiques
+[[headers]]
+  for = "/uploads/*"
+  [headers.values]
+    Cache-Control = "max-age=31536000"
+
+# Configuration pour les images optimisées
+[[headers]]
+  for = "*.webp"
+  [headers.values]
+    Cache-Control = "max-age=31536000"
+
+[[headers]]
+  for = "*.jpg"
+  [headers.values]
+    Cache-Control = "max-age=31536000"
+
+[[headers]]
+  for = "*.png"
+  [headers.values]
+    Cache-Control = "max-age=31536000"
+
+# Configuration pour le CMS admin
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex" 

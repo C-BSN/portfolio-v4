@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covoit'Air - Covoiturage Air Austral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 375px;
+            height: 667px;
+            background: #ffffff;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .screen {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .screen.active {
+            display: flex;
+        }
+
+        /* Header commun */
+        .header {
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Contenu principal */
+        .content {
+            flex: 1;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Écran d'accueil */
+        .welcome-content {
+            text-align: center;
+            justify-content: center;
+        }
+
+        .welcome-icon {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 60px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.3);
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            color: #1e293b;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .welcome-text {
+            font-size: 16px;
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Boutons */
+        .btn {
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: #64748b;
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+        }
+
+        /* Formulaire de recherche */
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-input {
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            background: white;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        /* Résultats */
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .result-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .result-card:hover {
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .result-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .profile-pic {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .result-info h3 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .result-info p {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .result-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .time-info {
+            font-size: 16px;
+            font-weight: 600;
+            color: #0ea5e9;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #10b981;
+        }
+
+        .route {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 14px;
+            width: 100%;
+        }
+
+        /* Responsive */
+        @media (max-width: 400px) {
+            .phone-container {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e5e7eb;
+            border-top: 2px solid #0ea5e9;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Écran 1: Accueil -->
+        <div class="screen active" id="welcome-screen">
+            <div class="header">
+                <div class="logo">
+                    <div class="logo-icon">✈</div>
+                    Covoit'Air
+                </div>
+                <div class="subtitle">Covoiturage Air Austral</div>
+            </div>
+            
+            <div class="content welcome-content">
+                <div class="welcome-icon">🚗</div>
+                <h1 class="welcome-title">Bienvenue !</h1>
+                <p class="welcome-text">
+                    Partagez vos trajets avec vos collègues Air Austral. 
+                    Économique, écologique et convivial !
+                </p>
+                <button class="btn" onclick="showScreen('search-screen')">
+                    Se connecter
+                </button>
+            </div>
+        </div>
+
+        <!-- Écran 2: Recherche -->
+        <div class="screen" id="search-screen">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('welcome-screen')">←</button>
+                <div class="logo">
+                    <div class="logo-icon">✈</div>
+                    Covoit'Air
+                </div>
+                <div class="subtitle">Rechercher un trajet</div>
+            </div>
+            
+            <div class="content">
+                <form class="search-form" onsubmit="searchRides(event)">
+                    <div class="form-group">
+                        <label class="form-label">Départ</label>
+                        <input type="text" class="form-input" placeholder="Ex: Aéroport Roland Garros" value="Aéroport Roland Garros" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Arrivée</label>
+                        <input type="text" class="form-input" placeholder="Ex: Saint-Denis" value="Saint-Denis" required>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Date</label>
+                            <input type="date" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Heure</label>
+                            <input type="time" class="form-input" value="08:00" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn">
+                        Rechercher des trajets
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Écran 3: Résultats -->
+        <div class="screen" id="results-screen">
+            <div class="header">
+                <button class="back-btn" onclick="showScreen('search-screen')">←</button>
+                <div class="logo">
+                    <div class="logo-icon">✈</div>
+                    Covoit'Air
+                </div>
+                <div class="subtitle">Trajets disponibles</div>
+            </div>
+            
+            <div class="content">
+                <div class="results-list">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <img src="https://via.placeholder.com/50/0ea5e9/ffffff?text=M" alt="Profil" class="profile-pic">
+                            <div class="result-info">
+                                <h3>Marie Dupont</h3>
+                                <p>Pilote • ⭐ 4.8 (23 avis)</p>
+                            </div>
+                        </div>
+                        <div class="route">
+                            🛫 Aéroport Roland Garros → 🏢 Saint-Denis Centre
+                        </div>
+                        <div class="result-details">
+                            <div class="time-info">08:15 - 08:45</div>
+                            <div class="price">5€</div>
+                        </div>
+                        <button class="btn btn-small" onclick="reserveRide('Marie Dupont')">
+                            Réserver ce trajet
+                        </button>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-header">
+                            <img src="https://via.placeholder.com/50/10b981/ffffff?text=J" alt="Profil" class="profile-pic">
+                            <div class="result-info">
+                                <h3>Jean Martin</h3>
+                                <p>Technicien • ⭐ 4.9 (31 avis)</p>
+                            </div>
+                        </div>
+                        <div class="route">
+                            🛫 Aéroport Roland Garros → 🏢 Saint-Denis Barachois
+                        </div>
+                        <div class="result-details">
+                            <div class="time-info">08:00 - 08:35</div>
+                            <div class="price">4€</div>
+                        </div>
+                        <button class="btn btn-small" onclick="reserveRide('Jean Martin')">
+                            Réserver ce trajet
+                        </button>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="result-header">
+                            <img src="https://via.placeholder.com/50/64748b/ffffff?text=S" alt="Profil" class="profile-pic">
+                            <div class="result-info">
+                                <h3>Sophie Leroy</h3>
+                                <p>Hôtesse • ⭐ 4.7 (18 avis)</p>
+                            </div>
+                        </div>
+                        <div class="route">
+                            🛫 Aéroport Roland Garros → 🏢 Saint-Denis Champ Fleuri
+                        </div>
+                        <div class="result-details">
+                            <div class="time-info">08:30 - 09:00</div>
+                            <div class="price">6€</div>
+                        </div>
+                        <button class="btn btn-small" onclick="reserveRide('Sophie Leroy')">
+                            Réserver ce trajet
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Écran de chargement -->
+        <div class="screen" id="loading-screen">
+            <div class="header">
+                <div class="logo">
+                    <div class="logo-icon">✈</div>
+                    Covoit'Air
+                </div>
+                <div class="subtitle">Recherche en cours...</div>
+            </div>
+            
+            <div class="content">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Recherche des trajets disponibles...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour afficher un écran
+        function showScreen(screenId) {
+            // Masquer tous les écrans
+            const screens = document.querySelectorAll('.screen');
+            screens.forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Afficher l'écran demandé
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.add('active');
+                targetScreen.classList.add('fade-in');
+                
+                // Retirer la classe d'animation après l'animation
+                setTimeout(() => {
+                    targetScreen.classList.remove('fade-in');
+                }, 500);
+            }
+        }
+
+        // Fonction pour simuler la recherche
+        function searchRides(event) {
+            event.preventDefault();
+            
+            // Afficher l'écran de chargement
+            showScreen('loading-screen');
+            
+            // Simuler un délai de recherche
+            setTimeout(() => {
+                showScreen('results-screen');
+            }, 2000);
+        }
+
+        // Fonction pour simuler une réservation
+        function reserveRide(driverName) {
+            alert(`Demande de réservation envoyée à ${driverName} !\n\nVous recevrez une confirmation par email.`);
+        }
+
+        // Initialiser la date du jour
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const dateInput = document.querySelector('input[type="date"]');
+            if (dateInput) {
+                dateInput.value = today;
+            }
+        });
+
+        // Navigation au clavier (pour les tests)
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                showScreen('welcome-screen');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travail Out Caz - Demande de Télétravail | Air Austral</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="work" patternUnits="userSpaceOnUse" width="40" height="40"><path d="M20 10 L30 20 L20 30 L10 20 Z" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23work)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .logo-section {
+            position: relative;
+            z-index: 2;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .logo img {
+            height: 50px;
+            width: auto;
+            filter: brightness(1.2) contrast(1.1);
+            drop-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .logo-text {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header-title {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header-subtitle {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .work-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+        }
+
+        /* Formulaire */
+        .form-container {
+            padding: 40px 30px;
+        }
+
+        .form-intro {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-intro h2 {
+            color: #1e293b;
+            font-size: 24px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .form-intro p {
+            color: #64748b;
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form {
+            display: grid;
+            gap: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 15px;
+            font-weight: 600;
+            color: #374151;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .required {
+            color: #ef4444;
+            font-size: 14px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .form-select {
+            cursor: pointer;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .date-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 20px;
+            background: #f1f5f9;
+            border-radius: 12px;
+            border: 2px solid #e2e8f0;
+            transition: border-color 0.3s ease;
+        }
+
+        .checkbox-group:has(input:checked) {
+            border-color: #10b981;
+            background: #ecfdf5;
+        }
+
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            accent-color: #10b981;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: #374151;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        .checkbox-label a {
+            color: #0ea5e9;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Bouton de soumission */
+        .submit-section {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #0ea5e9 0%, #10b981 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.3);
+            min-width: 250px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(14, 165, 233, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #e5e7eb;
+            color: #64748b;
+            padding: 18px 40px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            border-color: #0ea5e9;
+            color: #0ea5e9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(14, 165, 233, 0.2);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        /* Messages d'aide */
+        .help-text {
+            font-size: 13px;
+            color: #6b7280;
+            margin-top: 5px;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+
+        .info-box h3 {
+            color: #1e40af;
+            font-size: 16px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .info-box p {
+            color: #1e40af;
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Responsive */
+            @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .header-title {
+                font-size: 26px;
+            }
+
+            .header-subtitle {
+                font-size: 16px;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .date-inputs {
+                grid-template-columns: 1fr;
+            }
+
+            .submit-btn {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .button-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn-secondary {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .close-btn {
+                top: 15px;
+                right: 15px;
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 25px 15px;
+            }
+
+            .form-container {
+                padding: 25px 15px;
+            }
+
+            .logo-text {
+                font-size: 24px;
+            }
+
+            .header-title {
+                font-size: 22px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-message {
+            background: #dcfce7;
+            border: 2px solid #16a34a;
+            color: #15803d;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container fade-in">
+        <!-- Header -->
+        <div class="header">
+            <button class="close-btn" onclick="closePage()" title="Fermer">×</button>
+            <div class="logo-section">
+                <div class="work-icon">💼</div>
+                <div class="logo">
+                    <img src="air-austral Blanc 2.png" alt="Air Austral Logo" />
+                </div>
+                <h1 class="header-title">Travail Out Caz</h1>
+                <p class="header-subtitle">Demande de télétravail</p>
+            </div>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="form-container">
+            <div class="form-intro">
+                <h2>Formulaire de demande</h2>
+                <p>Complétez ce formulaire pour soumettre votre demande de télétravail. Toutes les informations sont nécessaires pour traiter votre demande.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Informations importantes</h3>
+                <p>Les demandes sont traitées sous 5 jours ouvrés. Vous recevrez une réponse par email à l'adresse de votre profil collaborateur.</p>
+            </div>
+
+            <form class="form" id="teleworkForm" onsubmit="submitForm(event)">
+                <!-- Informations personnelles -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Nom et Prénom <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="fullName" required placeholder="Ex: Marie Dupont">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Matricule collaborateur <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="employeeId" required placeholder="Ex: AA2024001">
+                        <div class="help-text">Votre numéro de matricule Air Austral</div>
+                    </div>
+                </div>
+
+                <!-- Service et fonction -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">
+                            Service / Département <span class="required">*</span>
+                        </label>
+                        <select class="form-select" name="department" required>
+                            <option value="">Sélectionnez votre service</option>
+                            <option value="ressources-humaines">Ressources Humaines</option>
+                            <option value="communication">Communication</option>
+                            <option value="finance">Finance</option>
+                            <option value="informatique">Informatique</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="operations">Opérations</option>
+                            <option value="maintenance">Maintenance</option>
+                            <option value="qualite">Qualité</option>
+                            <option value="juridique">Juridique</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            Fonction <span class="required">*</span>
+                        </label>
+                        <input type="text" class="form-input" name="position" required placeholder="Ex: Chargé de communication">
+                    </div>
+                </div>
+
+                <!-- Dates demandées -->
+                <div class="form-group full-width">
+                    <label class="form-label">
+                        Date(s) demandée(s) <span class="required">*</span>
+                    </label>
+                    <div class="date-inputs">
+                        <div>
+                            <input type="date" class="form-input" name="startDate" required>
+                            <div class="help-text">Date de début</div>
+                        </div>
+                        <div>
+                            <input type="date" class="form-input" name="endDate">
+                            <div class="help-text">Date de fin (optionnel pour une journée unique)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Motif de la demande -->
+                <div class="form-group full-width">
+                    <label class="form-label">
+                        Motif de la demande <span class="required">*</span>
+                    </label>
+                    <textarea class="form-textarea" name="reason" required placeholder="Décrivez brièvement les raisons de votre demande de télétravail (ex: projet nécessitant de la concentration, rendez-vous médical, contraintes personnelles...)"></textarea>
+                    <div class="help-text">Minimum 20 caractères</div>
+                </div>
+
+                <!-- Case à cocher -->
+                <div class="form-group full-width">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="charter" class="checkbox" name="charter" required>
+                        <label for="charter" class="checkbox-label">
+                            J'atteste avoir pris connaissance de la <a href="#" target="_blank">charte télétravail Air Austral</a> et m'engage à respecter les conditions qui y sont définies. <span class="required">*</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Boutons de soumission -->
+                <div class="submit-section">
+                    <div class="button-group">
+                        <button type="submit" class="submit-btn">
+                            📤 Envoyer la demande
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="closePage()">
+                            ← Annuler et quitter
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Message de succès -->
+            <div class="success-message" id="successMessage">
+                ✅ Votre demande de télétravail a été envoyée avec succès !<br>
+                Vous recevrez une réponse sous 5 jours ouvrés.
+                <div style="margin-top: 20px;">
+                    <button type="button" class="btn-secondary" onclick="closePage()">
+                        🏠 Retour à l'accueil
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour fermer la page
+        function closePage() {
+            // Vérifier si des données ont été saisies
+            const form = document.getElementById('teleworkForm');
+            const formData = new FormData(form);
+            let hasData = false;
+            
+            for (let [key, value] of formData.entries()) {
+                if (value.trim() !== '') {
+                    hasData = true;
+                    break;
+                }
+            }
+            
+            // Demander confirmation si des données ont été saisies
+            if (hasData) {
+                if (confirm('Êtes-vous sûr de vouloir quitter ? Les données saisies seront perdues.')) {
+                    window.close();
+                    // Si window.close() ne fonctionne pas (selon le navigateur), rediriger
+                    setTimeout(() => {
+                        window.history.back();
+                    }, 100);
+                }
+            } else {
+                window.close();
+                // Si window.close() ne fonctionne pas, rediriger
+                setTimeout(() => {
+                    window.history.back();
+                }, 100);
+            }
+        }
+
+        // Initialiser les dates minimales
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date().toISOString().split('T')[0];
+            const startDateInput = document.querySelector('input[name="startDate"]');
+            const endDateInput = document.querySelector('input[name="endDate"]');
+            
+            if (startDateInput) {
+                startDateInput.min = today;
+                startDateInput.addEventListener('change', function() {
+                    if (endDateInput) {
+                        endDateInput.min = this.value;
+                        if (endDateInput.value && endDateInput.value < this.value) {
+                            endDateInput.value = this.value;
+                        }
+                    }
+                });
+            }
+        });
+
+        // Validation du formulaire
+        function validateForm() {
+            const form = document.getElementById('teleworkForm');
+            const reason = form.reason.value.trim();
+            
+            if (reason.length < 20) {
+                alert('Le motif de la demande doit contenir au moins 20 caractères.');
+                return false;
+            }
+            
+            return true;
+        }
+
+        // Soumission du formulaire
+        function submitForm(event) {
+            event.preventDefault();
+            
+            if (!validateForm()) {
+                return;
+            }
+            
+            // Simuler l'envoi
+            const submitBtn = document.querySelector('.submit-btn');
+            const originalText = submitBtn.innerHTML;
+            
+            submitBtn.innerHTML = '⏳ Envoi en cours...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                // Masquer le formulaire et afficher le message de succès
+                document.querySelector('.form').style.display = 'none';
+                document.querySelector('.form-intro').style.display = 'none';
+                document.querySelector('.info-box').style.display = 'none';
+                document.getElementById('successMessage').classList.add('show');
+                
+                // Réinitialiser le bouton
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Scroll vers le haut
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        }
+
+        // Validation en temps réel
+        document.addEventListener('DOMContentLoaded', function() {
+            const reasonTextarea = document.querySelector('textarea[name="reason"]');
+            if (reasonTextarea) {
+                reasonTextarea.addEventListener('input', function() {
+                    const helpText = this.parentNode.querySelector('.help-text');
+                    const length = this.value.trim().length;
+                    
+                    if (length < 20) {
+                        helpText.textContent = `Minimum 20 caractères (${length}/20)`;
+                        helpText.style.color = '#ef4444';
+                    } else {
+                        helpText.textContent = `${length} caractères`;
+                        helpText.style.color = '#10b981';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+backend:
+  name: github
+  repo: massa974/foliobase  # Remplacez par votre repository GitHub réel
+  branch: dev
+  base_url: https://foliobase.netlify.app  # URL de votre site
+  auth_endpoint: /.netlify/functions/auth  # Notre fonction d'authentification
+
+# URL du site pour afficher un lien dans la navbar du CMS
+site_url: https://foliobase.netlify.app
+
+# Configuration du stockage des médias avec Cloudinary
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dtnbb9ykw  # À remplacer par le nom de votre compte Cloudinary
+    api_key: 116398255276922        # À remplacer par votre clé API Cloudinary
+    multiple: true
+
+# Dossier de stockage des médias dans le repository (fallback pour PDF > 20MB)
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+# Configuration locale pour le développement
+local_backend: true
+
+# Collections de contenu
+collections:
+  # Pages statiques
+  - name: "pages"
+    label: "Pages"
+    files:
+      - label: "Page d'accueil"
+        name: "homepage"
+        file: "content/pages/homepage.md"
+        fields:
+          - { label: "Titre principal", name: "title", widget: "string" }
+          - { label: "Sous-titre", name: "subtitle", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Image de fond", name: "hero_image", widget: "image", required: false }
+          - { label: "Texte du bouton CTA", name: "cta_text", widget: "string", default: "Voir mes réalisations" }
+          - { label: "Contenu", name: "body", widget: "markdown" }
+
+      - label: "À propos"
+        name: "about"
+        file: "content/pages/about.md"
+        fields:
+          - { label: "Titre", name: "title", widget: "string" }
+          - { label: "Photo de profil", name: "profile_image", widget: "image" }
+          - { label: "Compétences", name: "skills", widget: "list", field: { label: "Compétence", name: "skill", widget: "string" } }
+          - { label: "Contenu", name: "body", widget: "markdown" }
+
+  # Réalisations/Projets
+  - name: "projects"
+    label: "Réalisations"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Ordre d'affichage", name: "ordre", widget: "number", value_type: "int", min: 1, default: 1, hint: "1 = affiché en premier, 2 = deuxième, etc." }
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Date de création", name: "date", widget: "datetime" }
+      - { label: "Annonceur", name: "annonceur", widget: "string", required: false }
+      - { label: "Contexte", name: "contexte", widget: "select", options: ["Alternance", "École", "Projet personnel", "Client", "Autre"] }
+      - { label: "Précision contexte", name: "contexte_autre", widget: "string", required: false, condition: { field: "contexte", value: "Autre" }, hint: "Ce champ est obligatoire quand 'Autre' est sélectionné" }
+      - { label: "Type de projet", name: "project_type", widget: "select", options: ["Identité visuelle", "Site web", "Print", "Packaging", "Illustration", "Autre"] }
+      - { label: "Technologies/Outils", name: "tools", widget: "list", field: { label: "Outil", name: "tool", widget: "string" } }
+      - { label: "Image principale", name: "featured_image", widget: "image" }
+      - { label: "Galerie d'images", name: "gallery", widget: "list", field: { label: "Image", name: "image", widget: "image" } }
+      - { label: "Durée du projet", name: "duration", widget: "string", required: false }
+      - { label: "Statut", name: "status", widget: "select", options: ["En cours", "Terminé", "En pause"], default: "Terminé" }
+      - { label: "Portfolio PDF", name: "pdf_portfolio", widget: "file", required: false, hint: "Taille recommandée : moins de 20MB" }
+      - { label: "URL du projet", name: "project_url", widget: "string", required: false }
+      - { label: "Cibles", name: "cibles", widget: "text", required: false, hint: "Décrivez les cibles visées par ce projet" }
+      - { label: "Stratégie créative", name: "strategie_creative", widget: "text", required: false, hint: "Expliquez la stratégie créative utilisée" }
+      - { label: "Objectifs cognitifs", name: "objectifs_cognitifs", widget: "list", required: false, field: { label: "Objectif", name: "objectif", widget: "string" } }
+      - { label: "Objectifs affectifs", name: "objectifs_affectifs", widget: "list", required: false, field: { label: "Objectif", name: "objectif", widget: "string" } }
+      - { label: "Objectifs conatifs", name: "objectifs_conatifs", widget: "list", required: false, field: { label: "Objectif", name: "objectif", widget: "string" } }
+      - { label: "Preuves", name: "preuves", widget: "list", required: false, fields: [
+          { label: "Type", name: "type", widget: "select", options: ["Image", "URL", "PDF", "Video"] },
+          { label: "Description", name: "description", widget: "string" },
+          { label: "Fichier/Image", name: "file", widget: "image", required: false, condition: { field: "type", value: "Image" } },
+          { label: "PDF", name: "pdf", widget: "file", required: false, condition: { field: "type", value: "PDF" } },
+          { label: "URL", name: "url", widget: "string", required: false, condition: { field: "type", value: "URL" } },
+          { label: "URL YouTube", name: "youtube_url", widget: "string", required: false, condition: { field: "type", value: "Video" }, hint: "URL complète de la vidéo YouTube" }
+        ] }
+      - { label: "Extrait", name: "excerpt", widget: "text" }
+      - { label: "Description complète", name: "body", widget: "markdown" }
+      - { label: "Publié", name: "published", widget: "boolean", default: true }
+
+# Configuration de l'éditeur
+editor:
+  preview: true
+
+# Configuration du workflow éditorial
+publish_mode: editorial_workflow 

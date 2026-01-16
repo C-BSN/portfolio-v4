@@ -1,0 +1,96 @@
+import Link from "next/link"
+import { Mail, Github, Linkedin, Instagram } from "lucide-react"
+
+export function FooterManga() {
+  const currentYear = new Date().getFullYear()
+
+  const socialLinks = [
+    { icon: Mail, href: "mailto:corentinbassonpro@gmail.com", label: "Email" },
+    { icon: Instagram, href: "https://www.instagram.com/cbsn.studio/", label: "Instagram" },
+    { icon: Linkedin, href: "https://linkedin.com/in/corentin-basson", label: "LinkedIn" },
+    { icon: Github, href: "https://github.com/corentinbasson", label: "GitHub" },
+  ]
+
+  return (
+    <footer className="relative z-[200] bg-[#050505] border-t border-white/10">
+      <div className="max-w-7xl mx-auto w-full px-6 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+          {/* Logo et description */}
+          <div className="space-y-4">
+            <Link href="/" className="inline-block group">
+              <h3 className="text-2xl font-bold uppercase tracking-wider text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                Corentin Basson
+              </h3>
+            </Link>
+            <p className="text-sm text-white/70 max-w-xs" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              Photographe & Graphiste Freelance<br />
+              BTS Communication en alternance<br />
+              La Réunion • 974
+            </p>
+          </div>
+
+          {/* Navigation */}
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-widest text-white/70" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              Navigation
+            </h4>
+            <nav className="flex flex-col space-y-2">
+              {[
+                { name: "Accueil", href: "/" },
+                { name: "À propos", href: "/about" },
+                { name: "Projets", href: "/projects" }
+              ].map((item) => (
+                <Link 
+                  key={item.name}
+                  href={item.href} 
+                  className="text-sm text-white hover:opacity-70 transition-opacity w-fit uppercase tracking-wider"
+                  style={{ fontFamily: "'Oswald', sans-serif" }}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+          </div>
+
+          {/* Contact & Réseaux */}
+          <div className="space-y-4">
+            <h4 className="text-sm font-bold uppercase tracking-widest text-white/70" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              Contact & Réseaux
+            </h4>
+            <div className="flex space-x-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-10 h-10 border border-white/20 text-white flex items-center justify-center hover:border-white transition-colors"
+                  aria-label={social.label}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
+            <a
+              href="mailto:corentinbassonpro@gmail.com"
+              className="block text-sm text-white hover:opacity-70 transition-opacity"
+              style={{ fontFamily: "'Oswald', sans-serif" }}
+            >
+              corentinbassonpro@gmail.com
+            </a>
+          </div>
+        </div>
+
+        {/* Bottom Bar */}
+        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-white/50 uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            © {currentYear} Corentin Basson • Tous droits réservés
+          </p>
+          <p className="text-xs text-white/50 uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            Portfolio v4.0
+          </p>
+        </div>
+      </div>
+    </footer>
+  )
+}

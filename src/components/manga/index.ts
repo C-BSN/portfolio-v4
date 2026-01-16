@@ -1,0 +1,6 @@
+export { default as Hero } from './Hero'
+export { default as SmoothScroll } from './SmoothScroll'
+export { default as StackMarquee } from './StackMarquee'
+export { default as Projects } from './Projects'
+export { default as ProjectCard } from './ProjectCard'
+export type { ProjectCardData } from './ProjectCard'
