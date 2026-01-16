@@ -1,5 +1,5 @@
 exports.handler = async (event, context) => {
-  const { code, state } = event.queryStringParameters || {};
+  const { code } = event.queryStringParameters || {};
   
   if (!code) {
     return {
@@ -42,25 +42,35 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Script pour envoyer le token au CMS
+    // Script pour envoyer le token au CMS - Format compatible Decap CMS
     const script = `
       <script>
         (function() {
-          if (window.opener) {
-            const data = {
+          function receiveMessage(e) {
+            console.log("receiveMessage", e);
+            window.opener.postMessage(
+              'authorization:github:success:' + JSON.stringify({
+                token: "${tokenData.access_token}",
+                provider: "github"
+              }),
+              e.origin
+            );
+          }
+          window.addEventListener("message", receiveMessage, false);
+          
+          // Envoyer immédiatement aussi
+          window.opener.postMessage(
+            'authorization:github:success:' + JSON.stringify({
               token: "${tokenData.access_token}",
               provider: "github"
-            };
-            
-            // Envoyer le token au CMS
-            window.opener.postMessage(
-              "authorization:github:success:" + JSON.stringify(data),
-              "https://portfolio-cbsn.netlify.app"
-            );
-            
-            // Fermer la fenêtre
-            setTimeout(() => window.close(), 1000);
-          }
+            }),
+            "*"
+          );
+          
+          // Fermer après un délai
+          setTimeout(() => {
+            window.close();
+          }, 1000);
         })();
       </script>
     `;
@@ -76,16 +86,41 @@ exports.handler = async (event, context) => {
           <head>
             <title>Authentification GitHub - Decap CMS</title>
             <style>
-              body { font-family: sans-serif; text-align: center; padding: 50px; }
-              .loading { animation: spin 1s linear infinite; }
-              @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+              body { 
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+                text-align: center; 
+                padding: 50px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+              }
+              .container {
+                background: rgba(255,255,255,0.1);
+                padding: 40px;
+                border-radius: 20px;
+                backdrop-filter: blur(10px);
+              }
+              .spinner {
+                border: 4px solid rgba(255,255,255,0.3);
+                border-top: 4px solid white;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                margin: 20px auto;
+              }
+              @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+              }
             </style>
           </head>
           <body>
-            <h1>✅ Authentification réussie !</h1>
-            <p>Transmission des informations à Decap CMS...</p>
-            <div class="loading">🔄</div>
-            <p><small>Cette fenêtre va se fermer automatiquement.</small></p>
+            <div class="container">
+              <h1>✅ Authentification réussie !</h1>
+              <p>Connexion à Decap CMS en cours...</p>
+              <div class="spinner"></div>
+              <p><small>Cette fenêtre va se fermer automatiquement</small></p>
+            </div>
             ${script}
           </body>
         </html>
@@ -96,7 +131,7 @@ exports.handler = async (event, context) => {
     console.error('OAuth callback error:', error);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal server error' })
+      body: JSON.stringify({ error: 'Internal server error', details: error.message })
     };
   }
 }; 
