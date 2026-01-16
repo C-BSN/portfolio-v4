@@ -20,8 +20,8 @@ media_library:
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
-# Configuration locale pour le développement
-local_backend: true
+# Configuration locale pour le développement (désactivée en production)
+# local_backend: true
 
 # Collections de contenu
 collections:
