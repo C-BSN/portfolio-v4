@@ -42,29 +42,24 @@ exports.handler = async (event, context) => {
       };
     }
 
-    // Script pour envoyer le token au CMS - Version simplifiée qui fonctionne avec Decap CMS
+    // Script pour envoyer le token au CMS
     const script = `
       <script>
         (function() {
-          const token = "${tokenData.access_token}";
-          const provider = "github";
-          
-          // Envoyer le message immédiatement au parent
           if (window.opener) {
-            // Format attendu par Decap CMS
-            const authData = JSON.stringify({
-              token: token,
-              provider: provider
-            });
+            const data = {
+              token: "${tokenData.access_token}",
+              provider: "github"
+            };
             
-            // Envoyer le message d'authentification réussie
-            const message = "authorization:" + provider + ":success:" + authData;
-            window.opener.postMessage(message, "*");
+            // Envoyer le token au CMS
+            window.opener.postMessage(
+              "authorization:github:success:" + JSON.stringify(data),
+              "https://portfolio-cbsn.netlify.app"
+            );
             
-            // Fermer la fenêtre après un court délai
-            setTimeout(() => {
-              window.close();
-            }, 1000);
+            // Fermer la fenêtre
+            setTimeout(() => window.close(), 1000);
           }
         })();
       </script>
