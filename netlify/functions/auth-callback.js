@@ -51,7 +51,8 @@ exports.handler = async (event, context) => {
             console.log("receiveMessage event:", e);
             
             // Vérifier l'origine pour la sécurité
-            if (e.origin !== "${process.env.URL}") {
+            const allowedOrigins = ["https://portfolio-cbsn.netlify.app", "http://localhost:3000"];
+            if (!allowedOrigins.includes(e.origin)) {
               console.log("Invalid origin:", e.origin);
               return;
             }
@@ -75,7 +76,7 @@ exports.handler = async (event, context) => {
           // Informer le parent que cette fenêtre est prête
           if (window.opener) {
             console.log("Notifying opener that auth window is ready");
-            window.opener.postMessage("authorizing:github", "${process.env.URL}");
+            window.opener.postMessage("authorizing:github", "https://portfolio-cbsn.netlify.app");
           }
           
           // Auto-fermeture après 5 secondes si pas de communication
