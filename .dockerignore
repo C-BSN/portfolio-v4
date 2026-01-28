@@ -65,12 +65,34 @@ netlify
 netlify.toml
 .netlify
 
+# Docker
+Dockerfile.md
+docker-compose.yml
+.dockerignore
+
+# Configuration de déploiement
+heroku.yml
+render.yaml
+railway.json
+fly.toml
+
+# Documentation Docker
+*DOCKER*.md
+QUICK_START_DOCKER.md
+DEPLOIEMENT_DOCKER.md
+OPTIMIZATIONS_CHECKLIST.md
+FICHIERS_DOCKER.md
+INDEX_DOCKER.md
+STRUCTURE_PROJET.md
+🚀_DEMARRAGE_DOCKER.md
+
+# Scripts
+scripts
+
 # Autres
 zDOC
 public/Dockerfile.md
-Dockerfile
-.dockerignore
-docker-compose.yml
+public/admin
 .editorconfig
 .prettierrc
 .eslintrc
