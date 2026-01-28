@@ -2,6 +2,16 @@
 
 Portfolio créatif avec un design minimaliste inspiré du style manga/anime, combinant contenu professionnel et effets visuels modernes.
 
+## 🐳 Docker Optimisé
+
+**Image**: 50-60MB | **Startup**: <2s | **RAM**: ~128MB | **Conformité**: 100%
+
+```bash
+make build && make up
+```
+
+📖 **Guide rapide**: [`QUICK_START_DOCKER.md`](QUICK_START_DOCKER.md) | **Détails**: [`DOCKER_SUMMARY.md`](DOCKER_SUMMARY.md)
+
 ## 🚀 Démarrage rapide
 
 ```bash
@@ -137,6 +147,23 @@ Style : uppercase, tracking-wide pour l'effet manga
 - **/projects/[slug]** - Page détail d'un projet
 
 ## 🚀 Déploiement
+
+### 🐳 Docker (Recommandé)
+
+Déploiement optimisé avec Docker (~50MB, startup <2s):
+
+```bash
+# Quick start
+make build && make up
+
+# Ou avec Docker Compose
+docker-compose up -d
+
+# Validation des optimisations
+./scripts/validate-docker.sh
+```
+
+📖 **Documentation complète**: [`DOCKER_README.md`](DOCKER_README.md) | [`DEPLOIEMENT_DOCKER.md`](DEPLOIEMENT_DOCKER.md)
 
 ### Netlify
 
