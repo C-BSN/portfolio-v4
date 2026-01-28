@@ -29,7 +29,7 @@ export function RainEffect({
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d", { alpha: true, desynchronized: true })
     if (!ctx) return
 
     const resizeCanvas = () => {
@@ -38,7 +38,15 @@ export function RainEffect({
     }
     
     resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
+    
+    // Debounce du resize pour éviter trop de recalculs
+    let resizeTimeout: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(resizeCanvas, 250)
+    }
+    
+    window.addEventListener('resize', handleResize, { passive: true })
 
     // Initialize rain drops
     const drops: RainDrop[] = []
@@ -54,7 +62,7 @@ export function RainEffect({
     }
 
     let lastTime = 0
-    const targetFPS = 60
+    const targetFPS = 45 // Réduit de 60 à 45 pour économiser des ressources
     const frameTime = 1000 / targetFPS
 
     const animate = (currentTime: number) => {
@@ -108,7 +116,8 @@ export function RainEffect({
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current)
       }
-      window.removeEventListener('resize', resizeCanvas)
+      clearTimeout(resizeTimeout)
+      window.removeEventListener('resize', handleResize)
     }
   }, [dropCount])
 

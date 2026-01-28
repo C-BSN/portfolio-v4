@@ -70,9 +70,20 @@
     @apply bg-background text-foreground;
   }
   
-  /* Effet néon global sur les textes */
-  p, h1, h2, h3, h4, h5, h6, li, span {
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.2), 0 0 40px rgba(255, 255, 255, 0.1);
+  /* Optimisations de performance */
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  /* Effet néon optimisé - appliqué uniquement aux éléments importants */
+  h1, h2 {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+  }
+  
+  /* Améliorer les performances d'animation */
+  canvas, video, img {
+    will-change: auto;
   }
 }
 
@@ -189,10 +200,6 @@ html.lenis {
 .project-content-manga h4,
 .project-content-manga h5,
 .project-content-manga h6 {
-  color: transparent !important;
-  -webkit-text-stroke: 2px #F0F0F0;
-  text-stroke: 2px #F0F0F0;
-  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   font-weight: bold;
@@ -201,19 +208,68 @@ html.lenis {
 .project-content-manga p,
 .project-content-manga li,
 .project-content-manga span,
-.project-content-manga strong,
 .project-content-manga em {
   color: #F0F0F0 !important;
-  text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
 }
 
 .project-content-manga strong {
+  color: #00f3ff !important;
   font-weight: bold;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
 }
 
 .project-content-manga a {
   color: #F0F0F0 !important;
   text-decoration: underline;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+/* Neon Title Animation - Outline (pour H1) */
+@keyframes neonSparkle {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    color: transparent;
+    -webkit-text-stroke: 3px #ff0080;
+    text-stroke: 3px #ff0080;
+  }
+  20%, 24%, 55% {
+    color: transparent;
+    -webkit-text-stroke: 3px #00f3ff;
+    text-stroke: 3px #00f3ff;
+  }
+}
+
+.neon-title {
+  animation: neonSparkle 4s ease-in-out infinite;
+}
+
+/* Animation H2 - Couleur unie qui scintille */
+@keyframes sparkleH2 {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    color: #ff0080;
+  }
+  20%, 24%, 55% {
+    color: #00f3ff;
+  }
+}
+
+.title-h2-sparkle {
+  animation: sparkleH2 4s ease-in-out infinite;
+}
+
+/* Neon Title Animation - Filled (pour petits titres) */
+@keyframes neonSparkleFilled {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    color: #ff0080;
+  }
+  20%, 24%, 55% {
+    color: #00f3ff;
+  }
+}
+
+.neon-title-filled {
+  animation: neonSparkleFilled 4s ease-in-out infinite;
+}
+
+/* Titre rose uni pour h3 (sous-titres) */
+.title-pink-solid {
+  color: #ff0080 !important;
+  font-weight: bold;
 }

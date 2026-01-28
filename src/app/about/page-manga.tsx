@@ -5,6 +5,7 @@ import { Download, Mail, ExternalLink, Calendar } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { AboutData } from '@/lib/content'
+import { NeonTitle } from '@/components/effects/NeonTitle'
 
 interface AboutMangaProps {
   pageData: AboutData
@@ -46,20 +47,11 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
             </div>
 
             {/* Stats */}
-            <div className="mt-8 grid grid-cols-2 gap-4">
+            <div className="mt-8">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="border border-white/20 p-6 text-center"
-              >
-                <div className="text-4xl font-bold mb-2">{pageData.stats.years.value}</div>
-                <div className="text-sm tracking-widest opacity-70">{pageData.stats.years.label}</div>
-              </motion.div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
                 className="border border-white/20 p-6 text-center"
               >
                 <div className="text-4xl font-bold mb-2">{pageData.stats.projects.value}</div>
@@ -76,15 +68,12 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
             className="space-y-8"
           >
             <div>
-              <motion.h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2, duration: 0.6 }}
-                className="text-6xl md:text-8xl font-bold uppercase leading-none mb-4 text-outline-thick"
-                style={{ fontFamily: "'Oswald', sans-serif" }}
+              <NeonTitle 
+                as="h1"
+                className="text-6xl md:text-8xl font-bold uppercase leading-none mb-4"
               >
                 {pageData.title}
-              </motion.h1>
+              </NeonTitle>
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -119,9 +108,9 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.6 }}
             >
-              <h3 className="text-2xl font-bold mb-4 uppercase" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              <NeonTitle as="h3" className="text-2xl font-bold mb-4 uppercase" filled noAnimation>
                 Compétences
-              </h3>
+              </NeonTitle>
               <div className="flex flex-wrap gap-3">
                 {pageData.skills.map((skill, index) => (
                   <motion.span
@@ -194,7 +183,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
                   
                   // Handle h2
                   if (paragraph.startsWith('## ')) {
-                    return `<h2 class="text-5xl font-bold uppercase mb-8 mt-16" style="font-family: 'Oswald', sans-serif; color: transparent; -webkit-text-stroke: 2px #F0F0F0; text-stroke: 2px #F0F0F0; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));">${paragraph.replace('## ', '')}</h2>`
+                    return `<h2 class="text-5xl font-bold uppercase mb-8 mt-16 title-h2-sparkle" style="font-family: 'Oswald', sans-serif;">${paragraph.replace('## ', '')}</h2>`
                   }
                   
                   // Handle ordered lists (detect if starts with number)
@@ -202,7 +191,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
                     const items = paragraph.split('\n').filter(line => line.trim())
                     const listItems = items.map(item => {
                       const cleanItem = item.replace(/^\d+\.\s*/, '')
-                        .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #F0F0F0; font-weight: bold; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);">$1</strong>')
+                        .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
                         .replace(/\*([^*]+)\*/g, '<em style="color: #F0F0F0; font-style: italic;">$1</em>')
                         .replace(/→/g, '→')
                       return `<li class="mb-3 text-lg" style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${cleanItem}</li>`
@@ -212,7 +201,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
                   
                   // Handle regular paragraphs with markdown
                   const processedParagraph = paragraph
-                    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #F0F0F0; font-weight: bold; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);">$1</strong>')
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
                     .replace(/\*([^*]+)\*/g, '<em style="color: #F0F0F0; font-style: italic;">$1</em>')
                     .replace(/\n/g, '<br />')
                   
@@ -234,9 +223,9 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
           transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
-          <h2 className="text-5xl md:text-7xl font-bold uppercase mb-6 text-outline-thick" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <NeonTitle as="h2" className="text-5xl md:text-7xl font-bold uppercase mb-6" filled>
             {pageData.final_cta.title}
-          </h2>
+          </NeonTitle>
           <p className="text-xl mb-4 opacity-70" style={{ fontFamily: "'Oswald', sans-serif" }}>
             {pageData.final_cta.description_line1}
           </p>

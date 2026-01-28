@@ -36,27 +36,21 @@ export function Header({ theme }: HeaderProps = {}) {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex items-center justify-between h-16">
             
-            {/* Logo BSN */}
-            <Link href="/" className="flex items-center space-x-2 sm:space-x-3 group">
+            {/* Logo CBSN Studio */}
+            <Link href="/" className="flex items-center group">
               <div className="relative">
-                <div className="relative w-10 h-10 sm:w-12 sm:h-12 cyberpunk-logo-natural">
+                <div className="relative w-32 h-16 sm:w-40 sm:h-20 md:w-48 md:h-24 cyberpunk-logo-natural">
                   <Image
-                    src="/Logo%20CBSN%20v3.png"
-                    alt="CBSN Logo"
+                    src="/Logo%20CBSN%20v4.png"
+                    alt="CBSN Studio Logo"
                     fill
-                    sizes="(max-width: 640px) 40px, 48px"
+                    sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
                     className="object-contain w-full h-full filter brightness-110 contrast-110 drop-shadow-lg"
                     priority
                   />
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-pink-400/20 to-transparent -skew-x-12 transform translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 pointer-events-none"></div>
                 </div>
-                <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400/30 to-purple-500/30 rounded-full blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
-              </div>
-              <div className="hidden sm:block">
-                <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent font-mono">
-                  Corentin Basson
-                </span>
-                <div className="h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
+                <div className="absolute -inset-2 bg-gradient-to-r from-pink-400/30 to-cyan-500/30 rounded-lg blur-md opacity-0 group-hover:opacity-60 transition-opacity duration-300"></div>
               </div>
             </Link>
 

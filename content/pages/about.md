@@ -10,11 +10,8 @@ skills:
   - Illustration
   - Web Design
 stats:
-  years:
-    value: 5+
-    label: ANNÉES
   projects:
-    value: 50+
+    value: "7"
     label: PROJETS
 availability:
   status: true

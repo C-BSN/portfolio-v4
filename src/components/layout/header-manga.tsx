@@ -22,24 +22,19 @@ export function HeaderManga() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             
-            {/* Logo */}
-            <Link href="/" className="flex items-center space-x-3 group">
+            {/* Logo CBSN Studio */}
+            <Link href="/" className="flex items-center group">
               <div className="relative">
-                <div className="relative w-12 h-12">
+                <div className="relative w-32 h-16 sm:w-40 sm:h-20 md:w-48 md:h-24 transition-transform duration-300 group-hover:scale-105">
                   <Image
-                    src="/Logo%20CBSN%20v3.png"
-                    alt="CBSN Logo"
+                    src="/logo-cbsn-v4.png"
+                    alt="CBSN Studio Logo"
                     fill
-                    sizes="48px"
+                    sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
                     className="object-contain filter brightness-110"
                     priority
                   />
                 </div>
-              </div>
-              <div className="hidden sm:block">
-                <span className="text-xl font-bold uppercase tracking-wider" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                  Corentin Basson
-                </span>
               </div>
             </Link>
 

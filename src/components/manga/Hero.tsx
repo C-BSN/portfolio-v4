@@ -1,7 +1,7 @@
 'use client'
 
 import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 
 interface HeroData {
   title: string
@@ -16,6 +16,8 @@ interface HeroProps {
 
 export default function Hero({ data }: HeroProps) {
   const containerRef = useRef(null)
+  const [isGlowing, setIsGlowing] = useState(false)
+  const [currentColor, setCurrentColor] = useState<'pink' | 'cyan'>('pink')
   
   // Scroll animation setup
   const { scrollY } = useScroll()
@@ -24,6 +26,22 @@ export default function Hero({ data }: HeroProps) {
   const titleScale = useTransform(scrollY, [0, 500], [1, 1.5])
   const titleOpacity = useTransform(scrollY, [0, 300], [1, 0])
   const letterSpacing = useTransform(scrollY, [0, 500], [0, 50])
+
+  // Neon effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (Math.random() > 0.7) {
+        setIsGlowing(true)
+        setCurrentColor(prev => prev === 'pink' ? 'cyan' : 'pink')
+        
+        setTimeout(() => {
+          setIsGlowing(false)
+        }, 150 + Math.random() * 200)
+      }
+    }, 300 + Math.random() * 700)
+
+    return () => clearInterval(interval)
+  }, [])
   
   // Animation variants for words
   const containerVariants = {
@@ -71,6 +89,27 @@ export default function Hero({ data }: HeroProps) {
   // Split title into words for animation
   const titleWords = data.title.split(' ')
 
+  // Neon styles
+  const pinkStyle = {
+    color: 'transparent',
+    WebkitTextStroke: '3px #ff0080',
+    textStroke: '3px #ff0080',
+  }
+
+  const cyanStyle = {
+    color: 'transparent',
+    WebkitTextStroke: '3px #00f3ff',
+    textStroke: '3px #00f3ff',
+  }
+
+  const baseStyle = {
+    color: 'transparent',
+    WebkitTextStroke: '3px #ff0080',
+    textStroke: '3px #ff0080',
+  }
+
+  const glowStyle = currentColor === 'pink' ? pinkStyle : cyanStyle
+
   return (
     <section 
       ref={containerRef}
@@ -93,6 +132,8 @@ export default function Hero({ data }: HeroProps) {
             variants={wordVariants}
             className="text-[12vw] font-bold uppercase leading-none"
             style={{
+              ...(isGlowing ? glowStyle : baseStyle),
+              transition: 'all 0.1s ease-in-out',
               fontFamily: "'Oswald', sans-serif",
               fontWeight: 700,
               letterSpacing: `${index === 0 ? 0 : letterSpacing}px`

@@ -25,8 +25,7 @@ export default function AboutPage() {
       "Print Design"
     ],
     stats: {
-      years: { value: "5+", label: "ANNÉES" },
-      projects: { value: "50+", label: "PROJETS" }
+      projects: { value: "7", label: "PROJETS" }
     },
     availability: {
       status: true,

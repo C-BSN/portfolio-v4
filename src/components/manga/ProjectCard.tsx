@@ -48,7 +48,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
   const CardContent = (
     <motion.article
-      className="relative min-h-[400px] border border-white/10 bg-[#050505] overflow-hidden cursor-pointer group block"
+      className="relative h-[500px] border border-white/10 bg-[#050505] overflow-hidden cursor-pointer group block"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -100,9 +100,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       )}
 
       {/* Content */}
-      <div className="relative z-10 h-full p-8 flex flex-col justify-between">
+      <div className="relative z-10 h-full p-10 flex flex-col justify-between gap-6">
         {/* Top: Year & Category */}
-        <div className="flex items-start justify-between">
+        <div className="flex items-start justify-between mb-4">
           <motion.span 
             className="text-xs uppercase tracking-wider opacity-50 border border-white/20 px-3 py-1"
             animate={{ 
@@ -126,7 +126,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
         {/* Middle: Tech Stack */}
         <motion.div 
-          className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-h-[32px]"
         >
           {project.tech.map((tech, i) => (
             <span 
@@ -139,9 +139,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </motion.div>
 
         {/* Bottom: Title & Description */}
-        <div>
+        <div className="mt-auto space-y-4 pb-4">
           <motion.h3 
-            className="text-4xl md:text-5xl font-bold uppercase leading-none mb-4"
+            className="text-4xl md:text-5xl font-bold uppercase leading-none"
             animate={{ 
               x: isHovered ? 10 : 0,
               y: isHovered ? -5 : 0,
@@ -156,14 +156,14 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           </motion.h3>
 
           <motion.p 
-            className="text-sm opacity-0 max-w-md group-hover:opacity-70 transition-opacity duration-300"
+            className="text-sm opacity-0 max-w-[calc(100%-80px)] group-hover:opacity-70 transition-opacity duration-300 pr-4"
           >
             {project.description}
           </motion.p>
 
           {/* Link Icon */}
           <motion.div
-            className="absolute bottom-8 right-8 opacity-0 group-hover:opacity-100"
+            className="absolute bottom-10 right-10 opacity-0 group-hover:opacity-100"
             initial={{ scale: 0, rotate: -180 }}
             animate={{ 
               scale: isHovered ? 1 : 0,

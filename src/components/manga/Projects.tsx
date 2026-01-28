@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import ProjectCard, { ProjectCardData } from './ProjectCard'
+import { NeonTitle } from '@/components/effects/NeonTitle'
 
 interface ProjectsProps {
   projects: ProjectCardData[]
@@ -20,16 +21,16 @@ export default function Projects({ projects, title = "Projets", subtitle = "Sél
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <h2 className="text-6xl md:text-8xl font-bold uppercase text-outline-thick mb-4">
+        <NeonTitle as="h2" className="text-6xl md:text-8xl font-bold uppercase mb-4" filled>
           {title}
-        </h2>
+        </NeonTitle>
         <p className="text-sm uppercase tracking-widest opacity-50">
           {subtitle}
         </p>
       </motion.div>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
         {projects.map((project, index) => (
           <ProjectCard 
             key={project.id}

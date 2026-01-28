@@ -8,11 +8,40 @@ import { ArrowLeft, ExternalLink, Download, Calendar, ChevronLeft, ChevronRight 
 import { motion } from "framer-motion"
 import Image from "next/image"
 import type { Project } from "@/lib/content"
+import { NeonTitle } from "@/components/effects/NeonTitle"
 
 interface ProjectPageMangaProps {
   project: Project
   previousProject: Project | null
   nextProject: Project | null
+}
+
+// Fonction pour convertir une URL YouTube en URL d'embed
+function getYoutubeEmbedUrl(url: string): string {
+  try {
+    // Gestion des formats d'URL YouTube
+    // Format 1: https://www.youtube.com/watch?v=VIDEO_ID
+    // Format 2: https://youtu.be/VIDEO_ID
+    // Format 3: https://www.youtube.com/embed/VIDEO_ID (déjà au bon format)
+    
+    if (url.includes('youtube.com/embed/')) {
+      return url
+    }
+    
+    let videoId = ''
+    
+    if (url.includes('youtube.com/watch')) {
+      const urlParams = new URLSearchParams(url.split('?')[1])
+      videoId = urlParams.get('v') || ''
+    } else if (url.includes('youtu.be/')) {
+      videoId = url.split('youtu.be/')[1].split('?')[0]
+    }
+    
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : url
+  } catch (error) {
+    console.error('Error parsing YouTube URL:', error)
+    return url
+  }
 }
 
 export default function ProjectPageManga({ project, previousProject, nextProject }: ProjectPageMangaProps) {
@@ -90,18 +119,14 @@ export default function ProjectPageManga({ project, previousProject, nextProject
               )}
             </div>
             
-            <h1 
-              className="text-5xl md:text-7xl font-bold mb-6 uppercase inline-block px-6 py-4 bg-black/30 backdrop-blur-md border-4 border-white/40 rounded-lg" 
-              style={{ 
-                fontFamily: "'Oswald', sans-serif", 
-                color: 'transparent',
-                WebkitTextStroke: '3px #F0F0F0',
-                filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.5))',
-                textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
-              }}
-            >
-              {project.title}
-            </h1>
+            <div className="inline-block px-6 py-4 bg-black/30 backdrop-blur-md border-4 border-white/40 rounded-lg">
+              <NeonTitle 
+                as="h1" 
+                className="text-5xl md:text-7xl font-bold uppercase"
+              >
+                {project.title}
+              </NeonTitle>
+            </div>
             
             {project.excerpt && (
               <p 
@@ -152,7 +177,8 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                     className="prose prose-lg prose-invert max-w-none project-content-manga" 
                     style={{ 
                       fontFamily: "'Oswald', sans-serif", 
-                      color: '#F0F0F0'
+                      color: '#F0F0F0',
+                      textShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.2)'
                     }}
                   >
                     <div
@@ -160,40 +186,44 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                         __html: project.body
                           .split('\n\n')
                           .map(paragraph => {
+                            // Nettoyer le paragraphe
+                            const cleanParagraph = paragraph.trim()
+                            if (!cleanParagraph) return ''
+                            
                             // Si le paragraphe contient un titre ### suivi de listes, les séparer
-                            if (paragraph.match(/^### .+\n-/)) {
-                              const lines = paragraph.split('\n')
+                            if (cleanParagraph.match(/^### .+\n-/)) {
+                              const lines = cleanParagraph.split('\n')
                               const h3Line = lines[0]
                               const listLines = lines.slice(1).filter(line => line.startsWith('- '))
-                              const h3Html = `<h3 class="text-xl font-bold mb-2 text-white" style="color: #F0F0F0;">${h3Line.replace('### ', '')}</h3>`
-                              const listHtml = `<ul class="list-disc list-inside mb-4 text-white space-y-2">${listLines.map(item => `<li style="color: #F0F0F0;">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #F0F0F0;">$1</strong>')}</li>`).join('')}</ul>`
+                              const h3Html = `<h3 class="text-xl font-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #ff0080 !important;">${h3Line.replace('### ', '')}</h3>`
+                              const listHtml = `<ul class="list-disc list-inside mb-4 text-white space-y-2">${listLines.map(item => `<li style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')}</li>`).join('')}</ul>`
                               return h3Html + listHtml
                             }
                             
                             // Gérer les titres seuls
-                            if (paragraph.startsWith('# ')) {
-                              return `<h1 class="text-4xl font-bold mb-4 text-white text-outline-thick" style="color: transparent; -webkit-text-stroke: 2px #F0F0F0; filter: drop-shadow(0 0 10px rgba(240, 240, 240, 0.5));">${paragraph.replace('# ', '')}</h1>`
+                            if (cleanParagraph.startsWith('# ')) {
+                              return `<h1 class="text-4xl font-bold mb-4 neon-title" style="font-family: 'Oswald', sans-serif; color: transparent; -webkit-text-stroke: 3px #ff0080; text-stroke: 3px #ff0080;">${cleanParagraph.replace('# ', '')}</h1>`
                             }
-                            if (paragraph.startsWith('## ')) {
-                              return `<h2 class="text-3xl font-bold mb-3 text-white text-outline-thick" style="color: transparent; -webkit-text-stroke: 2px #F0F0F0; filter: drop-shadow(0 0 10px rgba(240, 240, 240, 0.5));">${paragraph.replace('## ', '')}</h2>`
+                            if (cleanParagraph.startsWith('## ')) {
+                              return `<h2 class="text-3xl font-bold mb-3 title-h2-sparkle" style="font-family: 'Oswald', sans-serif;">${cleanParagraph.replace('## ', '')}</h2>`
                             }
-                            if (paragraph.startsWith('### ')) {
-                              return `<h3 class="text-xl font-bold mb-2 text-white" style="color: #F0F0F0;">${paragraph.replace('### ', '')}</h3>`
+                            if (cleanParagraph.startsWith('### ')) {
+                              return `<h3 class="text-xl font-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #ff0080 !important;">${cleanParagraph.replace('### ', '')}</h3>`
                             }
                             
                             // Gérer les listes seules
-                            if (paragraph.includes('\n- ') || paragraph.startsWith('- ')) {
-                              const items = paragraph.split('\n').filter(line => line.startsWith('- '))
-                              return `<ul class="list-disc list-inside mb-4 text-white space-y-2">${items.map(item => `<li style="color: #F0F0F0;">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #F0F0F0;">$1</strong>')}</li>`).join('')}</ul>`
+                            if (cleanParagraph.includes('\n- ') || cleanParagraph.startsWith('- ')) {
+                              const items = cleanParagraph.split('\n').filter(line => line.startsWith('- '))
+                              return `<ul class="list-disc list-inside mb-4 text-white space-y-2">${items.map(item => `<li style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')}</li>`).join('')}</ul>`
                             }
                             
                             // Gérer le texte normal avec bold et italic
-                            const processedParagraph = paragraph
-                              .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-white" style="color: #F0F0F0;">$1</strong>')
+                            const processedParagraph = cleanParagraph
+                              .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-white" style="color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
                               .replace(/\*([^*]+)\*/g, '<em class="italic text-white" style="color: #F0F0F0;">$1</em>')
                               .replace(/\n/g, '<br />')
                             
-                            return `<p class="text-lg leading-relaxed mb-4 text-white" style="color: #F0F0F0;">${processedParagraph}</p>`
+                            return `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${processedParagraph}</p>`
                           })
                           .filter(html => html)
                           .join('')
@@ -205,7 +235,9 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                 {/* Galerie d'images */}
                 {project.gallery && project.gallery.length > 0 && (
                   <div className="border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-6 mb-8">
-                    <h3 className="text-3xl font-bold uppercase mb-4 text-outline-thick" style={{ fontFamily: "'Oswald', sans-serif", filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.7))' }}>Galerie</h3>
+                    <NeonTitle as="h3" className="text-3xl font-bold uppercase mb-4" filled noAnimation>
+                      Galerie
+                    </NeonTitle>
                     <ProjectGallery 
                       gallery={project.gallery}
                       title=""
@@ -213,6 +245,70 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                       showLayoutSwitcher={false}
                       className=""
                     />
+                  </div>
+                )}
+
+                {/* Section Preuves */}
+                {project.preuves && project.preuves.length > 0 && (
+                  <div className="border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-6 mb-8">
+                    <NeonTitle as="h3" className="text-3xl font-bold uppercase mb-6" filled noAnimation>
+                      Preuves
+                    </NeonTitle>
+                    <div className="space-y-6">
+                      {project.preuves.map((preuve, index) => (
+                        <div key={index} className="border border-white/20 bg-white/5 rounded-lg p-4">
+                          {/* Description */}
+                          {preuve.description && (
+                            <p className="text-sm font-medium uppercase tracking-wider mb-3 text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>
+                              {preuve.description}
+                            </p>
+                          )}
+                          
+                          {/* Contenu selon le type */}
+                          {preuve.type === 'Video' && preuve.youtube_url && (
+                            <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+                              <iframe
+                                className="absolute top-0 left-0 w-full h-full rounded"
+                                src={getYoutubeEmbedUrl(preuve.youtube_url)}
+                                title={preuve.description}
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                              />
+                            </div>
+                          )}
+                          
+                          {preuve.type === 'Image' && preuve.file && (
+                            <div className="relative w-full">
+                              <Image
+                                src={preuve.file}
+                                alt={preuve.description}
+                                width={800}
+                                height={600}
+                                className="w-full h-auto rounded"
+                              />
+                            </div>
+                          )}
+                          
+                          {preuve.type === 'PDF' && preuve.pdf && (
+                            <Button asChild className="w-full border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                              <Link href={preuve.pdf} target="_blank">
+                                <Download className="mr-2 h-4 w-4" />
+                                Télécharger le PDF
+                              </Link>
+                            </Button>
+                          )}
+                          
+                          {preuve.type === 'URL' && preuve.url && (
+                            <Button asChild className="w-full border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                              <Link href={preuve.url} target="_blank">
+                                <ExternalLink className="mr-2 h-4 w-4" />
+                                Voir le lien
+                              </Link>
+                            </Button>
+                          )}
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 )}
               </motion.div>
@@ -225,9 +321,9 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                 className="lg:col-span-1"
               >
                 <div className="sticky top-24 border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-6">
-                  <h3 className="text-2xl font-bold mb-4 uppercase text-outline-thick" style={{ fontFamily: "'Oswald', sans-serif", filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.5))' }}>
+                  <NeonTitle as="h3" className="text-2xl font-bold mb-4 uppercase" filled noAnimation>
                     Informations
-                  </h3>
+                  </NeonTitle>
                 
                   <div className="space-y-4">
                     {/* Date */}

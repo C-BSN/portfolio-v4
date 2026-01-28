@@ -60,7 +60,6 @@ export interface AboutData {
   profile_image?: string | string[]
   skills: string[]
   stats: {
-    years: { value: string; label: string }
     projects: { value: string; label: string }
   }
   availability: {

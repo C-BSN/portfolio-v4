@@ -22,6 +22,7 @@ export function LightningEffect({
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [isFlashing, setIsFlashing] = useState(false)
   const [lightningBolts, setLightningBolts] = useState<Point[][]>([])
+  const [currentColor, setCurrentColor] = useState<'white' | 'pink'>('white')
 
   // Générer un éclair en zigzag
   const generateLightning = (startX: number, startY: number, endY: number): Point[] => {
@@ -44,23 +45,24 @@ export function LightningEffect({
     return points
   }
 
-  // Générer des branches secondaires
+  // Générer des branches secondaires - Optimisé
   const generateBranches = (mainBolt: Point[]): Point[][] => {
     const branches: Point[][] = []
-    const numBranches = Math.floor(Math.random() * 3) + 1
+    // Réduire le nombre de branches (1-2 au lieu de 2-4)
+    const numBranches = Math.floor(Math.random() * 2) + 1
     
     for (let i = 0; i < numBranches; i++) {
       const branchPoint = mainBolt[Math.floor(Math.random() * (mainBolt.length - 2)) + 1]
-      const branchLength = Math.random() * 150 + 50
       const direction = Math.random() > 0.5 ? 1 : -1
       
       const branch: Point[] = [branchPoint]
       let x = branchPoint.x
       let y = branchPoint.y
       
-      for (let j = 0; j < 3; j++) {
-        y += 30 + Math.random() * 40
-        x += direction * (20 + Math.random() * 40)
+      // Réduire les segments de branche (2 au lieu de 3)
+      for (let j = 0; j < 2; j++) {
+        y += 35 + Math.random() * 35
+        x += direction * (25 + Math.random() * 35)
         branch.push({ x, y })
       }
       
@@ -71,7 +73,7 @@ export function LightningEffect({
   }
 
   // Dessiner un éclair
-  const drawLightning = (ctx: CanvasRenderingContext2D, points: Point[], width: number) => {
+  const drawLightning = (ctx: CanvasRenderingContext2D, points: Point[], width: number, color: 'white' | 'pink') => {
     ctx.beginPath()
     ctx.moveTo(points[0].x, points[0].y)
     
@@ -79,10 +81,13 @@ export function LightningEffect({
       ctx.lineTo(points[i].x, points[i].y)
     }
     
-    ctx.strokeStyle = `rgba(255, 255, 255, ${intensity})`
+    // Alterner entre blanc et rose/magenta vif
+    const colorRgb = color === 'white' ? '255, 255, 255' : '255, 0, 255' // Magenta vif
+    const colorIntensity = color === 'white' ? intensity : 1.0 // Rose à 100% d'intensité
+    ctx.strokeStyle = `rgba(${colorRgb}, ${colorIntensity})`
     ctx.lineWidth = width
-    ctx.shadowBlur = 20
-    ctx.shadowColor = 'rgba(255, 255, 255, 0.8)'
+    ctx.shadowBlur = 30
+    ctx.shadowColor = `rgba(${colorRgb}, 1.0)`
     ctx.stroke()
   }
 
@@ -90,7 +95,7 @@ export function LightningEffect({
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const ctx = canvas.getContext("2d")
+    const ctx = canvas.getContext("2d", { alpha: true })
     if (!ctx) return
 
     const resizeCanvas = () => {
@@ -99,34 +104,35 @@ export function LightningEffect({
     }
     
     resizeCanvas()
-    window.addEventListener('resize', resizeCanvas)
+    
+    // Debounce du resize pour éviter trop de recalculs
+    let resizeTimeout: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimeout)
+      resizeTimeout = setTimeout(resizeCanvas, 250)
+    }
+    
+    window.addEventListener('resize', handleResize)
 
     const triggerLightning = () => {
       // Position aléatoire en X
       const startX = Math.random() * canvas.width
       const mainBolt = generateLightning(startX, 0, canvas.height * 0.7)
-      const branches = generateBranches(mainBolt)
+      
+      // Réduire le nombre de branches pour les performances
+      const branches = Math.random() > 0.5 ? generateBranches(mainBolt) : []
+      
+      // Alterner la couleur à chaque éclair
+      setCurrentColor(prev => prev === 'white' ? 'pink' : 'white')
       
       setLightningBolts([mainBolt, ...branches])
       setIsFlashing(true)
 
-      // Flash rapide
+      // Flash rapide simplifié (pas de double flash)
       setTimeout(() => {
         setIsFlashing(false)
-        
-        // Deuxième flash (optionnel)
-        if (Math.random() > 0.5) {
-          setTimeout(() => {
-            setIsFlashing(true)
-            setTimeout(() => {
-              setIsFlashing(false)
-              setLightningBolts([])
-            }, 50)
-          }, 100)
-        } else {
-          setLightningBolts([])
-        }
-      }, 100)
+        setLightningBolts([])
+      }, 80)
     }
 
     const scheduleNextLightning = () => {
@@ -141,7 +147,8 @@ export function LightningEffect({
 
     return () => {
       clearTimeout(timeout)
-      window.removeEventListener('resize', resizeCanvas)
+      clearTimeout(resizeTimeout)
+      window.removeEventListener('resize', handleResize)
     }
   }, [frequency, intensity])
 
@@ -157,14 +164,14 @@ export function LightningEffect({
 
     if (lightningBolts.length > 0 && isFlashing) {
       // Éclair principal (plus épais)
-      drawLightning(ctx, lightningBolts[0], 4)
+      drawLightning(ctx, lightningBolts[0], 4, currentColor)
       
       // Branches (plus fines)
       for (let i = 1; i < lightningBolts.length; i++) {
-        drawLightning(ctx, lightningBolts[i], 2)
+        drawLightning(ctx, lightningBolts[i], 2, currentColor)
       }
     }
-  }, [lightningBolts, isFlashing, intensity])
+  }, [lightningBolts, isFlashing, intensity, currentColor])
 
   return (
     <div className={className}>
@@ -179,11 +186,14 @@ export function LightningEffect({
           <motion.div
             key={Math.random()}
             initial={{ opacity: 0 }}
-            animate={{ opacity: 0.2 }}
+            animate={{ opacity: currentColor === 'white' ? 0.2 : 0.3 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.05 }}
-            className="absolute inset-0 bg-white pointer-events-none"
-            style={{ mixBlendMode: 'screen' }}
+            className="absolute inset-0 pointer-events-none"
+            style={{ 
+              mixBlendMode: 'screen',
+              backgroundColor: currentColor === 'white' ? '#ffffff' : '#ff00ff'
+            }}
           />
         )}
       </AnimatePresence>

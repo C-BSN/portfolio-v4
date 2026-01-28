@@ -5,7 +5,7 @@ import "../styles/footer-cyberpunk.css";
 import { HeaderManga } from "@/components/layout/header-manga";
 import { FooterManga } from "@/components/layout/footer-manga";
 import { SmoothScroll } from "@/components/manga";
-import { GlobalEffects } from "@/components/GlobalEffects";
+import { GlobalEffectsWrapper } from "@/components/GlobalEffectsWrapper";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -53,7 +53,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className={inter.variable}>
       <body className="font-sans antialiased min-h-screen flex flex-col bg-[#050505] text-[#F0F0F0]">
-        <GlobalEffects />
+        <GlobalEffectsWrapper />
         <SmoothScroll>
           <HeaderManga />
           <main className="flex-1 relative z-10">

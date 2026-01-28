@@ -1,6 +1,7 @@
 import { Hero, StackMarquee, Projects } from '@/components/manga'
 import { getFeaturedProjects, getPageData } from '@/lib/content'
 import { convertProjectsToCardData, defaultPortfolioData } from '@/lib/manga-helpers'
+import { NeonTitle } from '@/components/effects/NeonTitle'
 
 export default function HomeManga() {
   // Get homepage data
@@ -36,16 +37,16 @@ export default function HomeManga() {
       {/* About Section */}
       <section className="min-h-screen flex items-center justify-center px-8 py-20">
         <div className="max-w-4xl">
-          <h2 className="text-6xl font-bold mb-8 text-outline-thick" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <NeonTitle as="h2" className="text-6xl font-bold mb-8" filled>
             {aboutData.title}
-          </h2>
+          </NeonTitle>
           {aboutData.body ? (
             <div className="text-xl leading-relaxed space-y-6" style={{ fontFamily: "'Oswald', sans-serif" }}>
               {aboutData.body.split('\n\n').map((paragraph, index) => {
                 // Handle headers (lines starting with *)
                 if (paragraph.trim().startsWith('*') && !paragraph.trim().startsWith('**')) {
                   return (
-                    <h3 key={index} className="text-3xl font-bold mt-8 mb-4">
+                    <h3 key={index} className="text-3xl font-bold mt-8 mb-4 title-h2-sparkle">
                       {paragraph.replace(/^\*/, '').trim()}
                     </h3>
                   )
@@ -53,7 +54,7 @@ export default function HomeManga() {
                 
                 // Handle bold text
                 const processedText = paragraph
-                  .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold">$1</strong>')
+                  .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
                   .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
 
                 return (
@@ -85,9 +86,9 @@ export default function HomeManga() {
       {/* CTA Section */}
       <section className="min-h-[50vh] flex items-center justify-center px-8 py-20 border-t border-white/10">
         <div className="max-w-4xl text-center">
-          <h2 className="text-5xl md:text-7xl font-bold mb-8 text-outline-thick" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <NeonTitle as="h2" className="text-5xl md:text-7xl font-bold mb-8" filled>
             CONTACTEZ-MOI
-          </h2>
+          </NeonTitle>
           <p className="text-xl mb-12 opacity-70" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Collaborons ensemble pour créer quelque chose d'exceptionnel
           </p>
