@@ -76,14 +76,12 @@
     -moz-osx-font-smoothing: grayscale;
   }
   
-  /* Effet néon optimisé - appliqué uniquement aux éléments importants */
   h1, h2 {
-    text-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
   }
-  
-  /* Améliorer les performances d'animation */
-  canvas, video, img {
-    will-change: auto;
+
+  img, video {
+    content-visibility: auto;
   }
 }
 
@@ -222,54 +220,54 @@ html.lenis {
   text-decoration: underline;
 }
 
-/* Neon Title Animation - Outline (pour H1) */
-@keyframes neonSparkle {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% {
-    color: transparent;
-    -webkit-text-stroke: 3px #ff0080;
-    text-stroke: 3px #ff0080;
-  }
-  20%, 24%, 55% {
-    color: transparent;
-    -webkit-text-stroke: 3px #00f3ff;
-    text-stroke: 3px #00f3ff;
-  }
-}
-
+/* Neon Title - H1 outline fix: solid white instead of blurry text-stroke */
 .neon-title {
-  animation: neonSparkle 4s ease-in-out infinite;
+  color: #F0F0F0;
 }
 
-/* Animation H2 - Couleur unie qui scintille */
+/* Animation H2 - Couleur qui alterne doucement */
 @keyframes sparkleH2 {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+  0%, 100% {
     color: #ff0080;
   }
-  20%, 24%, 55% {
+  50% {
     color: #00f3ff;
   }
 }
 
 .title-h2-sparkle {
-  animation: sparkleH2 4s ease-in-out infinite;
+  animation: sparkleH2 6s ease-in-out infinite;
 }
 
-/* Neon Title Animation - Filled (pour petits titres) */
-@keyframes neonSparkleFilled {
-  0%, 18%, 22%, 25%, 53%, 57%, 100% {
-    color: #ff0080;
-  }
-  20%, 24%, 55% {
-    color: #00f3ff;
-  }
-}
-
+/* Neon Title Filled (pour petits titres) */
 .neon-title-filled {
-  animation: neonSparkleFilled 4s ease-in-out infinite;
+  animation: sparkleH2 6s ease-in-out infinite;
 }
 
 /* Titre rose uni pour h3 (sous-titres) */
 .title-pink-solid {
   color: #ff0080 !important;
   font-weight: bold;
+}
+
+/* 404 page: hide layout chrome so the game takes full screen */
+body.page-404 header,
+body.page-404 footer {
+  display: none !important;
+}
+body.page-404 main {
+  flex: unset !important;
+}
+
+/* Respect des préférences utilisateur */
+@media (prefers-reduced-motion: reduce) {
+  .neon-title,
+  .title-h2-sparkle,
+  .neon-title-filled {
+    animation: none !important;
+  }
+  .title-h2-sparkle,
+  .neon-title-filled {
+    color: #ff0080;
+  }
 }

@@ -1,6 +1,6 @@
 ---
 title: À propos de moi
-subtitle: Photographe - Graphiste Freelance
+subtitle: Alternant BTS Communication - Graphiste & Photographe
 profile_image:
   - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1756203939/Cocorentin_hizfft.jpg
 skills:
@@ -13,6 +13,9 @@ stats:
   projects:
     value: "7"
     label: PROJETS
+  years:
+    value: "2"
+    label: ANNÉES D'EXPÉRIENCE
 availability:
   status: true
   message: DISPONIBLE POUR NOUVEAUX PROJETS
@@ -22,25 +25,25 @@ cta_buttons:
     email: corentinbassonpro@gmail.com
     icon: mail
   cv:
-    text: DOWNLOAD.CV
+    text: TÉLÉCHARGER CV
     file_url:
       - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1756290564/CV_Corentin_Basson_dsyobn.pdf
     icon: download
 final_cta:
   title: Un projet en tête ?
-  description_line1: Si tu es prêt pour une collaboration au tour d'un projet...
-  description_line2: Contact moi !
+  description_line1: Prêt pour une collaboration autour d'un projet ?
+  description_line2: Contactez-moi !
   buttons:
     projects:
-      text: VIEW.PROJECTS
+      text: VOIR MES PROJETS
       link: /projects
       icon: external-link
     contact:
-      text: START.PROJECT
+      text: DÉMARRER UN PROJET
       email: corentinbassonpro@gmail.com
       icon: mail
     calendly:
-      text: PLANIFIER.CALL()
+      text: PLANIFIER UN APPEL
       link: https://calendly.com/corentinbassonpro/30min
       icon: calendar
 ---
@@ -70,8 +73,3 @@ Mon objectif est de donner du sens à ce que je crée : que ce soit une image, u
 6. **Réalisation visuelle →** Je conçois les supports (photos, visuels, vidéos, contenus) avec un style minimaliste et authentique.
 7. **Évaluation & Impact →** J’analyse le résultat en fonction des retours et de l’efficacité auprès de la cible.
 
-## Collaborations
-
-J'ai eu le plaisir de travailler avec des startups innovantes, des PME dynamiques et des associations engagées. Chaque collaboration est une opportunité d'apprendre et de créer quelque chose d'unique.
-
-Prêt(e) à donner vie à votre projet ? Contactons-nous !

@@ -2,6 +2,7 @@ import { Hero, StackMarquee, Projects } from '@/components/manga'
 import { getFeaturedProjects, getPageData } from '@/lib/content'
 import { convertProjectsToCardData, defaultPortfolioData } from '@/lib/manga-helpers'
 import { NeonTitle } from '@/components/effects/NeonTitle'
+import Link from 'next/link'
 
 export default function HomeManga() {
   // Get homepage data
@@ -54,7 +55,7 @@ export default function HomeManga() {
                 
                 // Handle bold text
                 const processedText = paragraph
-                  .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
+                  .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold;">$1</strong>')
                   .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
 
                 return (
@@ -92,13 +93,13 @@ export default function HomeManga() {
           <p className="text-xl mb-12 opacity-70" style={{ fontFamily: "'Oswald', sans-serif" }}>
             Collaborons ensemble pour créer quelque chose d'exceptionnel
           </p>
-          <a 
-            href="mailto:corentinbassonpro@gmail.com"
+          <Link 
+            href="/contact"
             className="inline-block border-2 border-[#F0F0F0] px-12 py-4 text-lg uppercase tracking-widest hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300"
             style={{ fontFamily: "'Oswald', sans-serif" }}
           >
             Démarrer un projet
-          </a>
+          </Link>
         </div>
       </section>
     </div>

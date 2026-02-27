@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { PdfViewer } from '@/components/ui/pdf-viewer'
 import { ExternalLink, Image as ImageIcon, FileText, PlayCircle } from 'lucide-react'
-import { cn } from '@/lib/utils'
+import { cn, fixCloudinaryPdfUrl } from '@/lib/utils'
 import { useState, useEffect, useRef } from 'react'
 
 interface ProjectEvidenceProps {
@@ -192,7 +192,7 @@ export function ProjectEvidenceItem({ evidence, className, compact = false }: Pr
 
         {evidence.type === 'PDF' && evidence.pdf && (
           <PdfViewer
-            url={evidence.pdf}
+            url={fixCloudinaryPdfUrl(evidence.pdf)}
             title={evidence.description}
             allowDownload={true}
           />

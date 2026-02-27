@@ -22,9 +22,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Corentin Basson" }],
   creator: "Corentin Basson",
   icons: {
-    icon: "/Logo%20CBSN%20v3.png",
-    shortcut: "/Logo%20CBSN%20v3.png",
-    apple: "/Logo%20CBSN%20v3.png"
+    icon: "/logo-cbsn-v4.png",
+    shortcut: "/logo-cbsn-v4.png",
+    apple: "/logo-cbsn-v4.png"
   },
   openGraph: {
     type: "website",

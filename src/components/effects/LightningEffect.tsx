@@ -72,7 +72,6 @@ export function LightningEffect({
     return branches
   }
 
-  // Dessiner un éclair
   const drawLightning = (ctx: CanvasRenderingContext2D, points: Point[], width: number, color: 'white' | 'pink') => {
     ctx.beginPath()
     ctx.moveTo(points[0].x, points[0].y)
@@ -81,13 +80,11 @@ export function LightningEffect({
       ctx.lineTo(points[i].x, points[i].y)
     }
     
-    // Alterner entre blanc et rose/magenta vif
-    const colorRgb = color === 'white' ? '255, 255, 255' : '255, 0, 255' // Magenta vif
-    const colorIntensity = color === 'white' ? intensity : 1.0 // Rose à 100% d'intensité
-    ctx.strokeStyle = `rgba(${colorRgb}, ${colorIntensity})`
+    const colorRgb = color === 'white' ? '255, 255, 255' : '255, 0, 255'
+    ctx.strokeStyle = `rgba(${colorRgb}, ${intensity * 0.7})`
     ctx.lineWidth = width
-    ctx.shadowBlur = 30
-    ctx.shadowColor = `rgba(${colorRgb}, 1.0)`
+    ctx.shadowBlur = 15
+    ctx.shadowColor = `rgba(${colorRgb}, 0.6)`
     ctx.stroke()
   }
 

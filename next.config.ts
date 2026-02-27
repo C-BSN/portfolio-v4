@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
 
   // Optimisations de performance
   reactStrictMode: true,
-  swcMinify: true,
   
   // Configuration compiler pour optimiser la production
   compiler: {

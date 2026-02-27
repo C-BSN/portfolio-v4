@@ -63,7 +63,8 @@ export function useGallery(
     if (!items || items.length === 0) return []
     
     if (Array.isArray(items[0])) {
-      return items[0] as string[]
+      // Aplatir tous les sous-tableaux en un seul tableau d'URLs
+      return (items as string[][]).flat()
     }
     
     return (items as ProjectGalleryItem[]).map(item => item.image)
@@ -103,7 +104,8 @@ export function useGallery(
     
     // Cas 1: Format YAML - tableau de tableaux d'URLs (venant du YAML)
     if (Array.isArray(items[0])) {
-      const urls = items[0] as string[]
+      // Aplatir tous les sous-tableaux en un seul tableau d'URLs
+      const urls = (items as string[][]).flat()
       return urls.map((url, index) => {
         // Utiliser les vraies dimensions si disponibles, sinon les estimations
         const realDims = realDimensions.get(url)
@@ -154,7 +156,8 @@ export function transformProjectGallery(
   
   // Cas 1: Format YAML - tableau de tableaux d'URLs
   if (Array.isArray(gallery[0])) {
-    const urls = gallery[0] as string[]
+    // Aplatir tous les sous-tableaux en un seul tableau d'URLs
+    const urls = (gallery as string[][]).flat()
     return urls.map((url, index) => {
       const dimensions = estimateDimensions(url, defaultWidth, defaultHeight)
       

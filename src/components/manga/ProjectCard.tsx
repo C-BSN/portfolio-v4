@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState } from 'react'
-import { ExternalLink } from 'lucide-react'
+import { ArrowUpRight } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -35,12 +35,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     })
   }
 
-  // Accent colors for different projects
   const accentColors = [
-    'rgba(59, 130, 246, 0.1)',  // Blue
-    'rgba(239, 68, 68, 0.1)',   // Red
-    'rgba(34, 197, 94, 0.1)',   // Green
-    'rgba(168, 85, 247, 0.1)',  // Purple
+    'rgba(0, 243, 255, 0.12)',
+    'rgba(255, 0, 128, 0.12)',
+    'rgba(34, 197, 94, 0.12)',
+    'rgba(168, 85, 247, 0.12)',
   ]
 
   const projectHref = project.slug ? `/projects/${project.slug}` : (project.link || '#')
@@ -48,7 +47,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
 
   const CardContent = (
     <motion.article
-      className="relative h-[500px] border border-white/10 bg-[#050505] overflow-hidden cursor-pointer group block"
+      className="relative h-[480px] border border-white/10 bg-[#0a0a0a] overflow-hidden cursor-pointer group block rounded-sm"
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -61,143 +60,89 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         ease: [0.6, 0.01, 0.05, 0.95] as const
       }}
       whileHover={{ 
-        borderColor: 'rgba(240, 240, 240, 0.3)',
+        borderColor: 'rgba(255, 255, 255, 0.25)',
       }}
     >
-      {/* Hover background effect */}
+      {/* Hover radial glow */}
       <motion.div
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 pointer-events-none"
         initial={{ opacity: 0 }}
         animate={{ 
           opacity: isHovered ? 1 : 0,
           background: isHovered 
-            ? `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, ${accentColors[index % accentColors.length]}, transparent 40%)`
+            ? `radial-gradient(500px circle at ${mousePosition.x}px ${mousePosition.y}px, ${accentColors[index % accentColors.length]}, transparent 40%)`
             : 'transparent'
         }}
         transition={{ duration: 0.3 }}
       />
 
-      {/* Gradient overlay on hover */}
-      <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent z-0"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isHovered ? 1 : 0 }}
-        transition={{ duration: 0.3 }}
-      />
-
-      {/* Image Background */}
+      {/* Image */}
       {project.featured_image && (
         <div className="absolute inset-0 z-0">
           <Image
             src={project.featured_image}
             alt={project.title}
             fill
-            className="object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+            className="object-cover opacity-50 group-hover:opacity-65 transition-opacity duration-500 group-hover:scale-105 transition-transform"
           />
-          {/* Dark overlay for readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-[#050505]/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent" />
         </div>
       )}
 
       {/* Content */}
-      <div className="relative z-10 h-full p-10 flex flex-col justify-between gap-6">
-        {/* Top: Year & Category */}
-        <div className="flex items-start justify-between mb-4">
-          <motion.span 
-            className="text-xs uppercase tracking-wider opacity-50 border border-white/20 px-3 py-1"
-            animate={{ 
-              x: isHovered ? -5 : 0,
-              opacity: isHovered ? 0.8 : 0.5
-            }}
-          >
-            {project.category}
-          </motion.span>
-          
-          <motion.span 
-            className="text-2xl font-bold opacity-30"
-            animate={{ 
-              scale: isHovered ? 1.1 : 1,
-              opacity: isHovered ? 0.5 : 0.3
-            }}
-          >
-            {project.year}
-          </motion.span>
-        </div>
-
-        {/* Middle: Tech Stack */}
-        <motion.div 
-          className="flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-h-[32px]"
+      <div className="relative z-10 h-full p-8 md:p-10 flex flex-col justify-end">
+        {/* Title — always visible */}
+        <motion.h3 
+          className="text-2xl md:text-3xl font-bold uppercase leading-snug line-clamp-3 text-white"
+          style={{ fontFamily: "'Oswald', sans-serif" }}
+          animate={{ y: isHovered ? -8 : 0 }}
+          transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-          {project.tech.map((tech, i) => (
-            <span 
-              key={i}
-              className="text-xs border border-white/20 px-2 py-1 uppercase tracking-wide"
-            >
-              {tech}
-            </span>
-          ))}
-        </motion.div>
+          {project.title}
+        </motion.h3>
 
-        {/* Bottom: Title & Description */}
-        <div className="mt-auto space-y-4 pb-4">
-          <motion.h3 
-            className="text-4xl md:text-5xl font-bold uppercase leading-none"
-            animate={{ 
-              x: isHovered ? 10 : 0,
-              y: isHovered ? -5 : 0,
-            }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 300, 
-              damping: 20 
-            }}
-          >
-            {project.title}
-          </motion.h3>
-
-          <motion.p 
-            className="text-sm opacity-0 max-w-[calc(100%-80px)] group-hover:opacity-70 transition-opacity duration-300 pr-4"
-          >
-            {project.description}
-          </motion.p>
-
-          {/* Link Icon */}
-          <motion.div
-            className="absolute bottom-10 right-10 opacity-0 group-hover:opacity-100"
-            initial={{ scale: 0, rotate: -180 }}
-            animate={{ 
-              scale: isHovered ? 1 : 0,
-              rotate: isHovered ? 0 : -180
-            }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 260, 
-              damping: 20 
-            }}
-          >
-            <ExternalLink className="w-6 h-6" />
-          </motion.div>
-        </div>
-      </div>
-
-      {/* Cursor follower effect */}
-      {isHovered && (
+        {/* Hover details */}
         <motion.div
-          className="absolute w-32 h-32 rounded-full border border-white/20 pointer-events-none z-20"
-          style={{
-            left: mousePosition.x - 64,
-            top: mousePosition.y - 64,
+          className="overflow-hidden"
+          initial={{ height: 0, opacity: 0 }}
+          animate={{ 
+            height: isHovered ? 'auto' : 0, 
+            opacity: isHovered ? 1 : 0 
           }}
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.5 }}
-          exit={{ scale: 0, opacity: 0 }}
-          transition={{ 
-            type: "spring", 
-            stiffness: 150, 
-            damping: 15 
-          }}
-        />
-      )}
+          transition={{ duration: 0.3, ease: 'easeOut' }}
+        >
+          <div className="pt-4 space-y-3">
+            <div className="flex items-center gap-3">
+              <span className="text-[11px] uppercase tracking-[0.15em] text-white/80 border border-white/20 px-3 py-1 bg-white/5 backdrop-blur-sm">
+                {project.category}
+              </span>
+              <span className="text-sm text-white/50">{project.year}</span>
+            </div>
+
+            <div className="flex flex-wrap gap-1.5">
+              {project.tech.map((tech, i) => (
+                <span 
+                  key={i}
+                  className="text-[10px] border border-white/15 px-2 py-0.5 uppercase tracking-wider text-white/60 bg-white/5"
+                >
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <p className="text-sm leading-relaxed text-white/60 line-clamp-2">
+              {project.description}
+            </p>
+
+            <div className="flex items-center justify-between pt-2 border-t border-white/10">
+              <span className="text-[11px] uppercase tracking-[0.15em] text-white/50">
+                Voir le projet
+              </span>
+              <ArrowUpRight className="w-4 h-4 text-white/50" />
+            </div>
+          </div>
+        </motion.div>
+      </div>
     </motion.article>
   )
 

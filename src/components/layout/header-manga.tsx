@@ -54,13 +54,13 @@ export function HeaderManga() {
 
             {/* Contact Button Desktop */}
             <div className="hidden md:block">
-              <a
-                href="mailto:corentinbassonpro@gmail.com"
+              <Link
+                href="/contact"
                 className="border-2 border-[#F0F0F0] px-6 py-2 uppercase tracking-widest text-sm hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300"
                 style={{ fontFamily: "'Oswald', sans-serif" }}
               >
                 CONTACT
-              </a>
+              </Link>
             </div>
 
             {/* Mobile Menu Button */}
@@ -99,14 +99,14 @@ export function HeaderManga() {
                   {item.name}
                 </Link>
               ))}
-              <a
-                href="mailto:corentinbassonpro@gmail.com"
+              <Link
+                href="/contact"
                 className="border-2 border-[#F0F0F0] px-6 py-3 uppercase tracking-widest text-center hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300"
                 style={{ fontFamily: "'Oswald', sans-serif" }}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 CONTACT
-              </a>
+              </Link>
             </nav>
           </motion.div>
         )}

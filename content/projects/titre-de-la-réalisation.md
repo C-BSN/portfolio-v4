@@ -38,6 +38,6 @@ preuves:
     pdf:
       - https://res.cloudinary.com/dtnbb9ykw/image/upload/v1753894508/Re%CC%81fe%CC%81rentiel_d_activite%CC%81s_de_compe%CC%81tences_et_d_e%CC%81valuation_RDC_tcmlry.pdf
 excerpt: Ceci est l'extrait
-published: true
+published: false
 ---
 Ceci est la description complète. Ceci est la description complète. Ceci est la description complète. Ceci est la description complète. Ceci est la description complète. Ceci est la description complète. Ceci est la description complète. Ceci est la description complète. Ceci est la description complète.

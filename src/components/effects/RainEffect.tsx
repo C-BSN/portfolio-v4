@@ -62,46 +62,29 @@ export function RainEffect({
     }
 
     let lastTime = 0
-    const targetFPS = 45 // Réduit de 60 à 45 pour économiser des ressources
+    const targetFPS = 30
     const frameTime = 1000 / targetFPS
 
     const animate = (currentTime: number) => {
       if (currentTime - lastTime >= frameTime) {
         ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.shadowBlur = 0
 
         drops.forEach(drop => {
           drop.y += drop.speed
 
-          // Reset drop when it goes off screen
           if (drop.y > canvas.height + drop.length) {
             drop.y = -drop.length
             drop.x = Math.random() * canvas.width
-            drop.speed = Math.random() * 8 + 4
+            drop.speed = Math.random() * 6 + 3
           }
 
-          // Draw rain drop with neon effect
-          const gradient = ctx.createLinearGradient(drop.x, drop.y, drop.x, drop.y + drop.length)
-          gradient.addColorStop(0, `rgba(0, 255, 255, 0)`)
-          gradient.addColorStop(0.5, `rgba(0, 255, 255, ${drop.opacity})`)
-          gradient.addColorStop(1, `rgba(255, 0, 255, ${drop.opacity * 0.7})`)
-
-          ctx.strokeStyle = gradient
-          ctx.lineWidth = 1.5
+          ctx.strokeStyle = `rgba(200, 220, 255, ${drop.opacity * 0.6})`
+          ctx.lineWidth = 1
           ctx.beginPath()
           ctx.moveTo(drop.x, drop.y)
           ctx.lineTo(drop.x, drop.y + drop.length)
           ctx.stroke()
-
-          // Add glow effect
-          ctx.shadowColor = '#00ffff'
-          ctx.shadowBlur = 3
-          ctx.strokeStyle = `rgba(0, 255, 255, ${drop.opacity * 0.3})`
-          ctx.lineWidth = 3
-          ctx.beginPath()
-          ctx.moveTo(drop.x, drop.y)
-          ctx.lineTo(drop.x, drop.y + drop.length)
-          ctx.stroke()
-          ctx.shadowBlur = 0
         })
 
         lastTime = currentTime

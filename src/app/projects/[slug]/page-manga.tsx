@@ -9,6 +9,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import type { Project } from "@/lib/content"
 import { NeonTitle } from "@/components/effects/NeonTitle"
+import { fixCloudinaryPdfUrl, getCloudinaryPdfPreviewUrl, isCloudinaryPdf, resolveUrl } from "@/lib/utils"
 
 interface ProjectPageMangaProps {
   project: Project
@@ -63,8 +64,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
             alt={project.title}
             className="absolute inset-0 w-full h-full object-cover"
           />
-          {/* Overlay réduit pour voir l'image de fond */}
-          <div className="absolute inset-0 bg-[#050505]/20" />
+          <div className="absolute inset-0 bg-[#050505]/50" />
         </div>
       ) : (
         // Fallback: fond noir si pas d'image
@@ -119,7 +119,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
               )}
             </div>
             
-            <div className="inline-block px-6 py-4 bg-black/30 backdrop-blur-md border-4 border-white/40 rounded-lg">
+            <div className="inline-block px-6 py-4 bg-black/30 backdrop-blur-sm border-4 border-white/40 rounded-lg">
               <NeonTitle 
                 as="h1" 
                 className="text-5xl md:text-7xl font-bold uppercase"
@@ -130,10 +130,9 @@ export default function ProjectPageManga({ project, previousProject, nextProject
             
             {project.excerpt && (
               <p 
-                className="text-xl mb-8 inline-block px-6 py-3 bg-black/30 backdrop-blur-md border-2 border-white/30 rounded-lg" 
+                className="text-xl mb-8 inline-block px-6 py-3 bg-black/30 backdrop-blur-sm border-2 border-white/30 rounded-lg" 
                 style={{ 
                   fontFamily: "'Oswald', sans-serif", 
-                  textShadow: '0 0 20px rgba(255, 255, 255, 0.8)', 
                   color: '#F0F0F0' 
                 }}
               >
@@ -141,25 +140,6 @@ export default function ProjectPageManga({ project, previousProject, nextProject
               </p>
             )}
 
-            {/* Actions principales */}
-            <div className="flex flex-wrap gap-4">
-              {project.project_url && (
-                <Button asChild className="border-2 border-[#F0F0F0] px-8 py-3 uppercase tracking-widest hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                  <Link href={project.project_url} target="_blank">
-                    <ExternalLink className="mr-2 h-4 w-4" />
-                    Voir en ligne
-                  </Link>
-                </Button>
-              )}
-              {project.pdf_portfolio && (
-                <Button variant="outline" asChild className="border-2 border-white/30 px-8 py-3 uppercase tracking-widest hover:border-[#F0F0F0] transition-all duration-300" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                  <Link href={project.pdf_portfolio} target="_blank">
-                    <Download className="mr-2 h-4 w-4" />
-                    Télécharger PDF
-                  </Link>
-                </Button>
-              )}
-            </div>
           </motion.div>
 
           <div className="max-w-7xl mx-auto">
@@ -172,13 +152,12 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                 className="lg:col-span-2"
               >
                 {/* Description du projet */}
-                <div className="border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-8 mb-8">
+                <div className="border border-white/40 bg-[#050505]/80 backdrop-blur-sm rounded-lg p-8 mb-8">
                   <div 
                     className="prose prose-lg prose-invert max-w-none project-content-manga" 
                     style={{ 
                       fontFamily: "'Oswald', sans-serif", 
-                      color: '#F0F0F0',
-                      textShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.2)'
+                      color: '#F0F0F0'
                     }}
                   >
                     <div
@@ -190,51 +169,249 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                             const cleanParagraph = paragraph.trim()
                             if (!cleanParagraph) return ''
                             
-                            // Si le paragraphe contient un titre ### suivi de listes, les séparer
-                            if (cleanParagraph.match(/^### .+\n-/)) {
+                            // Si le paragraphe contient un titre ### suivi de listes (puces ou numérotées), les séparer
+                            if (cleanParagraph.match(/^### .+\n(-|\d+\.)\s/)) {
                               const lines = cleanParagraph.split('\n')
                               const h3Line = lines[0]
-                              const listLines = lines.slice(1).filter(line => line.startsWith('- '))
+                              const listLines = lines.slice(1).filter(line => line.match(/^(-|\d+\.)\s/))
+                              const isOrdered = listLines.length > 0 && listLines[0].match(/^\d+\.\s/)
                               const h3Html = `<h3 class="text-xl font-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #ff0080 !important;">${h3Line.replace('### ', '')}</h3>`
-                              const listHtml = `<ul class="list-disc list-inside mb-4 text-white space-y-2">${listLines.map(item => `<li style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')}</li>`).join('')}</ul>`
+                              const tag = isOrdered ? 'ol' : 'ul'
+                              const listClass = isOrdered ? 'list-decimal' : 'list-disc'
+                              const listHtml = `<${tag} class="${listClass} list-inside mb-4 text-white space-y-2">${listLines.map(item => `<li style="color: #F0F0F0; ">${item.replace(/^(-|\d+\.)\s/, '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff;">$1</strong>')}</li>`).join('')}</${tag}>`
                               return h3Html + listHtml
                             }
                             
-                            // Gérer les titres seuls
-                            if (cleanParagraph.startsWith('# ')) {
-                              return `<h1 class="text-4xl font-bold mb-4 neon-title" style="font-family: 'Oswald', sans-serif; color: transparent; -webkit-text-stroke: 3px #ff0080; text-stroke: 3px #ff0080;">${cleanParagraph.replace('# ', '')}</h1>`
-                            }
-                            if (cleanParagraph.startsWith('## ')) {
-                              return `<h2 class="text-3xl font-bold mb-3 title-h2-sparkle" style="font-family: 'Oswald', sans-serif;">${cleanParagraph.replace('## ', '')}</h2>`
-                            }
-                            if (cleanParagraph.startsWith('### ')) {
-                              return `<h3 class="text-xl font-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #ff0080 !important;">${cleanParagraph.replace('### ', '')}</h3>`
+                            // Gérer les titres (potentiellement suivis de texte)
+                            if (cleanParagraph.startsWith('# ') || cleanParagraph.startsWith('## ') || cleanParagraph.startsWith('### ')) {
+                              const lines = cleanParagraph.split('\n')
+                              const headingLine = lines[0]
+                              const restLines = lines.slice(1).filter(l => l.trim() !== '')
+                              
+                              let headingHtml = ''
+                              if (headingLine.startsWith('### ')) {
+                                headingHtml = `<h3 class="text-xl font-bold mb-2" style="font-family: 'Oswald', sans-serif; color: #ff0080 !important;">${headingLine.replace('### ', '')}</h3>`
+                              } else if (headingLine.startsWith('## ')) {
+                                headingHtml = `<h2 class="text-3xl font-bold mb-3 title-h2-sparkle" style="font-family: 'Oswald', sans-serif;">${headingLine.replace('## ', '')}</h2>`
+                              } else {
+                                headingHtml = `<h1 class="text-4xl font-bold mb-4 neon-title" style="font-family: 'Oswald', sans-serif;">${headingLine.replace('# ', '')}</h1>`
+                              }
+                              
+                              // S'il y a du texte après le titre, le rendre comme paragraphe
+                              if (restLines.length > 0) {
+                                const restText = restLines.join('\n')
+                                  .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-white" style="color: #00f3ff;">$1</strong>')
+                                  .replace(/\*([^*]+)\*/g, '<em class="italic text-white" style="color: #F0F0F0;">$1</em>')
+                                  .replace(/\n/g, '<br />')
+                                headingHtml += `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0; ">${restText}</p>`
+                              }
+                              
+                              return headingHtml
                             }
                             
-                            // Gérer les listes seules
+                            // Gérer les listes seules (puces)
                             if (cleanParagraph.includes('\n- ') || cleanParagraph.startsWith('- ')) {
                               const items = cleanParagraph.split('\n').filter(line => line.startsWith('- '))
-                              return `<ul class="list-disc list-inside mb-4 text-white space-y-2">${items.map(item => `<li style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')}</li>`).join('')}</ul>`
+                              return `<ul class="list-disc list-inside mb-4 text-white space-y-2">${items.map(item => `<li style="color: #F0F0F0; ">${item.replace('- ', '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff;">$1</strong>')}</li>`).join('')}</ul>`
+                            }
+                            
+                            // Gérer les listes numérotées seules
+                            if (cleanParagraph.match(/^(\d+\.)\s/) || cleanParagraph.includes('\n1.')) {
+                              const items = cleanParagraph.split('\n').filter(line => line.match(/^\d+\.\s/))
+                              if (items.length > 0) {
+                                return `<ol class="list-decimal list-inside mb-4 text-white space-y-2">${items.map(item => `<li style="color: #F0F0F0; ">${item.replace(/^\d+\.\s/, '').replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold" style="color: #00f3ff;">$1</strong>')}</li>`).join('')}</ol>`
+                              }
                             }
                             
                             // Gérer le texte normal avec bold et italic
                             const processedParagraph = cleanParagraph
-                              .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-white" style="color: #00f3ff; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
+                              .replace(/\*\*([^*]+)\*\*/g, '<strong class="font-bold text-white" style="color: #00f3ff;">$1</strong>')
                               .replace(/\*([^*]+)\*/g, '<em class="italic text-white" style="color: #F0F0F0;">$1</em>')
                               .replace(/\n/g, '<br />')
                             
-                            return `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${processedParagraph}</p>`
+                            return `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0; ">${processedParagraph}</p>`
                           })
                           .filter(html => html)
                           .join('')
                       }}
                     />
                   </div>
+
+                  {/* Copy Strategy - intégré dans le même bloc */}
+                  {(project.cibles || project.strategie_creative || project.objectifs_cognitifs || project.objectifs_affectifs || project.objectifs_conatifs) && (
+                    <div className="mt-8 pt-8 border-t border-white/20">
+                      <h2 className="text-3xl font-bold mb-6 title-h2-sparkle" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                        Stratégie de Communication
+                      </h2>
+                      
+                      <div className="space-y-6">
+                        {/* Cibles */}
+                        {project.cibles && (
+                          <div className="border-l-4 border-white/40 pl-6 py-2">
+                            <h3 
+                              className="text-xl font-bold mb-3" 
+                              style={{ 
+                                fontFamily: "'Oswald', sans-serif", 
+                                color: '#ff0080'
+                              }}
+                            >
+                              Cibles
+                            </h3>
+                            <p 
+                              className="text-lg leading-relaxed" 
+                              style={{ 
+                                fontFamily: "'Oswald', sans-serif",
+                                color: '#F0F0F0',
+                              }}
+                            >
+                              {project.cibles}
+                            </p>
+                          </div>
+                        )}
+                        
+                        {/* Stratégie créative */}
+                        {project.strategie_creative && (
+                          <div className="border-l-4 border-white/40 pl-6 py-2">
+                            <h3 
+                              className="text-xl font-bold mb-3" 
+                              style={{ 
+                                fontFamily: "'Oswald', sans-serif", 
+                                color: '#ff0080'
+                              }}
+                            >
+                              Positionnement
+                            </h3>
+                            <p 
+                              className="text-lg leading-relaxed" 
+                              style={{ 
+                                fontFamily: "'Oswald', sans-serif",
+                                color: '#F0F0F0',
+                              }}
+                            >
+                              {project.strategie_creative}
+                            </p>
+                          </div>
+                        )}
+                        
+                        {/* Objectifs */}
+                        {((project.objectifs_cognitifs && project.objectifs_cognitifs.length > 0) || 
+                          (project.objectifs_affectifs && project.objectifs_affectifs.length > 0) || 
+                          (project.objectifs_conatifs && project.objectifs_conatifs.length > 0)) && (
+                          <div className="border-l-4 border-white/40 pl-6 py-2">
+                            <h3 
+                              className="text-xl font-bold mb-4" 
+                              style={{ 
+                                fontFamily: "'Oswald', sans-serif", 
+                                color: '#ff0080'
+                              }}
+                            >
+                              Objectifs
+                            </h3>
+                            
+                            <div className="space-y-4">
+                              {/* Objectifs cognitifs */}
+                              {project.objectifs_cognitifs && project.objectifs_cognitifs.length > 0 && (
+                                <div>
+                                  <p 
+                                    className="text-base mb-2 uppercase tracking-wider" 
+                                    style={{ 
+                                      fontFamily: "'Oswald', sans-serif",
+                                      color: '#00f3ff',
+                                    }}
+                                  >
+                                    Cognitifs
+                                  </p>
+                                  <ul className="space-y-2">
+                                    {project.objectifs_cognitifs.map((objectif, index) => (
+                                      <li 
+                                        key={index} 
+                                        className="text-lg leading-relaxed pl-4"
+                                        style={{ 
+                                          fontFamily: "'Oswald', sans-serif",
+                                          color: '#F0F0F0',
+                                          position: 'relative'
+                                        }}
+                                      >
+                                        <span style={{ position: 'absolute', left: 0 }}>•</span>
+                                        {objectif}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {/* Objectifs affectifs */}
+                              {project.objectifs_affectifs && project.objectifs_affectifs.length > 0 && (
+                                <div>
+                                  <p 
+                                    className="text-base mb-2 uppercase tracking-wider" 
+                                    style={{ 
+                                      fontFamily: "'Oswald', sans-serif",
+                                      color: '#00f3ff',
+                                    }}
+                                  >
+                                    Affectifs
+                                  </p>
+                                  <ul className="space-y-2">
+                                    {project.objectifs_affectifs.map((objectif, index) => (
+                                      <li 
+                                        key={index} 
+                                        className="text-lg leading-relaxed pl-4"
+                                        style={{ 
+                                          fontFamily: "'Oswald', sans-serif",
+                                          color: '#F0F0F0',
+                                          position: 'relative'
+                                        }}
+                                      >
+                                        <span style={{ position: 'absolute', left: 0 }}>•</span>
+                                        {objectif}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                              
+                              {/* Objectifs conatifs */}
+                              {project.objectifs_conatifs && project.objectifs_conatifs.length > 0 && (
+                                <div>
+                                  <p 
+                                    className="text-base mb-2 uppercase tracking-wider" 
+                                    style={{ 
+                                      fontFamily: "'Oswald', sans-serif",
+                                      color: '#00f3ff',
+                                    }}
+                                  >
+                                    Conatifs
+                                  </p>
+                                  <ul className="space-y-2">
+                                    {project.objectifs_conatifs.map((objectif, index) => (
+                                      <li 
+                                        key={index} 
+                                        className="text-lg leading-relaxed pl-4"
+                                        style={{ 
+                                          fontFamily: "'Oswald', sans-serif",
+                                          color: '#F0F0F0',
+                                          position: 'relative'
+                                        }}
+                                      >
+                                        <span style={{ position: 'absolute', left: 0 }}>•</span>
+                                        {objectif}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Galerie d'images */}
                 {project.gallery && project.gallery.length > 0 && (
-                  <div className="border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-6 mb-8">
+                  <div className="border border-white/40 bg-[#050505]/80 backdrop-blur-sm rounded-lg p-6 mb-8">
                     <NeonTitle as="h3" className="text-3xl font-bold uppercase mb-4" filled noAnimation>
                       Galerie
                     </NeonTitle>
@@ -250,7 +427,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
 
                 {/* Section Preuves */}
                 {project.preuves && project.preuves.length > 0 && (
-                  <div className="border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-6 mb-8">
+                  <div className="border border-white/40 bg-[#050505]/80 backdrop-blur-sm rounded-lg p-6 mb-8">
                     <NeonTitle as="h3" className="text-3xl font-bold uppercase mb-6" filled noAnimation>
                       Preuves
                     </NeonTitle>
@@ -259,7 +436,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                         <div key={index} className="border border-white/20 bg-white/5 rounded-lg p-4">
                           {/* Description */}
                           {preuve.description && (
-                            <p className="text-sm font-medium uppercase tracking-wider mb-3 text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>
+                            <p className="text-sm font-medium uppercase tracking-wider mb-3 text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>
                               {preuve.description}
                             </p>
                           )}
@@ -289,14 +466,29 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                             </div>
                           )}
                           
-                          {preuve.type === 'PDF' && preuve.pdf && (
-                            <Button asChild className="w-full border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                              <Link href={preuve.pdf} target="_blank">
-                                <Download className="mr-2 h-4 w-4" />
-                                Télécharger le PDF
-                              </Link>
-                            </Button>
-                          )}
+                          {preuve.type === 'PDF' && preuve.pdf && (() => {
+                            const pdfUrl = fixCloudinaryPdfUrl(preuve.pdf)
+                            const previewUrl = isCloudinaryPdf(pdfUrl) ? getCloudinaryPdfPreviewUrl(preuve.pdf) : ''
+                            return (
+                              <div className="space-y-3">
+                                {previewUrl && (
+                                  <div className="relative w-full rounded overflow-hidden">
+                                    <img
+                                      src={previewUrl}
+                                      alt={preuve.description}
+                                      className="w-full h-auto"
+                                    />
+                                  </div>
+                                )}
+                                <Button asChild className="w-full border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                                  <Link href={pdfUrl} target="_blank">
+                                    <Download className="mr-2 h-4 w-4" />
+                                    Télécharger le PDF
+                                  </Link>
+                                </Button>
+                              </div>
+                            )
+                          })()}
                           
                           {preuve.type === 'URL' && preuve.url && (
                             <Button asChild className="w-full border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all" style={{ fontFamily: "'Oswald', sans-serif" }}>
@@ -320,7 +512,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                 transition={{ delay: 0.6 }}
                 className="lg:col-span-1"
               >
-                <div className="sticky top-24 border border-white/40 bg-[#050505]/30 backdrop-blur-xl rounded-lg p-6">
+                <div className="sticky top-24 border border-white/40 bg-[#050505]/80 backdrop-blur-sm rounded-lg p-6">
                   <NeonTitle as="h3" className="text-2xl font-bold mb-4 uppercase" filled noAnimation>
                     Informations
                   </NeonTitle>
@@ -330,8 +522,8 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                     <div className="flex items-start gap-3 p-3 border border-white/10 bg-white/5">
                       <Calendar className="h-5 w-5 mt-1 text-white" />
                       <div>
-                        <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>Date</p>
-                        <p className="text-sm text-white" style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.2)' }}>
+                        <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Date</p>
+                        <p className="text-sm text-white">
                           {new Date(project.date).toLocaleDateString('fr-FR', {
                             year: 'numeric',
                             month: 'long'
@@ -344,8 +536,8 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                     {project.annonceur && (
                       <div className="flex items-start gap-3 p-3 border border-white/10 bg-white/5">
                         <div>
-                          <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>Client</p>
-                          <p className="text-sm text-white" style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.2)' }}>{project.annonceur}</p>
+                          <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Client</p>
+                          <p className="text-sm text-white">{project.annonceur}</p>
                         </div>
                       </div>
                     )}
@@ -354,8 +546,8 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                     {project.contexte && (
                       <div className="flex items-start gap-3 p-3 border border-white/10 bg-white/5">
                         <div>
-                          <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>Contexte</p>
-                          <p className="text-sm text-white" style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.2)' }}>{project.contexte}</p>
+                          <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Contexte</p>
+                          <p className="text-sm text-white">{project.contexte}</p>
                         </div>
                       </div>
                     )}
@@ -364,8 +556,8 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                     {project.duration && (
                       <div className="flex items-start gap-3 p-3 border border-white/10 bg-white/5">
                         <div>
-                          <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>Durée</p>
-                          <p className="text-sm text-white" style={{ textShadow: '0 0 10px rgba(255, 255, 255, 0.2)' }}>{project.duration}</p>
+                          <p className="text-sm font-medium uppercase tracking-wider mb-1 text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>Durée</p>
+                          <p className="text-sm text-white">{project.duration}</p>
                         </div>
                       </div>
                     )}
@@ -374,7 +566,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                   {/* Technologies/Outils */}
                   {project.tools && project.tools.length > 0 && (
                     <div className="mt-6 pt-6 border-t border-white/10">
-                      <h4 className="text-sm font-bold mb-3 uppercase tracking-wider text-white" style={{ fontFamily: "'Oswald', sans-serif", textShadow: '0 0 10px rgba(255, 255, 255, 0.3)' }}>
+                      <h4 className="text-sm font-bold mb-3 uppercase tracking-wider text-white" style={{ fontFamily: "'Oswald', sans-serif" }}>
                         Technologies
                       </h4>
                       <div className="flex flex-wrap gap-2">
@@ -387,25 +579,6 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                     </div>
                   )}
 
-                  {/* Actions */}
-                  <div className="mt-6 pt-6 border-t border-white/10 space-y-3">
-                    {project.project_url && (
-                      <Button asChild className="w-full border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                        <Link href={project.project_url} target="_blank">
-                          <ExternalLink className="mr-2 h-4 w-4" />
-                          Voir
-                        </Link>
-                      </Button>
-                    )}
-                    {project.pdf_portfolio && (
-                      <Button variant="outline" asChild className="w-full border border-white/30 hover:bg-white/10" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                        <Link href={project.pdf_portfolio} target="_blank">
-                          <Download className="mr-2 h-4 w-4" />
-                          PDF
-                        </Link>
-                      </Button>
-                    )}
-                  </div>
                 </div>
               </motion.div>
             </div>
@@ -423,7 +596,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
               {/* Projet précédent */}
               <div className="flex-1">
                 {previousProject ? (
-                  <Button variant="outline" asChild className="h-auto p-4 w-full justify-start border-2 border-white/40 bg-black/40 backdrop-blur-md hover:bg-black/60 text-white">
+                  <Button variant="outline" asChild className="h-auto p-4 w-full justify-start border-2 border-white/40 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white">
                     <Link href={`/projects/${previousProject.slug}`}>
                       <div className="flex items-center gap-3">
                         <ChevronLeft className="h-5 w-5 flex-shrink-0 text-white" />
@@ -440,7 +613,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
               </div>
 
               {/* Retour à la grille */}
-              <Button variant="ghost" asChild className="border-2 border-white/40 bg-black/40 backdrop-blur-md hover:bg-black/60 text-white uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
+              <Button variant="ghost" asChild className="border-2 border-white/40 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
                 <Link href="/projects">
                   Tous
                 </Link>
@@ -449,7 +622,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
               {/* Projet suivant */}
               <div className="flex-1 flex justify-end">
                 {nextProject ? (
-                  <Button variant="outline" asChild className="h-auto p-4 w-full justify-end border-2 border-white/40 bg-black/40 backdrop-blur-md hover:bg-black/60 text-white">
+                  <Button variant="outline" asChild className="h-auto p-4 w-full justify-end border-2 border-white/40 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white">
                     <Link href={`/projects/${nextProject.slug}`}>
                       <div className="flex items-center gap-3">
                         <div className="text-right">

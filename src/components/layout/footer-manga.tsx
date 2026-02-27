@@ -5,7 +5,7 @@ export function FooterManga() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { icon: Mail, href: "mailto:corentinbassonpro@gmail.com", label: "Email" },
+    { icon: Mail, href: "/contact", label: "Contact" },
     { icon: Instagram, href: "https://www.instagram.com/cbsn.studio/", label: "Instagram" },
     { icon: Linkedin, href: "https://linkedin.com/in/corentin-basson", label: "LinkedIn" },
     { icon: Github, href: "https://github.com/corentinbasson", label: "GitHub" },
@@ -38,7 +38,8 @@ export function FooterManga() {
               {[
                 { name: "Accueil", href: "/" },
                 { name: "À propos", href: "/about" },
-                { name: "Projets", href: "/projects" }
+                { name: "Projets", href: "/projects" },
+                { name: "Contact", href: "/contact" }
               ].map((item) => (
                 <Link 
                   key={item.name}
@@ -58,18 +59,33 @@ export function FooterManga() {
               Contact & Réseaux
             </h4>
             <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-10 h-10 border border-white/20 text-white flex items-center justify-center hover:border-white transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const isInternal = social.href.startsWith('/')
+                if (isInternal) {
+                  return (
+                    <Link
+                      key={social.label}
+                      href={social.href}
+                      className="w-10 h-10 border border-white/20 text-white flex items-center justify-center hover:border-white transition-colors"
+                      aria-label={social.label}
+                    >
+                      <social.icon className="w-5 h-5" />
+                    </Link>
+                  )
+                }
+                return (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 border border-white/20 text-white flex items-center justify-center hover:border-white transition-colors"
+                    aria-label={social.label}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                )
+              })}
             </div>
             <a
               href="mailto:corentinbassonpro@gmail.com"
@@ -86,9 +102,13 @@ export function FooterManga() {
           <p className="text-xs text-white/50 uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
             © {currentYear} Corentin Basson • Tous droits réservés
           </p>
-          <p className="text-xs text-white/50 uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
+          <Link
+            href="/neon-run"
+            className="text-xs text-white/50 uppercase tracking-widest cursor-pointer hover:text-white transition-colors duration-300"
+            style={{ fontFamily: "'Oswald', sans-serif" }}
+          >
             Portfolio v4.0
-          </p>
+          </Link>
         </div>
       </div>
     </footer>

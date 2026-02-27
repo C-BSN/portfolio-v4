@@ -30,7 +30,7 @@ export interface Project {
   gallery: { image: string }[]
   duration?: string
   status: 'En cours' | 'Terminé' | 'En pause'
-  pdf_portfolio?: string
+  pdf_portfolio?: string | string[]
   project_url?: string
   cibles?: string
   strategie_creative?: string

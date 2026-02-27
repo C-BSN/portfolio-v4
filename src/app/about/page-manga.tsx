@@ -1,11 +1,65 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Download, Mail, ExternalLink, Calendar } from 'lucide-react'
+import { Download, Mail, ExternalLink, Calendar, GraduationCap, Briefcase, Heart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import type { AboutData } from '@/lib/content'
 import { NeonTitle } from '@/components/effects/NeonTitle'
+import { fixCloudinaryPdfUrl } from '@/lib/utils'
+
+const timeline = [
+  {
+    year: '2018',
+    items: [
+      { type: 'exp' as const, title: 'Assistant Administratif', org: 'CINOR', detail: 'Stage de 6 semaines — Fiche client, prospection, communication interne' },
+    ],
+  },
+  {
+    year: '2019',
+    items: [
+      { type: 'formation' as const, title: 'BAC Pro Gestion-Administration', org: 'Lycée Julien de Rontaunay', detail: 'Mention Assez Bien + BEP Gestion-Administration' },
+    ],
+  },
+  {
+    year: '2019 – 2021',
+    items: [
+      { type: 'formation' as const, title: 'BTS SIO (niveau)', org: 'Lycée Bellepierre', detail: 'Services Informatiques aux Organisations' },
+    ],
+  },
+  {
+    year: '2021 – 2023',
+    items: [
+      { type: 'formation' as const, title: 'Titre Pro Manager Unité Marchande (niveau)', org: 'DEVA Formation', detail: '' },
+      { type: 'exp' as const, title: 'Assistant de Direction', org: 'Lino Comedy', detail: 'Alternance 1 an 7 mois — Gestion d\'équipe, factures/devis, événementiel, supports visuels, vidéo' },
+    ],
+  },
+  {
+    year: '2024',
+    items: [
+      { type: 'benevolat' as const, title: 'Assistant Communication', org: 'Poney No Jutsu', detail: 'Bénévolat — Photo, vidéo, brainstorming, storys' },
+    ],
+  },
+  {
+    year: '2024 – 2026',
+    items: [
+      { type: 'formation' as const, title: 'BTS Communication', org: 'École du Numérique', detail: 'En alternance — En cours' },
+      { type: 'exp' as const, title: 'Chargé de Communication', org: 'UDAF Réunion', detail: 'Alternance — Supports visuels, événementiel, vidéos de prévention' },
+    ],
+  },
+]
+
+function TimelineIcon({ type }: { type: 'formation' | 'exp' | 'benevolat' }) {
+  if (type === 'formation') return <GraduationCap className="w-4 h-4" />
+  if (type === 'benevolat') return <Heart className="w-4 h-4" />
+  return <Briefcase className="w-4 h-4" />
+}
+
+function typeColor(type: 'formation' | 'exp' | 'benevolat') {
+  if (type === 'formation') return '#00f3ff'
+  if (type === 'benevolat') return '#a855f7'
+  return '#ff0080'
+}
 
 interface AboutMangaProps {
   pageData: AboutData
@@ -16,9 +70,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
     ? pageData.profile_image[0] 
     : pageData.profile_image || '/Cocorentin.jpg'
 
-  const cvUrl = Array.isArray(pageData.cta_buttons.cv.file_url)
-    ? pageData.cta_buttons.cv.file_url[0]
-    : pageData.cta_buttons.cv.file_url
+  const cvUrl = fixCloudinaryPdfUrl(pageData.cta_buttons.cv.file_url)
 
   return (
     <div className="min-h-screen py-20">
@@ -134,14 +186,14 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
               transition={{ delay: 0.6, duration: 0.6 }}
               className="flex flex-wrap gap-4"
             >
-              <a
-                href={`mailto:${pageData.cta_buttons.contact.email}`}
+              <Link
+                href="/contact"
                 className="border-2 border-[#F0F0F0] px-8 py-3 uppercase tracking-widest hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300 flex items-center gap-2"
                 style={{ fontFamily: "'Oswald', sans-serif" }}
               >
                 <Mail className="w-4 h-4" />
                 {pageData.cta_buttons.contact.text}
-              </a>
+              </Link>
               <a
                 href={cvUrl}
                 download
@@ -168,8 +220,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
           className="prose prose-lg prose-invert max-w-none"
           style={{ 
             fontFamily: "'Oswald', sans-serif", 
-            color: '#F0F0F0',
-            textShadow: '0 0 20px rgba(255, 255, 255, 0.3), 0 0 40px rgba(255, 255, 255, 0.2)'
+            color: '#F0F0F0'
           }}
         >
           <div
@@ -191,27 +242,126 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
                     const items = paragraph.split('\n').filter(line => line.trim())
                     const listItems = items.map(item => {
                       const cleanItem = item.replace(/^\d+\.\s*/, '')
-                        .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
+                        .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold;">$1</strong>')
                         .replace(/\*([^*]+)\*/g, '<em style="color: #F0F0F0; font-style: italic;">$1</em>')
                         .replace(/→/g, '→')
-                      return `<li class="mb-3 text-lg" style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${cleanItem}</li>`
+                      return `<li class="mb-3 text-lg" style="color: #F0F0F0;">${cleanItem}</li>`
                     }).join('')
                     return `<ol class="list-decimal list-inside space-y-3 mb-6" style="color: #F0F0F0;">${listItems}</ol>`
                   }
                   
-                  // Handle regular paragraphs with markdown
                   const processedParagraph = paragraph
-                    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold; text-shadow: 0 0 10px rgba(0, 243, 255, 0.6), 0 0 20px rgba(0, 243, 255, 0.4);">$1</strong>')
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold;">$1</strong>')
                     .replace(/\*([^*]+)\*/g, '<em style="color: #F0F0F0; font-style: italic;">$1</em>')
                     .replace(/\n/g, '<br />')
                   
-                  return `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);">${processedParagraph}</p>`
+                  return `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0;">${processedParagraph}</p>`
                 })
                 .filter(html => html) // Remove empty strings
                 .join('')
             }}
           />
         </motion.div>
+      </section>
+
+      {/* Parcours Timeline */}
+      <section className="px-8 py-20 max-w-5xl mx-auto relative z-10">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+        >
+          <NeonTitle as="h2" className="text-5xl md:text-7xl font-bold uppercase mb-4 text-center" filled>
+            Mon Parcours
+          </NeonTitle>
+          <div className="flex flex-wrap items-center justify-center gap-6 mb-16 text-sm uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
+            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#00f3ff' }} /> Formation</span>
+            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#ff0080' }} /> Expérience</span>
+            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#a855f7' }} /> Bénévolat</span>
+          </div>
+        </motion.div>
+
+        <div className="relative">
+          {/* Vertical line */}
+          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
+
+          {timeline.map((block, blockIdx) => (
+            <motion.div
+              key={blockIdx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.6, delay: blockIdx * 0.1 }}
+              className="relative mb-12 last:mb-0"
+            >
+              {/* Year badge */}
+              <div className="flex items-center md:justify-center mb-6">
+                <div
+                  className="relative z-10 border border-white/20 px-5 py-2 text-sm uppercase tracking-widest"
+                  style={{ fontFamily: "'Oswald', sans-serif", background: '#050505' }}
+                >
+                  {block.year}
+                </div>
+              </div>
+
+              {/* Items */}
+              <div className="space-y-4">
+                {block.items.map((item, itemIdx) => {
+                  const isLeft = itemIdx % 2 === 0
+                  const color = typeColor(item.type)
+
+                  return (
+                    <div
+                      key={itemIdx}
+                      className={`relative flex items-start gap-4 md:gap-0 ${
+                        isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
+                      }`}
+                    >
+                      {/* Dot on the line */}
+                      <div
+                        className="absolute left-6 md:left-1/2 w-3 h-3 rounded-full -translate-x-1/2 mt-1.5 z-10 shrink-0"
+                        style={{ background: color, boxShadow: `0 0 8px ${color}` }}
+                      />
+
+                      {/* Spacer for mobile (left of dot) */}
+                      <div className="w-12 shrink-0 md:hidden" />
+
+                      {/* Card */}
+                      <div className={`flex-1 md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-10 md:text-right' : 'md:pl-10 md:text-left'}`}>
+                        <div
+                          className="border border-white/10 p-5 hover:border-white/25 transition-colors duration-300"
+                          style={{ background: 'rgba(5,5,5,0.8)' }}
+                        >
+                          <div className={`flex items-center gap-2 mb-2 ${isLeft ? 'md:justify-end' : 'md:justify-start'}`}>
+                            <span style={{ color }}><TimelineIcon type={item.type} /></span>
+                            <span className="text-xs uppercase tracking-widest opacity-50" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                              {item.org}
+                            </span>
+                          </div>
+                          <h4
+                            className="text-lg font-bold uppercase mb-1"
+                            style={{ fontFamily: "'Oswald', sans-serif", color }}
+                          >
+                            {item.title}
+                          </h4>
+                          {item.detail && (
+                            <p className="text-sm opacity-60 leading-relaxed" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                              {item.detail}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Spacer for other side on desktop */}
+                      <div className="hidden md:block md:w-[calc(50%-2rem)]" />
+                    </div>
+                  )
+                })}
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* Final CTA */}
@@ -256,14 +406,14 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
                 {pageData.final_cta.buttons.calendly.text}
               </a>
             )}
-            <a
-              href={`mailto:${pageData.final_cta.buttons.contact.email}`}
+            <Link
+              href="/contact"
               className="border-2 border-white/30 px-8 py-3 uppercase tracking-widest hover:border-[#F0F0F0] transition-all duration-300 flex items-center gap-2"
               style={{ fontFamily: "'Oswald', sans-serif" }}
             >
               <Mail className="w-4 h-4" />
               {pageData.final_cta.buttons.contact.text}
-            </a>
+            </Link>
           </div>
         </motion.div>
       </section>

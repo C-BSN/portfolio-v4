@@ -51,7 +51,16 @@ objectifs_conatifs:
   - Encourager l'adoption du télétravail via Travail Out Caz
   - Motiver le partage d'expériences positives entre collègues
   - Pousser à l'engagement actif dans les initiatives RSE de l'entreprise
-preuves: []
+preuves:
+  - type: URL
+    description: Landing Page Covoit'Air - Application de covoiturage
+    url: /covoitair-app.html
+  - type: URL
+    description: Newsletter RSE Air Austral
+    url: /newsletter-air-austral.html
+  - type: URL
+    description: Formulaire Travail Out Caz - Demande de télétravail
+    url: /travail-out-caz-form.html
 excerpt: Création d'une identité visuelle complète pour une campagne de
   sensibilisation écologique, incluant logo, affiches, supports digitaux et
   charte graphique.
