@@ -89,7 +89,7 @@ export default function StitchInvadersGame() {
     }
   }, [])
 
-  const gameLoopRef = useRef<number>()
+  const gameLoopRef = useRef<number | undefined>(undefined)
   const lastShotRef = useRef(0)
   const lastEnemyMoveRef = useRef(0)
   const moveDownRef = useRef(false)
