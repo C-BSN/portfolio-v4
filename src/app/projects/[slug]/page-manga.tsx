@@ -122,7 +122,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
             <div className="inline-block px-6 py-4 bg-black/30 backdrop-blur-sm border-4 border-white/40 rounded-lg">
               <NeonTitle 
                 as="h1" 
-                className="text-5xl md:text-7xl font-bold uppercase"
+                className="text-5xl md:text-7xl font-bold uppercase leading-tight"
               >
                 {project.title}
               </NeonTitle>
