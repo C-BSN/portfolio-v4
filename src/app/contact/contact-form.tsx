@@ -54,7 +54,7 @@ export default function ContactForm() {
   const inputClasses = `w-full bg-transparent px-5 py-3 focus:outline-none transition-colors duration-300 border ${
     isDark
       ? 'border-white/20 text-[#F0F0F0] placeholder:text-white/30 focus:border-[#ff0080]'
-      : 'border-[#1a2f5a]/25 text-[#1a2f5a] placeholder:text-[#1a2f5a]/40 focus:border-[#f97316] bg-white/50 backdrop-blur-sm'
+      : 'border-[#1a2f5a]/25 text-[#1a2f5a] placeholder:text-[#1a2f5a]/40 focus:border-[#c45880] bg-white/50 backdrop-blur-sm'
   }`
 
   const labelClasses = `block text-sm uppercase tracking-widest mb-2 ${isDark ? 'text-white/70' : 'text-[#1a2f5a]/70'}`
@@ -64,7 +64,7 @@ export default function ContactForm() {
   const textMain = isDark ? 'text-white' : 'text-[#1a2f5a]'
   const textMuted = isDark ? 'text-white/50' : 'text-[#1a2f5a]/50'
   const textMutedSub = isDark ? 'text-white/70' : 'text-[#1a2f5a]/70'
-  const emailHighlight = isDark ? 'text-[#00f3ff]' : 'text-[#f97316]'
+  const emailHighlight = isDark ? 'text-[#00f3ff]' : 'text-[#c45880]'
   const sparkleClass = isDark ? 'title-h2-sparkle' : 'title-h2-sparkle-day'
   const optionBg = isDark ? 'bg-[#050505]' : 'bg-white'
 

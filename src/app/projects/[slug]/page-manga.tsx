@@ -49,7 +49,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
 
   // Couleurs dynamiques
   const textColor = isDark ? '#F0F0F0' : '#1a2f5a'
-  const accentColor = isDark ? '#00f3ff' : '#f97316'
+  const accentColor = isDark ? '#00f3ff' : '#c45880'
   const headingColor = isDark ? '#ff0080' : '#e11d48'
   const h2Class = isDark ? 'title-h2-sparkle' : 'title-h2-sparkle-day'
 

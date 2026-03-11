@@ -14,7 +14,7 @@ tools:
   - Adobe InDesign
   - Figma
 featured_image:
-  - https://res.cloudinary.com/dtnbb9ykw/image/upload/v1753886086/logo-velout-_u60b3j.png
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1770706454/Affiche_promo_pantoufle_s9oaud.png
 gallery:
   - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1770706454/Affiche_promo_pantoufle_s9oaud.png
 duration: 2 mois

@@ -37,9 +37,9 @@ export default function StackMarquee({ stack }: StackMarqueeProps) {
   const darkBaseStyle = { color: '#ff0080', textShadow: '0 0 5px #ff0080, 0 0 10px #ff0080' }
   const darkGlowStyle = currentColor === 'pink' ? darkPinkStyle : darkCyanStyle
 
-  // Light mode: warm orange/gold, no glow
-  const lightBaseStyle = { color: '#f97316' }
-  const lightGlowStyle = currentColor === 'pink' ? { color: '#f97316' } : { color: '#d97706' }
+  // Light mode: rose, no glow
+  const lightBaseStyle = { color: '#c45880' }
+  const lightGlowStyle = currentColor === 'pink' ? { color: '#c45880' } : { color: '#f4acc6' }
 
   const getAsteriskStyle = () => {
     if (isDark) return isGlowing ? darkGlowStyle : darkBaseStyle

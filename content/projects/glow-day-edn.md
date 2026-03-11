@@ -46,6 +46,10 @@ preuves:
     file:
       - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773123181/Dossier_sponso_GLOWDAY__oozqyt.pdf
     description: Dossier Sponsoring
+  - type: PDF
+    description: Dossier Sponsoring
+    pdf:
+      - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773123181/Dossier_sponso_GLOWDAY__oozqyt.pdf
 excerpt: Conception de la stratégie de communication et des supports visuels
   pour le Glow Day, une journée d'intégration événementielle organisée par
   l'École du Numérique.

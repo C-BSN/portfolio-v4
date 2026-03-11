@@ -38,11 +38,11 @@ export function HeaderManga() {
               <div className="relative">
                 <div className="relative w-32 h-16 sm:w-40 sm:h-20 md:w-48 md:h-24 transition-transform duration-300 group-hover:scale-105">
                   <Image
-                    src="/logo-cbsn-v4.png"
+                    src={isDark ? "/logo-cbsn-v4.png" : "/images/Logo CBSN bleu rose.png"}
                     alt="CBSN Studio Logo"
                     fill
                     sizes="(max-width: 640px) 128px, (max-width: 768px) 160px, 192px"
-                    className={`object-contain transition-all duration-300 ${isDark ? "filter brightness-110" : "filter brightness-75 saturate-150"}`}
+                    className="object-contain transition-all duration-300"
                     priority
                   />
                 </div>

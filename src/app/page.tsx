@@ -3,6 +3,14 @@ import { getFeaturedProjects, getPageData } from '@/lib/content'
 import { convertProjectsToCardData, defaultPortfolioData } from '@/lib/manga-helpers'
 import { NeonTitle } from '@/components/effects/NeonTitle'
 import Link from 'next/link'
+import { Camera, Pen, Clapperboard, Megaphone } from 'lucide-react'
+
+const EXPERTISE_ICONS: Record<string, React.ReactNode> = {
+  'Photographie': <Camera size={28} strokeWidth={1.5} />,
+  'Graphisme & design': <Pen size={28} strokeWidth={1.5} />,
+  'Audiovisuel': <Clapperboard size={28} strokeWidth={1.5} />,
+  'Communication': <Megaphone size={28} strokeWidth={1.5} />,
+}
 
 export default function HomeManga() {
   // Get homepage data
@@ -43,29 +51,90 @@ export default function HomeManga() {
           </NeonTitle>
           {aboutData.body ? (
             <div className="text-xl leading-relaxed space-y-6" style={{ fontFamily: "'Oswald', sans-serif" }}>
-              {aboutData.body.split('\n\n').map((paragraph, index) => {
-                // Handle headers (lines starting with *)
-                if (paragraph.trim().startsWith('*') && !paragraph.trim().startsWith('**')) {
-                  return (
-                    <h3 key={index} className="text-3xl font-bold mt-8 mb-4 home-h3-sparkle">
-                      {paragraph.replace(/^\*/, '').trim()}
-                    </h3>
-                  )
-                }
-                
-                // Handle bold text
-                const processedText = paragraph
-                  .replace(/\*\*([^*]+)\*\*/g, '<strong class="home-strong" style="font-weight: bold;">$1</strong>')
-                  .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
+              {(() => {
+                const paragraphs = aboutData.body.split('\n\n')
+                const elements: React.ReactNode[] = []
+                let i = 0
 
-                return (
-                  <p 
-                    key={index} 
-                    className="text-xl leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: processedText }}
-                  />
-                )
-              })}
+                while (i < paragraphs.length) {
+                  const paragraph = paragraphs[i]
+
+                  // H3 header (single * not **)
+                  if (paragraph.trim().startsWith('*') && !paragraph.trim().startsWith('**')) {
+                    const headerText = paragraph.replace(/^\*/, '').trim()
+
+                    // Look ahead: collect consecutive **bold** paragraphs as expertise items
+                    const expertiseItems: string[] = []
+                    let j = i + 1
+                    while (j < paragraphs.length && paragraphs[j].trim().startsWith('**')) {
+                      expertiseItems.push(paragraphs[j])
+                      j++
+                    }
+
+                    elements.push(
+                      <h3 key={`h-${i}`} className="text-3xl font-bold mt-8 mb-6 home-h3-sparkle">
+                        {headerText}
+                      </h3>
+                    )
+
+                    if (expertiseItems.length > 1) {
+                      // Render expertise grid
+                      elements.push(
+                        <div key={`grid-${i}`} className="grid grid-cols-1 sm:grid-cols-2 gap-4 not-italic">
+                          {expertiseItems.map((item, idx) => {
+                            const match = item.match(/\*\*([^*]+)\*\*\s*[:\-]?\s*(.*)/)
+                            const title = match ? match[1].trim() : item
+                            const desc = match ? match[2].trim() : ''
+                            const icon = EXPERTISE_ICONS[title]
+                            return (
+                              <div
+                                key={idx}
+                                className="group flex gap-4 items-start rounded-xl border p-5 transition-all duration-300
+                                  dark:bg-white/5 dark:border-[#00f3ff]/15 dark:hover:border-[#00f3ff]/40 dark:hover:bg-white/10
+                                  bg-white/60 border-[#c45880]/20 hover:border-[#c45880]/50 hover:bg-white/80
+                                  backdrop-blur-sm"
+                              >
+                                <span className="mt-0.5 shrink-0 dark:text-[#00f3ff] text-[#c45880] opacity-80 group-hover:opacity-100 transition-opacity">
+                                  {icon}
+                                </span>
+                                <div>
+                                  <p className="font-bold text-lg leading-tight home-strong">{title}</p>
+                                  {desc && (
+                                    <p className="text-sm mt-1 opacity-70 dark:text-[#F0F0F0] text-[#1a2f5a]" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                                      {desc}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            )
+                          })}
+                        </div>
+                      )
+                      i = j
+                      continue
+                    }
+
+                    i++
+                    continue
+                  }
+
+                  // Regular paragraph with bold/italic processing
+                  const processedText = paragraph
+                    .replace(/\*\*([^*]+)\*\*/g, '<strong class="home-strong" style="font-weight: bold;">$1</strong>')
+                    .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
+
+                  elements.push(
+                    <p
+                      key={`p-${i}`}
+                      className="text-xl leading-relaxed"
+                      dangerouslySetInnerHTML={{ __html: processedText }}
+                    />
+                  )
+                  i++
+                }
+
+                return elements
+              })()}
             </div>
           ) : (
             <p className="text-2xl leading-relaxed" style={{ fontFamily: "'Oswald', sans-serif" }}>

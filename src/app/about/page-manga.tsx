@@ -89,7 +89,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
 
   // Couleurs inline selon le thème
   const textColor = isDark ? '#F0F0F0' : '#1a2f5a'
-  const strongColor = isDark ? '#00f3ff' : '#f97316'
+  const strongColor = isDark ? '#00f3ff' : '#c45880'
   const h2Class = isDark ? 'title-h2-sparkle' : 'title-h2-sparkle-day'
 
   const borderColor = isDark ? 'border-white/20' : 'border-[#1a2f5a]/20'

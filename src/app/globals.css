@@ -5,39 +5,39 @@
 @tailwind utilities;
 
 @layer base {
-  /* === THÈME JOUR (ciel ensoleillé) === */
+  /* === THÈME JOUR (ciel sobre, éditorial) === */
   :root {
-    --background: 201 72% 88%;
-    --foreground: 222 56% 18%;
-    --card: 200 50% 96%;
-    --card-foreground: 222 56% 18%;
-    --popover: 200 50% 96%;
-    --popover-foreground: 222 56% 18%;
-    --primary: 222 56% 22%;
+    --background: 207 52% 84%;
+    --foreground: 222 42% 15%;
+    --card: 215 18% 97%;
+    --card-foreground: 222 42% 15%;
+    --popover: 215 18% 97%;
+    --popover-foreground: 222 42% 15%;
+    --primary: 222 42% 18%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 201 50% 82%;
-    --secondary-foreground: 222 56% 18%;
-    --muted: 200 40% 88%;
-    --muted-foreground: 222 30% 45%;
-    --accent: 201 50% 82%;
-    --accent-foreground: 222 56% 18%;
-    --destructive: 0 84% 60%;
+    --secondary: 215 18% 88%;
+    --secondary-foreground: 222 42% 15%;
+    --muted: 215 16% 88%;
+    --muted-foreground: 222 25% 42%;
+    --accent: 215 18% 88%;
+    --accent-foreground: 222 42% 15%;
+    --destructive: 0 72% 52%;
     --destructive-foreground: 0 0% 98%;
-    --border: 200 35% 72%;
-    --input: 200 40% 80%;
-    --ring: 222 56% 22%;
-    --chart-1: 24 90% 55%;
-    --chart-2: 44 90% 52%;
-    --chart-3: 197 80% 44%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --border: 215 18% 78%;
+    --input: 215 20% 84%;
+    --ring: 222 42% 18%;
+    --chart-1: 24 80% 50%;
+    --chart-2: 44 80% 48%;
+    --chart-3: 197 65% 42%;
+    --chart-4: 270 55% 55%;
+    --chart-5: 340 65% 50%;
     --radius: 0.5rem;
     --cell-size: 2rem;
     /* Accents spécifiques au thème jour */
-    --neon-1: #f97316;
-    --neon-2: #fbbf24;
-    --neon-1-rgb: 249, 115, 22;
-    --neon-2-rgb: 251, 191, 36;
+    --neon-1: #c45880;
+    --neon-2: #f4acc6;
+    --neon-1-rgb: 196, 88, 128;
+    --neon-2-rgb: 244, 172, 198;
   }
 
   /* === THÈME NUIT (orage) === */
@@ -83,9 +83,15 @@
     transition: background-color 0.4s ease, color 0.4s ease;
   }
 
-  /* Gradient de fond thème jour */
-  body:not(.dark) {
-    background: linear-gradient(180deg, hsl(201, 75%, 82%) 0%, hsl(201, 65%, 90%) 55%, hsl(200, 55%, 94%) 100%);
+  /* Gradient de fond thème jour — ciel bleu réaliste, s'éclaircit vers le bas */
+  html:not(.dark) body {
+    background: linear-gradient(
+      175deg,
+      hsl(207, 58%, 76%) 0%,
+      hsl(207, 48%, 86%) 40%,
+      hsl(210, 32%, 93%) 72%,
+      hsl(210, 18%, 97%) 100%
+    );
   }
 
   /* Gradient de fond thème nuit */
@@ -263,7 +269,7 @@ html.lenis {
 }
 
 :root:not(.dark) .project-content-manga strong {
-  color: #f97316 !important;
+  color: #c45880 !important;
   font-weight: bold;
 }
 
@@ -302,8 +308,8 @@ html.lenis {
 
 /* === ANIMATIONS THÈME JOUR === */
 @keyframes sparkleH2Day {
-  0%, 100% { color: #f97316; }
-  50% { color: #d97706; }
+  0%, 100% { color: #c45880; }
+  50% { color: #f4acc6; }
 }
 
 .title-h2-sparkle-day {
@@ -312,8 +318,8 @@ html.lenis {
 .neon-title-filled-day {
   animation: sparkleH2Day 6s ease-in-out infinite;
 }
-.title-orange-solid {
-  color: #f97316 !important;
+.title-pink-solid {
+  color: #c45880 !important;
   font-weight: bold;
 }
 
@@ -325,28 +331,74 @@ html.lenis {
 }
 
 /* === LONG SHADOW — thème jour === */
-/* Ombre portée dorée, comme projetée par le soleil depuis le haut-gauche */
+/* Ombre portée rosée, cohérente avec le logo bleu/rose */
 .long-shadow-title {
   color: #1a2f5a;
   text-shadow:
-    1px 1px 0 rgba(196, 145, 40, 0.88),
-    2px 2px 0 rgba(192, 140, 38, 0.84),
-    3px 3px 0 rgba(188, 135, 36, 0.80),
-    4px 4px 0 rgba(184, 130, 34, 0.76),
-    5px 5px 0 rgba(180, 126, 32, 0.72),
-    6px 6px 0 rgba(176, 122, 30, 0.67),
-    7px 7px 0 rgba(172, 118, 28, 0.62),
-    8px 8px 0 rgba(168, 114, 26, 0.57),
-    9px 9px 0 rgba(164, 110, 24, 0.52),
-    10px 10px 0 rgba(160, 106, 22, 0.46),
-    11px 11px 0 rgba(156, 102, 20, 0.40),
-    12px 12px 0 rgba(152, 98, 18, 0.34),
-    13px 13px 0 rgba(148, 94, 16, 0.28),
-    14px 14px 0 rgba(144, 90, 14, 0.22),
-    15px 15px 0 rgba(140, 86, 12, 0.16),
-    16px 16px 0 rgba(136, 82, 10, 0.11),
-    17px 17px 0 rgba(132, 78, 8, 0.07),
-    18px 18px 0 rgba(128, 74, 6, 0.03);
+    1px 1px 0 rgba(196, 88, 128, 0.88),
+    2px 2px 0 rgba(190, 84, 122, 0.84),
+    3px 3px 0 rgba(184, 80, 117, 0.80),
+    4px 4px 0 rgba(178, 76, 112, 0.76),
+    5px 5px 0 rgba(172, 72, 107, 0.72),
+    6px 6px 0 rgba(166, 68, 102, 0.67),
+    7px 7px 0 rgba(160, 64, 97, 0.62),
+    8px 8px 0 rgba(154, 60, 92, 0.57),
+    9px 9px 0 rgba(148, 56, 87, 0.52),
+    10px 10px 0 rgba(142, 52, 82, 0.46),
+    11px 11px 0 rgba(136, 48, 77, 0.40),
+    12px 12px 0 rgba(130, 44, 72, 0.34),
+    13px 13px 0 rgba(124, 40, 67, 0.28),
+    14px 14px 0 rgba(118, 36, 62, 0.22),
+    15px 15px 0 rgba(112, 32, 57, 0.16),
+    16px 16px 0 rgba(106, 28, 52, 0.11),
+    17px 17px 0 rgba(100, 24, 47, 0.07),
+    18px 18px 0 rgba(94, 20, 42, 0.03);
+}
+
+/* === NUAGES CSS — thème jour uniquement === */
+
+/* Forme du nuage : corps principal */
+.sky-cloud {
+  width: 220px;
+  height: 58px;
+  background: rgba(255, 255, 255, 0.88);
+  border-radius: 999px;
+  position: relative;
+  box-shadow:
+    0 6px 24px rgba(140, 175, 210, 0.22),
+    inset 0 -3px 8px rgba(180, 210, 230, 0.18);
+  will-change: margin-left;
+}
+
+/* Bosse gauche */
+.sky-cloud::before {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.92);
+  width: 110px;
+  height: 90px;
+  top: -22px;
+  left: 16px;
+  border-radius: 50%;
+  transform: rotate(30deg);
+}
+
+/* Bosse droite (plus grosse) */
+.sky-cloud::after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.92);
+  width: 130px;
+  height: 125px;
+  top: -60px;
+  right: 20px;
+  border-radius: 50%;
+}
+
+/* Animation de déplacement gauche → droite puis reset */
+@keyframes moveclouds {
+  0%   { margin-left: 110vw; }
+  100% { margin-left: -380px; }
 }
 
 /* 404 page: hide layout chrome so the game takes full screen */
@@ -362,7 +414,7 @@ body.page-404 main {
 
 /* Les strong avec class home-strong utilisent la couleur accent du thème */
 .dark .home-strong { color: #00f3ff; }
-:root:not(.dark) .home-strong { color: #f97316; }
+:root:not(.dark) .home-strong { color: #c45880; }
 
 /* home-h3-sparkle (server component) — override jour déjà dans le bloc ci-dessus */
 .dark .home-h3-sparkle {
@@ -385,6 +437,6 @@ body.page-404 main {
   }
   :root:not(.dark) .title-h2-sparkle-day,
   :root:not(.dark) .neon-title-filled-day {
-    color: #f97316;
+    color: #c45880;
   }
 }

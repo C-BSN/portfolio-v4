@@ -34,7 +34,7 @@ export function GlobalEffects() {
 
   const cursorColors = isDark
     ? ["#ffffff", "#F0F0F0"]
-    : ["#fbbf24", "#f97316"]
+    : ["#f4acc6", "#c45880"]
 
   return (
     <>
@@ -54,7 +54,7 @@ export function GlobalEffects() {
               />
             </>
           ) : (
-            <SkyEffect className="fixed inset-0 pointer-events-none z-[100]" />
+            <SkyEffect className="fixed top-20 left-0 right-0 bottom-0 pointer-events-none z-[1]" />
           )}
         </>
       )}

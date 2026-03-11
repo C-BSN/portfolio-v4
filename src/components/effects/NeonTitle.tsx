@@ -40,10 +40,10 @@ export function NeonTitle({
   } else {
     // Thème jour : long shadow pour H1, sparkle jour pour filled/H2
     cssClass = noAnimation
-      ? (filled ? 'title-orange-solid' : '')
+      ? (filled ? 'title-pink-solid' : '')
       : (filled ? 'neon-title-filled-day' : 'long-shadow-title')
     baseStyle = noAnimation
-      ? (filled ? { color: '#f97316' } : { color: '#1a2f5a' })
+      ? (filled ? { color: '#c45880' } : { color: '#1a2f5a' })
       : {}
   }
 
