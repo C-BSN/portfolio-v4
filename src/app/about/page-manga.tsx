@@ -1,6 +1,8 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { useTheme } from 'next-themes'
+import { useEffect, useState } from 'react'
 import { Download, Mail, ExternalLink, Calendar, GraduationCap, Briefcase, Heart } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -55,10 +57,17 @@ function TimelineIcon({ type }: { type: 'formation' | 'exp' | 'benevolat' }) {
   return <Briefcase className="w-4 h-4" />
 }
 
-function typeColor(type: 'formation' | 'exp' | 'benevolat') {
-  if (type === 'formation') return '#00f3ff'
-  if (type === 'benevolat') return '#a855f7'
-  return '#ff0080'
+// Couleurs adaptées selon le thème pour chaque type
+function typeColor(type: 'formation' | 'exp' | 'benevolat', isDark: boolean) {
+  if (isDark) {
+    if (type === 'formation') return '#00f3ff'
+    if (type === 'benevolat') return '#a855f7'
+    return '#ff0080'
+  } else {
+    if (type === 'formation') return '#0369a1'
+    if (type === 'benevolat') return '#7c3aed'
+    return '#e11d48'
+  }
 }
 
 interface AboutMangaProps {
@@ -66,11 +75,61 @@ interface AboutMangaProps {
 }
 
 export default function AboutManga({ pageData }: AboutMangaProps) {
-  const profileImage = Array.isArray(pageData.profile_image) 
-    ? pageData.profile_image[0] 
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
+
+  const isDark = !mounted || resolvedTheme === 'dark'
+
+  const profileImage = Array.isArray(pageData.profile_image)
+    ? pageData.profile_image[0]
     : pageData.profile_image || '/Cocorentin.jpg'
 
   const cvUrl = fixCloudinaryPdfUrl(pageData.cta_buttons.cv.file_url)
+
+  // Couleurs inline selon le thème
+  const textColor = isDark ? '#F0F0F0' : '#1a2f5a'
+  const strongColor = isDark ? '#00f3ff' : '#f97316'
+  const h2Class = isDark ? 'title-h2-sparkle' : 'title-h2-sparkle-day'
+
+  const borderColor = isDark ? 'border-white/20' : 'border-[#1a2f5a]/20'
+  const borderColorAlt = isDark ? 'border-white/10' : 'border-[#1a2f5a]/15'
+  const borderColorHover = isDark ? 'hover:border-white/25' : 'hover:border-[#1a2f5a]/35'
+  const cornerColor = isDark ? 'border-[#F0F0F0]' : 'border-[#1a2f5a]'
+  const imageBorder = isDark ? 'border-[#F0F0F0]' : 'border-[#1a2f5a]'
+
+  const btnPrimary = isDark
+    ? 'border-2 border-[#F0F0F0] hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300'
+    : 'border-2 border-[#1a2f5a] text-[#1a2f5a] hover:bg-[#1a2f5a] hover:text-white transition-all duration-300'
+  const btnSecondary = isDark
+    ? 'border-2 border-white/30 hover:border-[#F0F0F0] transition-all duration-300'
+    : 'border-2 border-[#1a2f5a]/40 text-[#1a2f5a] hover:border-[#1a2f5a] transition-all duration-300'
+
+  const cardBg = isDark ? 'rgba(5,5,5,0.8)' : 'rgba(255,255,255,0.80)'
+  const yearBadgeBg = isDark ? '#050505' : 'rgba(255,255,255,0.90)'
+
+  const buildBody = (html: string) =>
+    html.split('\n\n').map(paragraph => {
+      if (!paragraph.trim()) return ''
+      if (paragraph.startsWith('## ')) {
+        return `<h2 class="text-5xl font-bold uppercase mb-8 mt-16 ${h2Class}" style="font-family: 'Oswald', sans-serif;">${paragraph.replace('## ', '')}</h2>`
+      }
+      if (/^\d+\./.test(paragraph.trim())) {
+        const items = paragraph.split('\n').filter(l => l.trim())
+        const listItems = items.map(item => {
+          const clean = item.replace(/^\d+\.\s*/, '')
+            .replace(/\*\*([^*]+)\*\*/g, `<strong style="color: ${strongColor}; font-weight: bold;">$1</strong>`)
+            .replace(/\*([^*]+)\*/g, `<em style="color: ${textColor}; font-style: italic;">$1</em>`)
+          return `<li class="mb-3 text-lg" style="color: ${textColor};">${clean}</li>`
+        }).join('')
+        return `<ol class="list-decimal list-inside space-y-3 mb-6" style="color: ${textColor};">${listItems}</ol>`
+      }
+      const processed = paragraph
+        .replace(/\*\*([^*]+)\*\*/g, `<strong style="color: ${strongColor}; font-weight: bold;">$1</strong>`)
+        .replace(/\*([^*]+)\*/g, `<em style="color: ${textColor}; font-style: italic;">$1</em>`)
+        .replace(/\n/g, '<br />')
+      return `<p class="text-lg leading-relaxed mb-6" style="color: ${textColor};">${processed}</p>`
+    }).filter(Boolean).join('')
 
   return (
     <div className="min-h-screen py-20">
@@ -78,33 +137,19 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
       <section className="min-h-screen flex items-center justify-center px-8 py-20">
         <div className="max-w-7xl w-full grid md:grid-cols-2 gap-16 items-center">
           {/* Left: Image */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            <div className="relative aspect-square border-2 border-[#F0F0F0] overflow-hidden">
-              <Image
-                src={profileImage}
-                alt={pageData.title}
-                fill
-                className="object-cover"
-              />
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#F0F0F0] -translate-x-[4px] -translate-y-[4px]" />
-              <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#F0F0F0] translate-x-[4px] -translate-y-[4px]" />
-              <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#F0F0F0] -translate-x-[4px] translate-y-[4px]" />
-              <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#F0F0F0] translate-x-[4px] translate-y-[4px]" />
+          <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="relative">
+            <div className={`relative aspect-square border-2 overflow-hidden ${imageBorder}`}>
+              <Image src={profileImage} alt={pageData.title} fill className="object-cover" />
+              <div className={`absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 -translate-x-[4px] -translate-y-[4px] ${cornerColor}`} />
+              <div className={`absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 translate-x-[4px] -translate-y-[4px] ${cornerColor}`} />
+              <div className={`absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 -translate-x-[4px] translate-y-[4px] ${cornerColor}`} />
+              <div className={`absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 translate-x-[4px] translate-y-[4px] ${cornerColor}`} />
             </div>
 
-            {/* Stats */}
             <div className="mt-8">
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-                className="border border-white/20 p-6 text-center"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}
+                className={`p-6 text-center border ${borderColor} ${!isDark ? 'bg-white/60 backdrop-blur-sm' : ''}`}
               >
                 <div className="text-4xl font-bold mb-2">{pageData.stats.projects.value}</div>
                 <div className="text-sm tracking-widest opacity-70">{pageData.stats.projects.label}</div>
@@ -113,23 +158,13 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
           </motion.div>
 
           {/* Right: Info */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
+          <motion.div initial={{ opacity: 0, x: 50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.8 }} className="space-y-8">
             <div>
-              <NeonTitle 
-                as="h1"
-                className="text-6xl md:text-8xl font-bold uppercase leading-none mb-4"
-              >
+              <NeonTitle as="h1" className="text-6xl md:text-8xl font-bold uppercase leading-none mb-4">
                 {pageData.title}
               </NeonTitle>
               <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3, duration: 0.6 }}
                 className="text-xl uppercase tracking-widest opacity-70"
                 style={{ fontFamily: "'Oswald', sans-serif" }}
               >
@@ -140,10 +175,8 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
             {/* Availability */}
             {pageData.availability.status && (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="border border-white/20 px-6 py-3 inline-block"
+                initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4, duration: 0.6 }}
+                className={`px-6 py-3 inline-block border ${borderColor} ${!isDark ? 'bg-white/60 backdrop-blur-sm' : ''}`}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
@@ -155,11 +188,7 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
             )}
 
             {/* Skills */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.6 }}
-            >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5, duration: 0.6 }}>
               <NeonTitle as="h3" className="text-2xl font-bold mb-4 uppercase" filled noAnimation>
                 Compétences
               </NeonTitle>
@@ -167,10 +196,9 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
                 {pageData.skills.map((skill, index) => (
                   <motion.span
                     key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.5 + index * 0.05, duration: 0.3 }}
-                    className="border border-white/20 px-4 py-2 text-sm uppercase tracking-wide"
+                    className={`px-4 py-2 text-sm uppercase tracking-wide border ${borderColor} ${!isDark ? 'bg-white/50 backdrop-blur-sm' : ''}`}
                     style={{ fontFamily: "'Oswald', sans-serif" }}
                   >
                     {skill}
@@ -180,26 +208,13 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
             </motion.div>
 
             {/* CTA Buttons */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              className="flex flex-wrap gap-4"
-            >
-              <Link
-                href="/contact"
-                className="border-2 border-[#F0F0F0] px-8 py-3 uppercase tracking-widest hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300 flex items-center gap-2"
-                style={{ fontFamily: "'Oswald', sans-serif" }}
-              >
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 0.6 }} className="flex flex-wrap gap-4">
+              <Link href="/contact" className={`${btnPrimary} px-8 py-3 uppercase tracking-widest flex items-center gap-2`} style={{ fontFamily: "'Oswald', sans-serif" }}>
                 <Mail className="w-4 h-4" />
                 {pageData.cta_buttons.contact.text}
               </Link>
-              <a
-                href={cvUrl}
-                download
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-white/30 px-8 py-3 uppercase tracking-widest hover:border-[#F0F0F0] transition-all duration-300 flex items-center gap-2"
+              <a href={cvUrl} download target="_blank" rel="noopener noreferrer"
+                className={`${btnSecondary} px-8 py-3 uppercase tracking-widest flex items-center gap-2`}
                 style={{ fontFamily: "'Oswald', sans-serif" }}
               >
                 <Download className="w-4 h-4" />
@@ -211,166 +226,124 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
       </section>
 
       {/* Content Section */}
-      <section className="px-8 py-20 max-w-5xl mx-auto relative z-10" style={{ color: '#F0F0F0' }}>
+      <section className="px-8 py-20 max-w-5xl mx-auto relative z-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="prose prose-lg prose-invert max-w-none"
-          style={{ 
-            fontFamily: "'Oswald', sans-serif", 
-            color: '#F0F0F0'
-          }}
+          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
+          className={`prose prose-lg max-w-none rounded-sm ${!isDark ? 'bg-white/50 backdrop-blur-sm p-8' : ''}`}
+          style={{ fontFamily: "'Oswald', sans-serif", color: textColor }}
         >
           <div
-            style={{ color: '#F0F0F0' }}
-            dangerouslySetInnerHTML={{
-              __html: pageData.body
-                .split('\n\n')
-                .map(paragraph => {
-                  // Skip empty paragraphs
-                  if (!paragraph.trim()) return ''
-                  
-                  // Handle h2
-                  if (paragraph.startsWith('## ')) {
-                    return `<h2 class="text-5xl font-bold uppercase mb-8 mt-16 title-h2-sparkle" style="font-family: 'Oswald', sans-serif;">${paragraph.replace('## ', '')}</h2>`
-                  }
-                  
-                  // Handle ordered lists (detect if starts with number)
-                  if (/^\d+\./.test(paragraph.trim())) {
-                    const items = paragraph.split('\n').filter(line => line.trim())
-                    const listItems = items.map(item => {
-                      const cleanItem = item.replace(/^\d+\.\s*/, '')
-                        .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold;">$1</strong>')
-                        .replace(/\*([^*]+)\*/g, '<em style="color: #F0F0F0; font-style: italic;">$1</em>')
-                        .replace(/→/g, '→')
-                      return `<li class="mb-3 text-lg" style="color: #F0F0F0;">${cleanItem}</li>`
-                    }).join('')
-                    return `<ol class="list-decimal list-inside space-y-3 mb-6" style="color: #F0F0F0;">${listItems}</ol>`
-                  }
-                  
-                  const processedParagraph = paragraph
-                    .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold;">$1</strong>')
-                    .replace(/\*([^*]+)\*/g, '<em style="color: #F0F0F0; font-style: italic;">$1</em>')
-                    .replace(/\n/g, '<br />')
-                  
-                  return `<p class="text-lg leading-relaxed mb-6" style="color: #F0F0F0;">${processedParagraph}</p>`
-                })
-                .filter(html => html) // Remove empty strings
-                .join('')
-            }}
+            style={{ color: textColor }}
+            dangerouslySetInnerHTML={{ __html: buildBody(pageData.body) }}
           />
         </motion.div>
       </section>
 
       {/* Parcours Timeline */}
       <section className="px-8 py-20 max-w-5xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
+        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
           <NeonTitle as="h2" className="text-5xl md:text-7xl font-bold uppercase mb-4 text-center" filled>
             Mon Parcours
           </NeonTitle>
           <div className="flex flex-wrap items-center justify-center gap-6 mb-16 text-sm uppercase tracking-widest" style={{ fontFamily: "'Oswald', sans-serif" }}>
-            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#00f3ff' }} /> Formation</span>
-            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#ff0080' }} /> Expérience</span>
-            <span className="flex items-center gap-2"><span className="w-3 h-3 rounded-full" style={{ background: '#a855f7' }} /> Bénévolat</span>
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full" style={{ background: typeColor('formation', isDark) }} />
+              Formation
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full" style={{ background: typeColor('exp', isDark) }} />
+              Expérience
+            </span>
+            <span className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full" style={{ background: typeColor('benevolat', isDark) }} />
+              Bénévolat
+            </span>
           </div>
         </motion.div>
 
         <div className="relative">
           {/* Vertical line */}
-          <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-white/10 -translate-x-1/2" />
+          <div className={`absolute left-6 md:left-1/2 top-0 bottom-0 w-px -translate-x-1/2 ${isDark ? 'bg-white/10' : 'bg-[#1a2f5a]/20'}`} />
 
-          {timeline.map((block, blockIdx) => (
-            <motion.div
-              key={blockIdx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.6, delay: blockIdx * 0.1 }}
-              className="relative mb-12 last:mb-0"
-            >
-              {/* Year badge */}
-              <div className="flex items-center md:justify-center mb-6">
-                <div
-                  className="relative z-10 border border-white/20 px-5 py-2 text-sm uppercase tracking-widest"
-                  style={{ fontFamily: "'Oswald', sans-serif", background: '#050505' }}
-                >
-                  {block.year}
+          {timeline.map((block, blockIdx) => {
+            const color = typeColor(block.items[0].type, isDark)
+            return (
+              <motion.div
+                key={blockIdx}
+                initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{ duration: 0.6, delay: blockIdx * 0.1 }}
+                className="relative mb-12 last:mb-0"
+              >
+                {/* Year badge */}
+                <div className="flex items-center md:justify-center mb-6">
+                  <div
+                    className={`relative z-10 px-5 py-2 text-sm uppercase tracking-widest border ${borderColor}`}
+                    style={{ fontFamily: "'Oswald', sans-serif", background: yearBadgeBg }}
+                  >
+                    {block.year}
+                  </div>
                 </div>
-              </div>
 
-              {/* Items */}
-              <div className="space-y-4">
-                {block.items.map((item, itemIdx) => {
-                  const isLeft = itemIdx % 2 === 0
-                  const color = typeColor(item.type)
-
-                  return (
-                    <div
-                      key={itemIdx}
-                      className={`relative flex items-start gap-4 md:gap-0 ${
-                        isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
-                      }`}
-                    >
-                      {/* Dot on the line */}
+                {/* Items */}
+                <div className="space-y-4">
+                  {block.items.map((item, itemIdx) => {
+                    const itemColor = typeColor(item.type, isDark)
+                    const isLeft = itemIdx % 2 === 0
+                    return (
                       <div
-                        className="absolute left-6 md:left-1/2 w-3 h-3 rounded-full -translate-x-1/2 mt-1.5 z-10 shrink-0"
-                        style={{ background: color, boxShadow: `0 0 8px ${color}` }}
-                      />
-
-                      {/* Spacer for mobile (left of dot) */}
-                      <div className="w-12 shrink-0 md:hidden" />
-
-                      {/* Card */}
-                      <div className={`flex-1 md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-10 md:text-right' : 'md:pl-10 md:text-left'}`}>
+                        key={itemIdx}
+                        className={`relative flex items-start gap-4 md:gap-0 ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'}`}
+                      >
+                        {/* Dot */}
                         <div
-                          className="border border-white/10 p-5 hover:border-white/25 transition-colors duration-300"
-                          style={{ background: 'rgba(5,5,5,0.8)' }}
-                        >
-                          <div className={`flex items-center gap-2 mb-2 ${isLeft ? 'md:justify-end' : 'md:justify-start'}`}>
-                            <span style={{ color }}><TimelineIcon type={item.type} /></span>
-                            <span className="text-xs uppercase tracking-widest opacity-50" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                              {item.org}
-                            </span>
-                          </div>
-                          <h4
-                            className="text-lg font-bold uppercase mb-1"
-                            style={{ fontFamily: "'Oswald', sans-serif", color }}
-                          >
-                            {item.title}
-                          </h4>
-                          {item.detail && (
-                            <p className="text-sm opacity-60 leading-relaxed" style={{ fontFamily: "'Oswald', sans-serif" }}>
-                              {item.detail}
-                            </p>
-                          )}
-                        </div>
-                      </div>
+                          className="absolute left-6 md:left-1/2 w-3 h-3 rounded-full -translate-x-1/2 mt-1.5 z-10 shrink-0"
+                          style={{
+                            background: itemColor,
+                            boxShadow: isDark ? `0 0 8px ${itemColor}` : `0 2px 6px ${itemColor}40`,
+                          }}
+                        />
 
-                      {/* Spacer for other side on desktop */}
-                      <div className="hidden md:block md:w-[calc(50%-2rem)]" />
-                    </div>
-                  )
-                })}
-              </div>
-            </motion.div>
-          ))}
+                        <div className="w-12 shrink-0 md:hidden" />
+
+                        {/* Card */}
+                        <div className={`flex-1 md:w-[calc(50%-2rem)] ${isLeft ? 'md:pr-10 md:text-right' : 'md:pl-10 md:text-left'}`}>
+                          <div
+                            className={`border p-5 transition-colors duration-300 ${borderColorAlt} ${borderColorHover} ${!isDark ? 'backdrop-blur-sm' : ''}`}
+                            style={{ background: cardBg }}
+                          >
+                            <div className={`flex items-center gap-2 mb-2 ${isLeft ? 'md:justify-end' : 'md:justify-start'}`}>
+                              <span style={{ color: itemColor }}><TimelineIcon type={item.type} /></span>
+                              <span className="text-xs uppercase tracking-widest opacity-50" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                                {item.org}
+                              </span>
+                            </div>
+                            <h4 className="text-lg font-bold uppercase mb-1" style={{ fontFamily: "'Oswald', sans-serif", color: itemColor }}>
+                              {item.title}
+                            </h4>
+                            {item.detail && (
+                              <p className="text-sm opacity-60 leading-relaxed" style={{ fontFamily: "'Oswald', sans-serif" }}>
+                                {item.detail}
+                              </p>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="hidden md:block md:w-[calc(50%-2rem)]" />
+                      </div>
+                    )
+                  })}
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
       </section>
 
       {/* Final CTA */}
-      <section className="px-8 py-20 border-t border-white/10 relative z-10">
+      <section className={`px-8 py-20 border-t relative z-10 ${isDark ? 'border-white/10' : 'border-[#1a2f5a]/10'}`}>
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
           className="max-w-4xl mx-auto text-center"
         >
           <NeonTitle as="h2" className="text-5xl md:text-7xl font-bold uppercase mb-6" filled>
@@ -385,32 +358,21 @@ export default function AboutManga({ pageData }: AboutMangaProps) {
 
           <div className="flex flex-wrap gap-4 justify-center">
             {pageData.final_cta.buttons.projects && (
-              <Link
-                href={pageData.final_cta.buttons.projects.link}
-                className="border-2 border-[#F0F0F0] px-8 py-3 uppercase tracking-widest hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300 flex items-center gap-2"
-                style={{ fontFamily: "'Oswald', sans-serif" }}
-              >
+              <Link href={pageData.final_cta.buttons.projects.link} className={`${btnPrimary} px-8 py-3 uppercase tracking-widest flex items-center gap-2`} style={{ fontFamily: "'Oswald', sans-serif" }}>
                 <ExternalLink className="w-4 h-4" />
                 {pageData.final_cta.buttons.projects.text}
               </Link>
             )}
             {pageData.final_cta.buttons.calendly && (
-              <a
-                href={pageData.final_cta.buttons.calendly.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="border-2 border-white/30 px-8 py-3 uppercase tracking-widest hover:border-[#F0F0F0] transition-all duration-300 flex items-center gap-2"
+              <a href={pageData.final_cta.buttons.calendly.link} target="_blank" rel="noopener noreferrer"
+                className={`${btnSecondary} px-8 py-3 uppercase tracking-widest flex items-center gap-2`}
                 style={{ fontFamily: "'Oswald', sans-serif" }}
               >
                 <Calendar className="w-4 h-4" />
                 {pageData.final_cta.buttons.calendly.text}
               </a>
             )}
-            <Link
-              href="/contact"
-              className="border-2 border-white/30 px-8 py-3 uppercase tracking-widest hover:border-[#F0F0F0] transition-all duration-300 flex items-center gap-2"
-              style={{ fontFamily: "'Oswald', sans-serif" }}
-            >
+            <Link href="/contact" className={`${btnSecondary} px-8 py-3 uppercase tracking-widest flex items-center gap-2`} style={{ fontFamily: "'Oswald', sans-serif" }}>
               <Mail className="w-4 h-4" />
               {pageData.final_cta.buttons.contact.text}
             </Link>

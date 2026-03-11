@@ -47,7 +47,7 @@ export default function HomeManga() {
                 // Handle headers (lines starting with *)
                 if (paragraph.trim().startsWith('*') && !paragraph.trim().startsWith('**')) {
                   return (
-                    <h3 key={index} className="text-3xl font-bold mt-8 mb-4 title-h2-sparkle">
+                    <h3 key={index} className="text-3xl font-bold mt-8 mb-4 home-h3-sparkle">
                       {paragraph.replace(/^\*/, '').trim()}
                     </h3>
                   )
@@ -55,7 +55,7 @@ export default function HomeManga() {
                 
                 // Handle bold text
                 const processedText = paragraph
-                  .replace(/\*\*([^*]+)\*\*/g, '<strong style="color: #00f3ff; font-weight: bold;">$1</strong>')
+                  .replace(/\*\*([^*]+)\*\*/g, '<strong class="home-strong" style="font-weight: bold;">$1</strong>')
                   .replace(/\*([^*]+)\*/g, '<em class="italic">$1</em>')
 
                 return (
@@ -85,7 +85,7 @@ export default function HomeManga() {
       )}
 
       {/* CTA Section */}
-      <section className="min-h-[50vh] flex items-center justify-center px-8 py-20 border-t border-white/10">
+      <section className="min-h-[50vh] flex items-center justify-center px-8 py-20 border-t border-foreground/10">
         <div className="max-w-4xl text-center">
           <NeonTitle as="h2" className="text-5xl md:text-7xl font-bold mb-8" filled>
             CONTACTEZ-MOI
@@ -95,7 +95,7 @@ export default function HomeManga() {
           </p>
           <Link 
             href="/contact"
-            className="inline-block border-2 border-[#F0F0F0] px-12 py-4 text-lg uppercase tracking-widest hover:bg-[#F0F0F0] hover:text-[#050505] transition-all duration-300"
+            className="inline-block border-2 px-12 py-4 text-lg uppercase tracking-widest transition-all duration-300 border-[#1a2f5a] text-[#1a2f5a] hover:bg-[#1a2f5a] hover:text-white dark:border-[#F0F0F0] dark:text-[#F0F0F0] dark:hover:bg-[#F0F0F0] dark:hover:text-[#050505]"
             style={{ fontFamily: "'Oswald', sans-serif" }}
           >
             Démarrer un projet

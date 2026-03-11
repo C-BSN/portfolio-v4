@@ -1,5 +1,7 @@
 "use client"
 
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
 interface NeonTitleProps {
@@ -19,13 +21,31 @@ export function NeonTitle({
   filled = false,
   noAnimation = false
 }: NeonTitleProps) {
-  const cssClass = noAnimation
-    ? (filled ? 'title-pink-solid' : '')
-    : (filled ? 'neon-title-filled' : 'neon-title')
+  const { resolvedTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
 
-  const baseStyle = noAnimation
-    ? (filled ? { color: '#ff0080' } : { color: '#F0F0F0' })
-    : {}
+  const isDark = !mounted || resolvedTheme === 'dark'
+
+  let cssClass: string
+  let baseStyle: React.CSSProperties
+
+  if (isDark) {
+    cssClass = noAnimation
+      ? (filled ? 'title-pink-solid' : '')
+      : (filled ? 'neon-title-filled' : 'neon-title')
+    baseStyle = noAnimation
+      ? (filled ? { color: '#ff0080' } : { color: '#F0F0F0' })
+      : {}
+  } else {
+    // Thème jour : long shadow pour H1, sparkle jour pour filled/H2
+    cssClass = noAnimation
+      ? (filled ? 'title-orange-solid' : '')
+      : (filled ? 'neon-title-filled-day' : 'long-shadow-title')
+    baseStyle = noAnimation
+      ? (filled ? { color: '#f97316' } : { color: '#1a2f5a' })
+      : {}
+  }
 
   return (
     <motion.div

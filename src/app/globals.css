@@ -5,35 +5,42 @@
 @tailwind utilities;
 
 @layer base {
+  /* === THÈME JOUR (ciel ensoleillé) === */
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --background: 201 72% 88%;
+    --foreground: 222 56% 18%;
+    --card: 200 50% 96%;
+    --card-foreground: 222 56% 18%;
+    --popover: 200 50% 96%;
+    --popover-foreground: 222 56% 18%;
+    --primary: 222 56% 22%;
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
+    --secondary: 201 50% 82%;
+    --secondary-foreground: 222 56% 18%;
+    --muted: 200 40% 88%;
+    --muted-foreground: 222 30% 45%;
+    --accent: 201 50% 82%;
+    --accent-foreground: 222 56% 18%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
+    --border: 200 35% 72%;
+    --input: 200 40% 80%;
+    --ring: 222 56% 22%;
+    --chart-1: 24 90% 55%;
+    --chart-2: 44 90% 52%;
+    --chart-3: 197 80% 44%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
     --radius: 0.5rem;
     --cell-size: 2rem;
+    /* Accents spécifiques au thème jour */
+    --neon-1: #f97316;
+    --neon-2: #fbbf24;
+    --neon-1-rgb: 249, 115, 22;
+    --neon-2-rgb: 251, 191, 36;
   }
 
+  /* === THÈME NUIT (orage) === */
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -59,6 +66,11 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    /* Accents spécifiques au thème nuit */
+    --neon-1: #ff0080;
+    --neon-2: #00f3ff;
+    --neon-1-rgb: 255, 0, 128;
+    --neon-2-rgb: 0, 243, 255;
   }
 }
 
@@ -68,6 +80,17 @@
   }
   body {
     @apply bg-background text-foreground;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Gradient de fond thème jour */
+  body:not(.dark) {
+    background: linear-gradient(180deg, hsl(201, 75%, 82%) 0%, hsl(201, 65%, 90%) 55%, hsl(200, 55%, 94%) 100%);
+  }
+
+  /* Gradient de fond thème nuit */
+  .dark body {
+    background: #050505;
   }
   
   /* Optimisations de performance */
@@ -75,8 +98,8 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
-  h1, h2 {
+
+  .dark h1, .dark h2 {
     text-shadow: 0 0 8px rgba(255, 255, 255, 0.1);
   }
 
@@ -170,6 +193,17 @@
   text-stroke: 2px #F0F0F0;
 }
 
+/* Overrides thème jour pour les text-outline */
+:root:not(.dark) .text-outline {
+  -webkit-text-stroke: 1px #1a2f5a;
+  text-stroke: 1px #1a2f5a;
+}
+
+:root:not(.dark) .text-outline-thick {
+  -webkit-text-stroke: 2px #1a2f5a;
+  text-stroke: 2px #1a2f5a;
+}
+
 /* Smooth Scroll with Lenis */
 html.lenis {
   height: auto;
@@ -203,51 +237,116 @@ html.lenis {
   font-weight: bold;
 }
 
-.project-content-manga p,
-.project-content-manga li,
-.project-content-manga span,
-.project-content-manga em {
+.dark .project-content-manga p,
+.dark .project-content-manga li,
+.dark .project-content-manga span,
+.dark .project-content-manga em {
   color: #F0F0F0 !important;
 }
 
-.project-content-manga strong {
+.dark .project-content-manga strong {
   color: #00f3ff !important;
   font-weight: bold;
 }
 
-.project-content-manga a {
+.dark .project-content-manga a {
   color: #F0F0F0 !important;
   text-decoration: underline;
 }
 
-/* Neon Title - H1 outline fix: solid white instead of blurry text-stroke */
-.neon-title {
+/* Thème jour */
+:root:not(.dark) .project-content-manga p,
+:root:not(.dark) .project-content-manga li,
+:root:not(.dark) .project-content-manga span,
+:root:not(.dark) .project-content-manga em {
+  color: #1a2f5a !important;
+}
+
+:root:not(.dark) .project-content-manga strong {
+  color: #f97316 !important;
+  font-weight: bold;
+}
+
+:root:not(.dark) .project-content-manga a {
+  color: #1a2f5a !important;
+  text-decoration: underline;
+}
+
+/* Neon Title - thème nuit */
+.dark .neon-title {
   color: #F0F0F0;
 }
 
-/* Animation H2 - Couleur qui alterne doucement */
-@keyframes sparkleH2 {
-  0%, 100% {
-    color: #ff0080;
-  }
-  50% {
-    color: #00f3ff;
-  }
+/* Neon Title - thème jour : couleur navy */
+:root:not(.dark) .neon-title {
+  color: #1a2f5a;
 }
 
+/* === ANIMATIONS THÈME NUIT === */
+@keyframes sparkleH2 {
+  0%, 100% { color: #ff0080; }
+  50% { color: #00f3ff; }
+}
+
+/* Par défaut (dark) */
 .title-h2-sparkle {
   animation: sparkleH2 6s ease-in-out infinite;
 }
-
-/* Neon Title Filled (pour petits titres) */
 .neon-title-filled {
   animation: sparkleH2 6s ease-in-out infinite;
 }
-
-/* Titre rose uni pour h3 (sous-titres) */
 .title-pink-solid {
   color: #ff0080 !important;
   font-weight: bold;
+}
+
+/* === ANIMATIONS THÈME JOUR === */
+@keyframes sparkleH2Day {
+  0%, 100% { color: #f97316; }
+  50% { color: #d97706; }
+}
+
+.title-h2-sparkle-day {
+  animation: sparkleH2Day 6s ease-in-out infinite;
+}
+.neon-title-filled-day {
+  animation: sparkleH2Day 6s ease-in-out infinite;
+}
+.title-orange-solid {
+  color: #f97316 !important;
+  font-weight: bold;
+}
+
+/* Override : en mode jour, les classes génériques basculent sur sparkleH2Day */
+:root:not(.dark) .title-h2-sparkle,
+:root:not(.dark) .neon-title-filled,
+:root:not(.dark) .home-h3-sparkle {
+  animation: sparkleH2Day 6s ease-in-out infinite;
+}
+
+/* === LONG SHADOW — thème jour === */
+/* Ombre portée dorée, comme projetée par le soleil depuis le haut-gauche */
+.long-shadow-title {
+  color: #1a2f5a;
+  text-shadow:
+    1px 1px 0 rgba(196, 145, 40, 0.88),
+    2px 2px 0 rgba(192, 140, 38, 0.84),
+    3px 3px 0 rgba(188, 135, 36, 0.80),
+    4px 4px 0 rgba(184, 130, 34, 0.76),
+    5px 5px 0 rgba(180, 126, 32, 0.72),
+    6px 6px 0 rgba(176, 122, 30, 0.67),
+    7px 7px 0 rgba(172, 118, 28, 0.62),
+    8px 8px 0 rgba(168, 114, 26, 0.57),
+    9px 9px 0 rgba(164, 110, 24, 0.52),
+    10px 10px 0 rgba(160, 106, 22, 0.46),
+    11px 11px 0 rgba(156, 102, 20, 0.40),
+    12px 12px 0 rgba(152, 98, 18, 0.34),
+    13px 13px 0 rgba(148, 94, 16, 0.28),
+    14px 14px 0 rgba(144, 90, 14, 0.22),
+    15px 15px 0 rgba(140, 86, 12, 0.16),
+    16px 16px 0 rgba(136, 82, 10, 0.11),
+    17px 17px 0 rgba(132, 78, 8, 0.07),
+    18px 18px 0 rgba(128, 74, 6, 0.03);
 }
 
 /* 404 page: hide layout chrome so the game takes full screen */
@@ -259,15 +358,33 @@ body.page-404 main {
   flex: unset !important;
 }
 
+/* === OVERRIDES THÈME JOUR pour server components (page.tsx) === */
+
+/* Les strong avec class home-strong utilisent la couleur accent du thème */
+.dark .home-strong { color: #00f3ff; }
+:root:not(.dark) .home-strong { color: #f97316; }
+
+/* home-h3-sparkle (server component) — override jour déjà dans le bloc ci-dessus */
+.dark .home-h3-sparkle {
+  animation: sparkleH2 6s ease-in-out infinite;
+}
+
 /* Respect des préférences utilisateur */
 @media (prefers-reduced-motion: reduce) {
   .neon-title,
   .title-h2-sparkle,
-  .neon-title-filled {
+  .neon-title-filled,
+  .title-h2-sparkle-day,
+  .neon-title-filled-day,
+  .long-shadow-title {
     animation: none !important;
   }
-  .title-h2-sparkle,
-  .neon-title-filled {
+  .dark .title-h2-sparkle,
+  .dark .neon-title-filled {
     color: #ff0080;
+  }
+  :root:not(.dark) .title-h2-sparkle-day,
+  :root:not(.dark) .neon-title-filled-day {
+    color: #f97316;
   }
 }
