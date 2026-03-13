@@ -6,6 +6,7 @@ COPY package*.json ./
 RUN npm ci && npm cache clean --force
 
 COPY . .
+ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
 # ─── Production stage ─────────────────────────────────────────────────────────
