@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   const { error } = await resend.emails.send({
     from: 'Portfolio Contact <onboarding@resend.dev>',
     to: 'corentinbassonpro@gmail.com',
-    reply_to: email,
+    replyTo: email,
     subject: emailSubject,
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">

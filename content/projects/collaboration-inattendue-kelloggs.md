@@ -28,67 +28,87 @@ gallery:
 duration: 2 mois
 status: Terminé
 project_url: ""
-cibles: "Jeunes adultes 18-35 ans, amateurs de musique urbaine et consommateurs
-  de céréales premium. Cible secondaire : collectionneurs d'objets dérivés
-  musicaux et fans de collaborations artistiques inattendues."
-strategie_creative: Créer une synergie entre l'univers musical urbain et
-  l'héritage familial de Kellogg's en exploitant les codes visuels du hip-hop et
-  les couleurs iconiques de la marque. Développer une identité visuelle qui
-  surprend par son audace tout en restant cohérente avec les valeurs des deux
-  entités.
+cibles: "Cœur de cible : jeunes adultes et adolescents (12-25 ans), fans de Rosé,
+  Bad Bunny et Bruno Mars, actifs sur les réseaux sociaux. Cible principale :
+  jeunes adultes 18-30 ans. Cible secondaire : enfants 6-12 ans et parents
+  30-45 ans, amateurs de pop culture et de musique."
+strategie_creative: Associer trois céréales iconiques Kellogg's à trois artistes
+  internationaux dans le cadre d'une édition spéciale Saint-Valentin. Bad Bunny
+  pour Frosties (énergie brute et style audacieux), Rosé de BLACKPINK pour Miel
+  Pops (douceur et élégance), Bruno Mars pour Coco Pops (groove, nostalgie et
+  fun). Chaque duo artiste/céréale crée une cohérence visuelle et émotionnelle
+  forte, portée par un univers romantique et festif.
 objectifs_cognitifs:
-  - Faire connaître la collaboration entre l'artiste et Kellogg's
-  - Éduquer sur les valeurs partagées entre musique et alimentation
-  - Présenter les produits dérivés de manière attractive
+  - Faire connaître la collaboration tripartite Kellogg's x Bad Bunny, Rosé et Bruno Mars
+  - Présenter les packagings collector et les produits dérivés de l'édition Saint-Valentin
+  - Mettre en avant les singles exclusifs "Aime-moi" créés pour la collaboration
 objectifs_affectifs:
-  - Créer de l'émotion et de la surprise chez les consommateurs
-  - Renforcer l'attachement à la marque Kellogg's
-  - Générer de l'enthousiasme pour la musique de l'artiste
+  - Créer de la surprise et de l'émotion avec l'association inattendue céréales/pop stars
+  - Générer un sentiment de désir autour des packagings collector et du ticket d'or
+  - Renforcer l'attachement à la marque Kellogg's via un univers romantique et festif
 objectifs_conatifs:
-  - Inciter à l'achat des produits dérivés
-  - Encourager l'écoute de l'album/EP
-  - Motiver l'inscription à la newsletter
+  - Inciter à l'achat des boîtes collector pour tenter de remporter un ticket d'or
+  - Encourager l'écoute des singles exclusifs via les QR codes sur les packagings
+  - Motiver l'inscription à la newsletter et la participation aux défis TikTok et Instagram
 preuves:
-  - type: Image
-    description: Pochette d'album au format carré
-    file: null
-excerpt: Projet créatif explorant une collaboration fictive entre Kellogg's et
-  un artiste musical urbain, créant une identité visuelle surprenante mais
-  cohérente.
+  - type: PDF
+    description: "Dossier "
+    pdf:
+      - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773398772/Collaboration_inattendue_-3_compressed_rvthq2.pdf
+excerpt: Édition spéciale Saint-Valentin imaginant Kellogg's en collaboration
+  avec Bad Bunny, Rosé (BLACKPINK) et Bruno Mars — trois artistes, trois
+  céréales, trois univers visuels distincts, réunis par un concept de ticket d'or
+  et des singles exclusifs.
 published: true
 ---
 
 ## Concept du projet
 
-Dans le cadre d'un projet créatif, j'ai travaillé sur la conception d'une collaboration fictive entre un artiste musical actuel et la marque Kellogg's. L'objectif était de proposer une association surprenante, inattendue de prime abord, mais cohérente après analyse des univers respectifs.
+Pour la Saint-Valentin, Kellogg's s'associe à trois artistes internationaux pour une édition collector aussi inattendue que cohérente : **Bad Bunny x Frosties**, **Rosé (BLACKPINK) x Miel Pops**, **Bruno Mars x Coco Pops**. Chaque duo réunit une céréale iconique et un artiste dont l'univers en reflète parfaitement l'essence — énergie brute, douceur lumineuse ou groove contagieux. L'ambition : faire du petit-déjeuner un moment de musique, d'amour et d'émotion.
 
-## Démarche créative
+## Les duos artiste × céréale
 
-### Phase de recherche
-- **Analyse approfondie** de l'artiste et de la marque choisis
-- **Étude des collaborations existantes** pour identifier des pistes d'inspiration
-- **Définition des territoires de marque** et mise en évidence des points communs possibles
+### Bad Bunny × Frosties
+Né à Porto Rico en 1994, Bad Bunny révolutionne le reggaeton en le mêlant au trap et au rock. Son look rétro, son énergie brute et son charisme audacieux font écho à Tony le Tigre, mascotte emblématique des Frosties. Une rencontre entre deux icônes qui n'ont peur de rien.
 
-### Phase de production
-- **Réalisation d'un mapping** de positionnement de la marque
-- **Définition des cibles respectives** (artiste et marque)
-- **Conception d'un moodboard** et d'une copy strategy dédiés à la collaboration
+### Rosé (BLACKPINK) × Miel Pops
+Avec sa voix aérienne et son univers sophistiqué, Rosé incarne la douceur et l'éclat — exactement ce que représentent les Miel Pops. Sa présence lumineuse et délicate s'accorde parfaitement avec le côté réconfortant et doré de ces céréales.
+
+### Bruno Mars × Coco Pops
+Chanteur, producteur, multi-instrumentiste aux influences funk et R&B, Bruno Mars apporte fun, nostalgie et énergie contagieuse. Tout comme les Coco Pops, sa musique rappelle l'insouciance des matins d'enfance — une collaboration qui mélange groove et gourmandise.
+
+## Copy stratégie
+
+**Promesse** — *"Un petit-déjeuner qui fait battre ton cœur ! Kellogg's s'associe à Bruno Mars, Bad Bunny et Rosé pour une édition spéciale Saint-Valentin, pleine de saveurs, de musique et d'amour."*
+
+**Ton** — Doux, romantique, pop et engageant. Un registre chaleureux et complice, mêlant l'univers glamour de la pop et l'esprit festif de la Saint-Valentin.
+
+**Bénéfice consommateur**
+- Un matin rempli d'amour et de bonne humeur
+- Une expérience immersive et exclusive (playlists, dédicaces, défis Saint-Valentin)
+- Un cadeau gourmand et original à offrir ou partager
+
+## Les singles exclusifs — "Aime-moi"
+
+Trois artistes. Trois morceaux. Trois façons d'aimer.
+
+Chaque artiste dévoile un titre exclusif inspiré d'un même mot : **"Aime-moi"**. Pourtant, chaque chanson raconte une histoire différente.
+
+- **Bad Bunny** livre un morceau intense et brut, entre reggaeton et trap — l'amour comme un combat, une passion dévorante qui oscille entre attirance et rejet.
+- **Rosé** propose une ballade délicate et mélancolique, où l'amour est un refuge, une quête de douceur où les silences en disent plus que les mots.
+- **Bruno Mars** transforme "Aime-moi" en une explosion de groove et de romantisme — l'amour avec légèreté et sensualité, comme une danse dont on ne veut jamais sortir.
+
+## Storytelling — La légende des tickets d'or
+
+La Saint-Valentin approche… et cette année, l'amour et la musique s'invitent au petit-déjeuner. À l'intérieur de chaque boîte collector, caché entre les pétales croustillants, un simple bout de papier pourrait changer ta vie.
+
+**Le ticket d'or.** Six chanceux à travers le monde vivront l'expérience ultime : une rencontre privée avec leur idole — Bad Bunny, Rosé ou Bruno Mars.
+
+Même sans ticket d'or, chaque boîte renferme un QR code donnant accès à un single exclusif de l'artiste préféré, disponible uniquement pendant la durée du concours.
 
 ## Livrables réalisés
 
-### Créations principales
-- **Pochette d'album/EP** au format carré respectant les codes visuels des deux univers
-- **Produit dérivé** (objet, vêtement ou accessoire), présenté avec un mockup professionnel
-- **Landing page** développée via Bolt.new mettant en avant :
-  - La présentation de la collaboration
-  - Les produits disponibles (album + objet dérivé)
-  - Une inscription à la newsletter
-
-### Contraintes techniques respectées
-- Format carré pour l'EP
-- Utilisation de mockups professionnels de sources diverses
-- Landing page respectant les codes du e-commerce et du marketing digital
-
-## Résultats
-
-Ce projet a permis de démontrer ma capacité à créer des ponts créatifs entre des univers apparemment opposés, tout en respectant l'identité de chaque marque et en créant une nouvelle proposition de valeur attractive pour les consommateurs.
+- **Packagings collector** pour chaque céréale (Frosties, Miel Pops, Coco Pops), avec les codes visuels de chaque artiste et des messages d'amour intégrés
+- **Pochettes de vinyle** au format carré pour chacun des trois artistes
+- **Cartes ticket** (visuels collector) donnant accès aux expériences exclusives
+- **Landing page** développée via v0, présentant la collaboration, les produits disponibles et une inscription à la newsletter
