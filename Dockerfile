@@ -1,41 +1,30 @@
-# ========================================
-# Stage 1: Dépendances
-# ========================================
-FROM node:alpine AS deps
+# ─── Build stage ──────────────────────────────────────────────────────────────
+FROM node:22-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci && npm cache clean --force
 
-# ========================================
-# Stage 2: Build
-# ========================================
-FROM node:alpine AS builder
-WORKDIR /app
-
-COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-
 RUN npm run build
 
-# ========================================
-# Stage 3: Production (Nginx)
-# ========================================
-FROM nginx:alpine AS production
+# ─── Production stage ─────────────────────────────────────────────────────────
+FROM node:22-alpine AS runner
+WORKDIR /app
 
-# Utilisateur non-root
-RUN addgroup -g 1001 -S appgroup && \
-    adduser -S appuser -u 1001 -G appgroup && \
-    chown -R appuser:appgroup /usr/share/nginx/html /var/cache/nginx /var/log/nginx /etc/nginx/conf.d && \
-    touch /run/nginx.pid && chown appuser:appgroup /run/nginx.pid
+ENV NODE_ENV=production
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=builder /app/out /usr/share/nginx/html
+# Non-root user for security
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
 
-EXPOSE 80
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD wget --quiet --tries=1 --spider http://localhost:80/ || exit 1
+USER nextjs
 
-USER appuser
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 3000
+
+CMD ["npm", "start"]
