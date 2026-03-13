@@ -91,7 +91,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {filteredProjects.map((project) => (
-              <Card key={project.slug} className="group overflow-hidden bg-black/40 backdrop-blur-md border border-cyan-500/20 shadow-2xl shadow-cyan-500/10 hover:shadow-cyan-500/20 hover:border-cyan-400/40 transition-all duration-500 relative z-10">
+              <Card key={project.slug} className="group overflow-hidden bg-zinc-900/30 backdrop-blur-md border border-cyan-500/20 shadow-2xl shadow-cyan-500/10 hover:shadow-cyan-500/20 hover:border-cyan-400/40 transition-all duration-500 relative z-10">
                 <div className="aspect-video bg-gradient-to-br from-cyan-500/10 to-purple-500/10 relative overflow-hidden">
                   {project.featured_image ? (
                     <>
@@ -100,7 +100,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
                         alt={project.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
                     </>
                   ) : (
                     <div className="w-full h-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 flex items-center justify-center relative">
@@ -127,7 +127,7 @@ export default function ProjectsClient({ projects }: ProjectsClientProps) {
                     <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400 to-transparent" />
                   </div>
                 </div>
-                <CardContent className="p-6 bg-black/20">
+                <CardContent className="p-6 bg-zinc-900/40">
                   <div className="flex flex-wrap gap-2 mb-3">
                     {Array.isArray(project.project_type) ? (
                       project.project_type.map((type, index) => (

@@ -4,14 +4,18 @@ import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { ProjectGallery } from "@/components/ui/project-gallery"
 import Link from "next/link"
-import { ArrowLeft, ExternalLink, Download, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowLeft, ExternalLink, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import type { Project } from "@/lib/content"
 import { NeonTitle } from "@/components/effects/NeonTitle"
-import { fixCloudinaryPdfUrl, getCloudinaryPdfPreviewUrl, isCloudinaryPdf, resolveUrl } from "@/lib/utils"
+
+import { PdfViewer } from "@/components/ui/pdf-viewer"
+import dynamic from "next/dynamic"
+
+const LiloStitchSurveyCharts = dynamic(() => import("@/components/ui/lilo-stitch-survey-charts"), { ssr: false })
 
 interface ProjectPageMangaProps {
   project: Project
@@ -256,6 +260,13 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                   )}
                 </div>
 
+                {/* Graphiques enquête Lilo & Stitch */}
+                {project.slug === 'lilo-stitch' && (
+                  <div className={`border ${panelBorder} ${panelBg} backdrop-blur-sm rounded-lg p-8 mb-8`}>
+                    <LiloStitchSurveyCharts />
+                  </div>
+                )}
+
                 {/* Galerie */}
                 {project.gallery && project.gallery.length > 0 && (
                   <div className={`border ${panelBorder} ${panelBg} backdrop-blur-sm rounded-lg p-6 mb-8`}>
@@ -286,18 +297,15 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                           {preuve.type === 'Image' && preuve.file && (
                             <Image src={preuve.file} alt={preuve.description} width={800} height={600} className="w-full h-auto rounded" />
                           )}
-                          {preuve.type === 'PDF' && preuve.pdf && (() => {
-                            const pdfUrl = fixCloudinaryPdfUrl(preuve.pdf)
-                            const previewUrl = isCloudinaryPdf(pdfUrl) ? getCloudinaryPdfPreviewUrl(preuve.pdf) : ''
-                            return (
-                              <div className="space-y-3">
-                                {previewUrl && <img src={previewUrl} alt={preuve.description} className="w-full h-auto rounded" />}
-                                <Button asChild className={`w-full ${btnPrimary}`} style={{ fontFamily: "'Oswald', sans-serif" }}>
-                                  <Link href={pdfUrl} target="_blank"><Download className="mr-2 h-4 w-4" />Télécharger le PDF</Link>
-                                </Button>
-                              </div>
-                            )
-                          })()}
+                          {preuve.type === 'PDF' && preuve.pdf && (
+                            <PdfViewer
+                              url={preuve.pdf}
+                              title={preuve.description}
+                              isDark={isDark}
+                              accentColor={accentColor}
+                              allowDownload
+                            />
+                          )}
                           {preuve.type === 'URL' && preuve.url && (
                             <Button asChild className={`w-full ${btnPrimary}`} style={{ fontFamily: "'Oswald', sans-serif" }}>
                               <Link href={preuve.url} target="_blank"><ExternalLink className="mr-2 h-4 w-4" />Voir le lien</Link>

@@ -92,11 +92,11 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
             src={project.featured_image}
             alt={project.title}
             fill
-            className="object-cover opacity-50 group-hover:opacity-65 transition-opacity duration-500 group-hover:scale-105 transition-transform"
+            className="object-cover opacity-75 group-hover:opacity-90 transition-opacity duration-500 group-hover:scale-105 transition-transform"
           />
           <div className={`absolute inset-0 bg-gradient-to-t ${
             isDark
-              ? 'from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent'
+              ? 'from-[#0a0a0a]/90 via-[#0a0a0a]/30 to-transparent'
               : 'from-white/90 via-white/60 to-transparent'
           }`} />
         </div>

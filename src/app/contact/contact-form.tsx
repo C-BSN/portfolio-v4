@@ -7,7 +7,7 @@ import { Send, Mail, MapPin, Calendar, CheckCircle, Linkedin, Instagram } from '
 import Link from 'next/link'
 import { NeonTitle } from '@/components/effects/NeonTitle'
 
-type FormState = 'idle' | 'sending' | 'sent'
+type FormState = 'idle' | 'sending' | 'sent' | 'error'
 
 export default function ContactForm() {
   const [formState, setFormState] = useState<FormState>('idle')
@@ -32,21 +32,20 @@ export default function ContactForm() {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormState('sending')
-    const subject = encodeURIComponent(formData.subject || `Demande de contact - ${formData.type || 'Projet'}`)
-    const body = encodeURIComponent(
-      `Bonjour Corentin,\n\nJe me permets de vous contacter.\n\n` +
-      `Nom : ${formData.name}\nEmail : ${formData.email}\n` +
-      (formData.type ? `Type de projet : ${formData.type}\n` : '') +
-      (formData.subject ? `Objet : ${formData.subject}\n` : '') +
-      `\nMessage :\n${formData.message}\n\nCordialement,\n${formData.name}`
-    )
-    setTimeout(() => {
-      window.location.href = `mailto:corentinbassonpro@gmail.com?subject=${subject}&body=${body}`
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      if (!res.ok) throw new Error()
       setFormState('sent')
-    }, 400)
+    } catch {
+      setFormState('error')
+    }
   }
 
   const fontStyle = { fontFamily: "'Oswald', sans-serif" }
@@ -98,14 +97,11 @@ export default function ContactForm() {
               >
                 <CheckCircle className="w-16 h-16 mx-auto mb-6 text-green-400" />
                 <h2 className="text-3xl font-bold uppercase mb-4" style={fontStyle}>
-                  Votre client mail s'est ouvert
+                  Message envoyé !
                 </h2>
                 <p className="text-lg opacity-70 mb-8" style={fontStyle}>
-                  Si votre messagerie ne s'est pas ouverte automatiquement, envoyez directement votre message à :
+                  Votre message a bien été reçu. Je vous répondrai dans les plus brefs délais.
                 </p>
-                <a href="mailto:corentinbassonpro@gmail.com" className={`${emailHighlight} text-lg underline underline-offset-4 hover:opacity-80 transition-opacity`} style={fontStyle}>
-                  corentinbassonpro@gmail.com
-                </a>
                 <div className="mt-10">
                   <button
                     onClick={() => { setFormState('idle'); setFormData({ name: '', email: '', subject: '', type: '', message: '' }) }}
@@ -113,6 +109,33 @@ export default function ContactForm() {
                     style={fontStyle}
                   >
                     Nouveau message
+                  </button>
+                </div>
+              </motion.div>
+            ) : formState === 'error' ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
+                className={`border p-12 text-center ${borderBox} ${boxBg}`}
+              >
+                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center rounded-full border-2 border-red-400">
+                  <span className="text-red-400 text-3xl font-bold">!</span>
+                </div>
+                <h2 className="text-3xl font-bold uppercase mb-4" style={fontStyle}>
+                  Une erreur est survenue
+                </h2>
+                <p className="text-lg opacity-70 mb-4" style={fontStyle}>
+                  L'envoi a échoué. Vous pouvez me contacter directement à :
+                </p>
+                <a href="mailto:corentinbassonpro@gmail.com" className={`${emailHighlight} text-lg underline underline-offset-4 hover:opacity-80 transition-opacity`} style={fontStyle}>
+                  corentinbassonpro@gmail.com
+                </a>
+                <div className="mt-10">
+                  <button
+                    onClick={() => setFormState('idle')}
+                    className={`${btnPrimary} px-8 py-3 uppercase tracking-widest`}
+                    style={fontStyle}
+                  >
+                    Réessayer
                   </button>
                 </div>
               </motion.div>
@@ -161,7 +184,7 @@ export default function ContactForm() {
                   style={fontStyle}
                 >
                   {formState === 'sending' ? (
-                    <><div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />Ouverture...</>
+                    <><div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />Envoi en cours...</>
                   ) : (
                     <><Send className="w-5 h-5" />Envoyer le message</>
                   )}
