@@ -1,4 +1,4 @@
-import ProjectsPageManga from "./page-manga"
+import ProjectsPageManga from "./_components/ProjectsPage"
 
 export default function ProjectsPage() {
   return <ProjectsPageManga />

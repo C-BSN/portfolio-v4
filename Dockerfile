@@ -16,20 +16,19 @@ WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
 
 # Non-root user for security
-RUN npm install -g npm@latest && \
-    addgroup --system --gid 1001 nodejs && \
+RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder --chown=nextjs:nodejs /app/package*.json ./
-
-RUN npm ci --omit=dev
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["node", "server.js"]

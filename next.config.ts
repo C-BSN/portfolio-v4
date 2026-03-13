@@ -2,18 +2,20 @@ import type { NextConfig } from "next";
 
 /** @type {import('next').NextConfig} */
 const nextConfig: NextConfig = {
+  output: 'standalone',
   trailingSlash: true,
-  images: {
-    unoptimized: true,
-  },
-  // Optimisations de performance
   reactStrictMode: true,
-  
-  // Configuration compiler pour optimiser la production
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+      },
+    ],
+  },
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
-
   turbopack: {},
 }
 

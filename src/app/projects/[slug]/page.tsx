@@ -1,6 +1,6 @@
 import { getProjectData, getProjectSlugs, getAllProjects } from "@/lib/content"
 import { notFound } from "next/navigation"
-import ProjectPageManga from "./page-manga"
+import ProjectPageManga from "./_components/ProjectPage"
 
 interface ProjectPageProps {
   params: Promise<{
@@ -31,13 +31,27 @@ export async function generateMetadata({ params }: ProjectPageProps) {
     }
   }
 
+  const description = project.excerpt || `Projet créatif par Corentin Basson`
+
   return {
     title: project.title,
-    description: project.excerpt,
+    description,
+    alternates: {
+      canonical: `/projects/${slug}/`,
+    },
     openGraph: {
       title: project.title,
-      description: project.excerpt,
-      images: project.featured_image ? [project.featured_image] : [],
+      description,
+      type: "article",
+      url: `/projects/${slug}/`,
+      locale: "fr_FR",
+      siteName: "Corentin Basson",
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title: project.title,
+      description,
+      creator: "@cbsn_pics",
     },
   }
 }

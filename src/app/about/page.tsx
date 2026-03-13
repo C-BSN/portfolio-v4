@@ -1,5 +1,5 @@
 import { getPageData, type AboutData } from "@/lib/content"
-import AboutManga from "./page-manga"
+import AboutManga from "./_components/AboutPage"
 
 export const metadata = {
   title: "À propos",

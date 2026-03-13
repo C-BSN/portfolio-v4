@@ -14,35 +14,58 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cbsn-pics.com"),
   title: {
     default: "Corentin Basson - Portfolio Créatif",
-    template: "%s | Corentin Basson"
+    template: "%s | Corentin Basson",
   },
-  description: "Corentin Basson - Portfolio créatif et artistique. Découvrez mes créations en design graphique, identité visuelle, photographie et plus encore.",
-  keywords: ["CBSN", "PICS", "portfolio", "créatif", "design", "photographie", "identité visuelle", "art"],
-  authors: [{ name: "Corentin Basson" }],
+  description:
+    "Corentin Basson — Portfolio créatif. Design graphique, identité visuelle, photographie et direction artistique.",
+  keywords: [
+    "Corentin Basson",
+    "CBSN",
+    "portfolio",
+    "design graphique",
+    "identité visuelle",
+    "photographie",
+    "direction artistique",
+    "créatif",
+  ],
+  authors: [{ name: "Corentin Basson", url: "https://cbsn-pics.com" }],
   creator: "Corentin Basson",
   icons: {
     icon: "/logo-cbsn-v4.png",
     shortcut: "/logo-cbsn-v4.png",
-    apple: "/logo-cbsn-v4.png"
+    apple: "/logo-cbsn-v4.png",
+  },
+  alternates: {
+    canonical: "/",
   },
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://cbsn-pics.com",
+    url: "/",
     title: "Corentin Basson - Portfolio Créatif",
-    description: "Découvrez mes créations en design graphique, identité visuelle, photographie et plus encore.",
+    description:
+      "Design graphique, identité visuelle, photographie et direction artistique.",
     siteName: "Corentin Basson",
   },
   twitter: {
     card: "summary_large_image",
     title: "Corentin Basson - Portfolio Créatif",
-    description: "Découvrez mes créations en design graphique, identité visuelle, photographie et plus encore.",
+    description:
+      "Design graphique, identité visuelle, photographie et direction artistique.",
+    creator: "@cbsn_pics",
   },
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -53,14 +76,27 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={inter.variable} suppressHydrationWarning>
-      <body className="font-sans antialiased min-h-screen flex flex-col" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body
+        className="font-sans antialiased min-h-screen flex flex-col"
+        suppressHydrationWarning
+      >
         <Providers>
           <GlobalEffectsWrapper />
           <SmoothScroll>
             <HeaderManga />
-            <main className="flex-1 relative z-10">
-              {children}
-            </main>
+            <main className="flex-1 relative z-10">{children}</main>
             <FooterManga />
           </SmoothScroll>
         </Providers>

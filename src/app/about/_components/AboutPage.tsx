@@ -77,6 +77,7 @@ interface AboutMangaProps {
 export default function AboutManga({ pageData }: AboutMangaProps) {
   const { resolvedTheme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true) }, [])
 
   const isDark = !mounted || resolvedTheme === 'dark'
