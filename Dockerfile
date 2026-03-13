@@ -2,6 +2,7 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+RUN npm install -g npm@latest
 COPY package*.json ./
 RUN npm ci
 
@@ -17,7 +18,8 @@ ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
 # Non-root user for security
-RUN addgroup --system --gid 1001 nodejs && \
+RUN npm install -g npm@latest && \
+    addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nextjs
 
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
