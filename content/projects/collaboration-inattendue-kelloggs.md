@@ -27,7 +27,7 @@ gallery:
     - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759398671/Carte_ticket_Bruno_hfpie3.png
 duration: 2 mois
 status: Terminé
-project_url: ""
+project_url: "/projects/collaboration-inattendue-kelloggs/landing-page"
 cibles: "Cœur de cible : jeunes adultes et adolescents (12-25 ans), fans de Rosé,
   Bad Bunny et Bruno Mars, actifs sur les réseaux sociaux. Cible principale :
   jeunes adultes 18-30 ans. Cible secondaire : enfants 6-12 ans et parents

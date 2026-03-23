@@ -11,6 +11,8 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import type { Project } from "@/lib/content"
 import { NeonTitle } from "@/components/effects/NeonTitle"
+import { KelloggsBtsCaseStudy } from "./KelloggsBtsCaseStudy"
+import { LiloStitchBtsCaseStudy } from "./LiloStitchBtsCaseStudy"
 
 import { PdfViewer } from "@/components/ui/pdf-viewer"
 import dynamic from "next/dynamic"
@@ -139,6 +141,9 @@ export default function ProjectPageManga({ project, previousProject, nextProject
     ? 'border-2 border-white/40 bg-black/40 backdrop-blur-sm hover:bg-black/60 text-white'
     : 'border-2 border-[#1a2f5a]/30 bg-white/70 backdrop-blur-sm hover:bg-white/90 text-[#1a2f5a]'
 
+  const isKelloggsCaseStudy = project.slug === 'collaboration-inattendue-kelloggs'
+  const isLiloStitchCaseStudy = project.slug === 'lilo-stitch'
+
   return (
     <div className="min-h-screen relative">
       {/* Background */}
@@ -196,6 +201,40 @@ export default function ProjectPageManga({ project, previousProject, nextProject
           </motion.div>
 
           <div className="max-w-7xl mx-auto">
+            {isKelloggsCaseStudy ? (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                <KelloggsBtsCaseStudy
+                  project={project}
+                  isDark={isDark}
+                  textColor={textColor}
+                  accentColor={accentColor}
+                  headingColor={headingColor}
+                  h2Class={h2Class}
+                  panelBg={panelBg}
+                  panelBorder={panelBorder}
+                  innerBorder={innerBorder}
+                  innerBg={innerBg}
+                  sidebarBorder={sidebarBorder}
+                  btnPrimary={btnPrimary}
+                />
+              </motion.div>
+            ) : isLiloStitchCaseStudy ? (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                <LiloStitchBtsCaseStudy
+                  project={project}
+                  isDark={isDark}
+                  textColor={textColor}
+                  accentColor={accentColor}
+                  headingColor={headingColor}
+                  h2Class={h2Class}
+                  panelBg={panelBg}
+                  panelBorder={panelBorder}
+                  innerBorder={innerBorder}
+                  innerBg={innerBg}
+                  btnPrimary={btnPrimary}
+                />
+              </motion.div>
+            ) : (
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
               {/* Contenu principal */}
@@ -363,6 +402,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
                 </div>
               </motion.div>
             </div>
+            )}
           </div>
 
           {/* Navigation entre projets */}
