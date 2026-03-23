@@ -13,6 +13,7 @@ import type { Project } from "@/lib/content"
 import { NeonTitle } from "@/components/effects/NeonTitle"
 import { KelloggsBtsCaseStudy } from "./KelloggsBtsCaseStudy"
 import { LiloStitchBtsCaseStudy } from "./LiloStitchBtsCaseStudy"
+import { GlowDayBtsCaseStudy } from "./GlowDayBtsCaseStudy"
 
 import { PdfViewer } from "@/components/ui/pdf-viewer"
 import dynamic from "next/dynamic"
@@ -143,6 +144,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
 
   const isKelloggsCaseStudy = project.slug === 'collaboration-inattendue-kelloggs'
   const isLiloStitchCaseStudy = project.slug === 'lilo-stitch'
+  const isGlowDayCaseStudy = project.slug === 'glow-day-edn'
 
   return (
     <div className="min-h-screen relative">
@@ -221,6 +223,22 @@ export default function ProjectPageManga({ project, previousProject, nextProject
             ) : isLiloStitchCaseStudy ? (
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
                 <LiloStitchBtsCaseStudy
+                  project={project}
+                  isDark={isDark}
+                  textColor={textColor}
+                  accentColor={accentColor}
+                  headingColor={headingColor}
+                  h2Class={h2Class}
+                  panelBg={panelBg}
+                  panelBorder={panelBorder}
+                  innerBorder={innerBorder}
+                  innerBg={innerBg}
+                  btnPrimary={btnPrimary}
+                />
+              </motion.div>
+            ) : isGlowDayCaseStudy ? (
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
+                <GlowDayBtsCaseStudy
                   project={project}
                   isDark={isDark}
                   textColor={textColor}
