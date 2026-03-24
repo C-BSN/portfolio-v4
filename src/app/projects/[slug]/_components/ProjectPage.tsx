@@ -67,7 +67,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
   const innerBorder = isDark ? 'border-white/20' : 'border-[#1a2f5a]/15'
   const innerBg = isDark ? 'bg-white/5' : 'bg-[#1a2f5a]/5'
   const sidebarBorder = isDark ? 'border-white/10' : 'border-[#1a2f5a]/10'
-  const badgeCls = `border uppercase tracking-wider ${isDark ? 'border-white/30 bg-white/10' : 'border-[#1a2f5a]/30 bg-[#1a2f5a]/5 text-[#1a2f5a]'}`
+  const badgeCls = `border uppercase tracking-wider backdrop-blur-sm ${isDark ? 'border-white/40 bg-black/45 text-[#F0F0F0] shadow-[0_0_20px_rgba(0,0,0,0.25)]' : 'border-[#1a2f5a]/30 bg-white/70 text-[#1a2f5a]'}`
 
   // Build body HTML
   const buildBodyHtml = (body: string) =>
@@ -159,7 +159,7 @@ export default function ProjectPageManga({ project, previousProject, nextProject
       )}
 
       {/* Contenu */}
-      <div className="relative z-10 py-12">
+      <div className="relative z-10 px-0 pt-28 pb-12 md:pt-32">
         <div className="max-w-7xl mx-auto w-full px-4">
 
           {/* Retour */}
