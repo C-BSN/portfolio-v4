@@ -309,34 +309,16 @@ export function KelloggsBtsCaseStudy({
 
   const proofCards = [
     {
-      title: "Mapping de positionnement",
-      description:
-        "Montre comment la collaboration se situe entre edition limitee, univers pop et desirabilite produit.",
-      status: "placeholder",
-      label: "Document a inserer",
-    },
-    {
       title: "Definition des cibles",
       description:
         "Prouve le travail de segmentation et la capacite a faire correspondre publics, usages et messages.",
-      status: "available",
-      label: "Section disponible",
       href: "#strategie",
       actionLabel: "Voir la strategie",
-    },
-    {
-      title: "Moodboard",
-      description:
-        "Justifie la direction artistique, les influences visuelles et la coherence entre romantisme pop et edition collector.",
-      status: "placeholder",
-      label: "Document a inserer",
     },
     {
       title: "Copy strategie",
       description:
         "Demontre la formalisation du message: promesse, preuve, benefices et ton de la campagne.",
-      status: "available",
-      label: "Section disponible",
       href: "#copy-strategie",
       actionLabel: "Voir la copy strategie",
     },
@@ -344,8 +326,6 @@ export function KelloggsBtsCaseStudy({
       title: "Maquettes / packagings",
       description:
         "Prouvent la traduction concrete de la strategie sur des supports visuels et produits coherents.",
-      status: "available",
-      label: "Galerie disponible",
       href: "#galerie",
       actionLabel: "Voir la galerie",
     },
@@ -353,8 +333,6 @@ export function KelloggsBtsCaseStudy({
       title: "Landing page",
       description:
         "Illustre la logique de parcours, de conversion et de prolongement digital de la campagne.",
-      status: resolvedProjectUrl ? "external" : "placeholder",
-      label: resolvedProjectUrl ? "Lien disponible" : "Lien a ajouter",
       href: resolvedProjectUrl || undefined,
       actionLabel: resolvedProjectUrl ? "Ouvrir la landing page" : undefined,
     },
@@ -362,12 +340,10 @@ export function KelloggsBtsCaseStudy({
       title: "Dossier final PDF",
       description:
         "Regroupe l'ensemble de la demarche, des choix créatifs et des productions pour une lecture complete du projet.",
-      status: finalPdfUrl ? "pdf" : "placeholder",
-      label: finalPdfUrl ? "PDF disponible" : "PDF a ajouter",
       href: finalPdfUrl ? fixCloudinaryPdfUrl(finalPdfUrl) : undefined,
       actionLabel: finalPdfUrl ? "Ouvrir le dossier" : undefined,
     },
-  ]
+  ].filter((proof) => proof.href && proof.actionLabel)
 
   const qualityCriteria = [
     "Cohérence graphique entre les packagings, les contenus musicaux et la landing page.",
@@ -983,9 +959,9 @@ export function KelloggsBtsCaseStudy({
       <SectionShell
         id="preuves"
         tone="strategie"
-        eyebrow="Preuves de demarche"
+        eyebrow="Preuves"
         title="Des preuves structurees pour documenter la methode"
-        intro="Cette section rassemble les elements qui permettent a un examinateur de verifier la logique du projet, meme lorsque certains documents sont encore a remplacer par leurs versions finales."
+        intro="Cette section rassemble les elements qui permettent de verifier la logique du projet a travers les supports deja disponibles."
         isDark={isDark}
         textColor={textColor}
         headingColor={headingColor}
@@ -996,30 +972,10 @@ export function KelloggsBtsCaseStudy({
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {proofCards.map((proof) => (
             <article key={proof.title} className={`rounded-2xl border ${innerBorder} ${innerBg} p-5 flex flex-col`}>
-              <div className="flex items-start justify-between gap-3 mb-4">
-                <div>
-                  <Badge
-                    className={`mb-3 border uppercase tracking-wide ${isDark ? "border-white/20 bg-white/10 text-white" : "border-[#1a2f5a]/20 bg-white/70 text-[#1a2f5a]"}`}
-                    style={{ fontFamily: "'Oswald', sans-serif" }}
-                  >
-                    Preuve de demarche
-                  </Badge>
-                  <h3 className="text-lg font-bold" style={{ fontFamily: "'Oswald', sans-serif", color: headingColor }}>
-                    {proof.title}
-                  </h3>
-                </div>
-                <Badge
-                  className={`border ${proof.status === "placeholder"
-                    ? isDark
-                      ? "border-white/15 bg-white/5 text-white/70"
-                      : "border-[#1a2f5a]/15 bg-white/60 text-[#1a2f5a]/70"
-                    : isDark
-                      ? "border-cyan-400/30 bg-cyan-400/10 text-cyan-100"
-                      : "border-[#1a2f5a]/20 bg-[#1a2f5a]/8 text-[#1a2f5a]"}`}
-                  style={{ fontFamily: "'Oswald', sans-serif" }}
-                >
-                  {proof.label}
-                </Badge>
+              <div className="mb-4">
+                <h3 className="text-lg font-bold" style={{ fontFamily: "'Oswald', sans-serif", color: headingColor }}>
+                  {proof.title}
+                </h3>
               </div>
 
               <p className="text-sm leading-relaxed mb-5" style={{ color: textColor }}>
@@ -1027,25 +983,19 @@ export function KelloggsBtsCaseStudy({
               </p>
 
               <div className="mt-auto">
-                {proof.href && proof.actionLabel ? (
-                  <Button asChild className={`w-full ${btnPrimary}`} style={{ fontFamily: "'Oswald', sans-serif" }}>
-                    {proof.status === "external" || proof.status === "pdf" ? (
-                      <Link href={proof.href} target="_blank" rel="noopener noreferrer">
-                        {proof.status === "pdf" ? <Download className="mr-2 h-4 w-4" /> : <ExternalLink className="mr-2 h-4 w-4" />}
-                        {proof.actionLabel}
-                      </Link>
-                    ) : (
-                      <a href={proof.href}>
-                        <ArrowRight className="mr-2 h-4 w-4" />
-                        {proof.actionLabel}
-                      </a>
-                    )}
-                  </Button>
-                ) : (
-                  <div className={`rounded-xl border border-dashed ${sidebarBorder} p-4 text-sm ${subtleTextClass}`}>
-                    Emplacement pret a accueillir le document final.
-                  </div>
-                )}
+                <Button asChild className={`w-full ${btnPrimary}`} style={{ fontFamily: "'Oswald', sans-serif" }}>
+                  {proof.href?.startsWith("#") ? (
+                    <a href={proof.href}>
+                      <ArrowRight className="mr-2 h-4 w-4" />
+                      {proof.actionLabel}
+                    </a>
+                  ) : (
+                    <Link href={proof.href!} target="_blank" rel="noopener noreferrer">
+                      {proof.href?.includes(".pdf") ? <Download className="mr-2 h-4 w-4" /> : <ExternalLink className="mr-2 h-4 w-4" />}
+                      {proof.actionLabel}
+                    </Link>
+                  )}
+                </Button>
               </div>
             </article>
           ))}

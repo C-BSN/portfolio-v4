@@ -352,12 +352,6 @@ export function GlowDayBtsCaseStudy({
 
           {pdfUrl && (
             <div className={`rounded-2xl border ${innerBorder} ${innerBg} p-4`}>
-              <p
-                className="mb-3 text-xs uppercase tracking-[0.25em]"
-                style={{ fontFamily: "'Oswald', sans-serif", color: accentColor }}
-              >
-                Preuve principale
-              </p>
               <PdfViewer
                 url={pdfUrl}
                 title="Dossier sponsoring Glow Day"

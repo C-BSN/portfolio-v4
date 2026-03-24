@@ -147,11 +147,6 @@ const quickRead = [
     text: "Un dispositif événementiel mêlant communication visuelle, animations sur site, goodies et activation digitale via Stitch Invaders.",
     icon: <Megaphone className="h-5 w-5" />,
   },
-  {
-    title: "Preuve de méthode",
-    text: "Veille, étude consommateurs, analyse concurrentielle, persona, choix du créneau, parcours d'expérience et critères d'évaluation.",
-    icon: <CheckCircle2 className="h-5 w-5" />,
-  },
 ]
 
 const keyFigures = [
