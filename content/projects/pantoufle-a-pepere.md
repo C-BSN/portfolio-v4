@@ -14,9 +14,7 @@ tools:
   - Adobe InDesign
   - Figma
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1770706454/Affiche_promo_pantoufle_s9oaud.png
-gallery:
-  - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1770706454/Affiche_promo_pantoufle_s9oaud.png
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774525156/air_austral_ualfi3.png
 duration: 2 mois
 status: Terminé
 project_url: ""
@@ -62,6 +60,8 @@ excerpt: Conception d'une campagne print visant à promouvoir le site e-commerce
   La Pantoufle à Pépère, en mettant en avant l'accessibilité digitale, le
   confort et l'authenticité de l'artisanat français.
 published: true
+gallery:
+  - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1770706454/Affiche_promo_pantoufle_s9oaud.png
 ---
 ## Le Contexte du Projet
 

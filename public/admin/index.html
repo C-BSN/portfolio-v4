@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <title>Portfolio CMS</title>
+  </head>
+  <body>
+    <script>
+      window.CMS_MANUAL_INIT = true
+    </script>
+    <script src="https://unpkg.com/decap-cms@3.3.3/dist/decap-cms.js"></script>
+    <script src="https://media-library.cloudinary.com/global/all.js"></script>
+    <script>
+      CMS.init({
+        config: {
+          backend: {
+            name: 'git-gateway',
+            branch: 'main'
+          },
+          local_backend: true,
+          media_library: {
+            name: 'cloudinary',
+            config: {
+              cloud_name: 'dcrgwzlnc',
+              api_key: '772966115598952'
+            }
+          },
+          media_folder: 'public/images/projects',
+          public_folder: '/images/projects',
+          collections: [
+            {
+              name: 'projects',
+              label: 'Projets',
+              label_singular: 'Projet',
+              folder: 'content/projects',
+              create: true,
+              slug: '{{slug}}',
+              identifier_field: 'title',
+              fields: [
+                { label: 'Ordre', name: 'ordre', widget: 'number', required: false },
+                { label: 'Titre', name: 'title', widget: 'string' },
+                { label: 'Date', name: 'date', widget: 'datetime' },
+                { label: 'Annonceur', name: 'annonceur', widget: 'string', required: false },
+                {
+                  label: 'Contexte',
+                  name: 'contexte',
+                  widget: 'select',
+                  options: ['École', 'Professionnel', 'Personnel'],
+                  required: false
+                },
+                { label: 'Contexte (détail)', name: 'contexte_autre', widget: 'text', required: false },
+                {
+                  label: 'Types de projet',
+                  name: 'project_type',
+                  widget: 'list',
+                  field: { label: 'Type', name: 'type', widget: 'string' },
+                  required: false
+                },
+                {
+                  label: 'Outils',
+                  name: 'tools',
+                  widget: 'list',
+                  field: { label: 'Outil', name: 'outil', widget: 'string' },
+                  required: false
+                },
+                {
+                  label: 'Image principale',
+                  name: 'featured_image',
+                  widget: 'list',
+                  max: 1,
+                  field: { label: 'URL Cloudinary', name: 'url', widget: 'image' },
+                  required: false
+                },
+                {
+                  label: 'Galerie d\'images',
+                  name: 'gallery_images',
+                  widget: 'list',
+                  field: { label: 'Image', name: 'url', widget: 'image' },
+                  required: false
+                },
+                { label: 'Durée', name: 'duration', widget: 'string', required: false },
+                {
+                  label: 'Statut',
+                  name: 'status',
+                  widget: 'select',
+                  options: ['Terminé', 'En cours', 'Concept'],
+                  default: 'Terminé',
+                  required: false
+                },
+                { label: 'PDF Portfolio (URL)', name: 'pdf_portfolio', widget: 'string', required: false, default: '' },
+                { label: 'URL du projet', name: 'project_url', widget: 'string', required: false, default: '' },
+                { label: 'Cibles', name: 'cibles', widget: 'text', required: false },
+                { label: 'Stratégie créative', name: 'strategie_creative', widget: 'text', required: false },
+                {
+                  label: 'Objectifs cognitifs',
+                  name: 'objectifs_cognitifs',
+                  widget: 'list',
+                  field: { label: 'Objectif', name: 'objectif', widget: 'string' },
+                  required: false
+                },
+                {
+                  label: 'Objectifs affectifs',
+                  name: 'objectifs_affectifs',
+                  widget: 'list',
+                  field: { label: 'Objectif', name: 'objectif', widget: 'string' },
+                  required: false
+                },
+                {
+                  label: 'Objectifs conatifs',
+                  name: 'objectifs_conatifs',
+                  widget: 'list',
+                  field: { label: 'Objectif', name: 'objectif', widget: 'string' },
+                  required: false
+                },
+                {
+                  label: 'Preuves',
+                  name: 'preuves',
+                  widget: 'list',
+                  required: false,
+                  fields: [
+                    {
+                      label: 'Type',
+                      name: 'type',
+                      widget: 'select',
+                      options: ['PDF', 'URL', 'Image']
+                    },
+                    { label: 'Description', name: 'description', widget: 'string', required: false },
+                    {
+                      label: 'Fichiers PDF (URLs Cloudinary)',
+                      name: 'pdf',
+                      widget: 'list',
+                      required: false,
+                      field: { label: 'Fichier', name: 'url', widget: 'image' }
+                    },
+                    { label: 'URL (lien externe ou page)', name: 'url', widget: 'string', required: false }
+                  ]
+                },
+                { label: 'Résumé', name: 'excerpt', widget: 'text', required: false },
+                { label: 'Publié', name: 'published', widget: 'boolean', default: true },
+                { label: 'Contenu', name: 'body', widget: 'markdown', required: false }
+              ]
+            }
+          ]
+        }
+      })
+    </script>
+  </body>
+</html>

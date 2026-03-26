@@ -19,11 +19,7 @@ tools:
   - CANVA
   - V0
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172092/Lilo_20_26_20Stitch_xio5fn.jpg
-gallery:
-  - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172092/Lilo_20_26_20Stitch_xio5fn.jpg
-    - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172285/Lilo_20_26_20Stitch_r9xxuo.jpg
-    - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172697/4x3_tmuokq.jpg
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172697/4x3_tmuokq.jpg
 duration: 2 mois
 status: Terminé
 pdf_portfolio: ""
@@ -86,6 +82,10 @@ excerpt: Organisation et communication d'une projection événementielle Disney
   et stratégie multi-canal pour une expérience cinéma mémorable et
   différenciante.
 published: true
+gallery:
+  - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172092/Lilo_20_26_20Stitch_xio5fn.jpg
+    - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172285/Lilo_20_26_20Stitch_r9xxuo.jpg
+    - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1772172697/4x3_tmuokq.jpg
 ---
 
 ## Le Contexte du Projet
