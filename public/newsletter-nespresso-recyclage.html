@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Newsletter Nespresso – Le Recyclage, de A à Z</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #f2f0eb; font-family: Arial, Helvetica, sans-serif; color: #1a1a1a; }
+  a { color: #2c6e3f; }
+  .wrapper { max-width: 620px; margin: 0 auto; background: #ffffff; }
+
+  /* LOGO BAR */
+  .top-bar { background: #fff; border-bottom: 1px solid #e0ddd6; padding: 18px 30px; text-align: center; }
+  .logo-n { width: 44px; height: 44px; background: #1a1a1a; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; }
+  .logo-n span { color: #fff; font-family: Georgia, serif; font-size: 22px; font-weight: bold; font-style: italic; }
+
+  /* HERO */
+  .hero { background: #d6e8d9; padding: 36px 30px 28px; text-align: center; }
+  .hero h1 { font-family: Georgia, serif; font-size: 24px; font-weight: bold; color: #1a1a1a; line-height: 1.35; margin-bottom: 10px; }
+  .hero p { font-size: 13px; color: #3a3a3a; line-height: 1.65; max-width: 460px; margin: 0 auto; }
+
+  /* CYCLE */
+  .cycle-section { background: #f7f5f0; padding: 32px 30px; }
+  .section-label { text-align: center; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #6a6a6a; margin-bottom: 20px; }
+  .cycle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cycle-box { background: #fff; border: 1px solid #d8d5ce; border-radius: 6px; padding: 16px 14px; display: flex; align-items: flex-start; gap: 10px; }
+  .cnum { font-size: 20px; font-family: Georgia, serif; font-weight: bold; color: #2c6e3f; min-width: 18px; line-height: 1; }
+  .ctext h3 { font-size: 11px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px; }
+  .ctext p { font-size: 10px; color: #5a5a5a; line-height: 1.55; }
+
+  /* AAA SPLIT */
+  .aaa-section { display: grid; grid-template-columns: 1fr 1fr; }
+  .aaa-left { background: #2c6e3f; padding: 26px 22px; color: #fff; }
+  .aaa-left h2 { font-family: Georgia, serif; font-size: 17px; font-weight: bold; margin-bottom: 5px; line-height: 1.3; }
+  .aaa-left .sub { font-size: 11px; font-style: italic; color: #b8d9c2; margin-bottom: 12px; }
+  .aaa-left p { font-size: 11px; line-height: 1.65; color: #d8f0e0; margin-bottom: 10px; }
+  .cols2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .cols2 h4 { font-size: 10px; font-weight: bold; color: #fff; text-decoration: underline; margin-bottom: 3px; }
+  .cols2 ul { list-style: none; }
+  .cols2 ul li { font-size: 10px; color: #c8e8d4; line-height: 1.6; padding-left: 8px; position: relative; }
+  .cols2 ul li::before { content: '-'; position: absolute; left: 0; color: #8ec4a2; }
+  .aaa-right { background: #e8f2eb; display: flex; align-items: center; justify-content: center; padding: 20px; }
+  .aaa-right-box { width: 100%; height: 190px; background: #c2dcc8; border-radius: 6px; display: flex; align-items: center; justify-content: center; }
+
+  /* CHIFFRES */
+  .carbon-section { padding: 30px 30px; background: #fff; }
+  .carbon-section h2 { font-family: Georgia, serif; font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px; text-align: center; line-height: 1.3; }
+  .carbon-section .csub { font-size: 11px; color: #5a5a5a; text-align: center; margin-bottom: 20px; }
+  .carbon-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .carbon-left h3, .carbon-right h3 { font-size: 11px; font-weight: bold; color: #1a1a1a; margin-bottom: 10px; text-decoration: underline; }
+  .ebar { margin-bottom: 9px; }
+  .elabel { font-size: 10px; color: #3a3a3a; margin-bottom: 3px; line-height: 1.4; }
+  .erow { display: flex; align-items: center; gap: 6px; }
+  .eline { height: 6px; border-radius: 3px; background: #2c6e3f; }
+  .epct { font-size: 10px; font-weight: bold; color: #2c6e3f; min-width: 28px; text-align: right; }
+  .carbon-right ul { list-style: none; }
+  .carbon-right ul li { font-size: 10px; color: #3a3a3a; line-height: 1.6; padding-left: 10px; position: relative; margin-bottom: 5px; }
+  .carbon-right ul li::before { content: '▶'; position: absolute; left: 0; color: #2c6e3f; font-size: 7px; top: 3px; }
+
+  /* COMMENT */
+  .recycle-section { background: #f7f5f0; padding: 28px 30px; }
+  .recycle-section h2 { font-family: Georgia, serif; font-size: 18px; font-weight: bold; color: #1a1a1a; margin-bottom: 18px; text-align: center; }
+  .rsteps { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .rstep { background: #fff; border: 1px solid #d8d5ce; border-radius: 6px; padding: 14px 12px; text-align: center; }
+  .rstep-icon { width: 36px; height: 36px; background: #e0f0e5; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; }
+  .rstep-icon svg { width: 18px; height: 18px; stroke: #2c6e3f; stroke-width: 1.5; fill: none; }
+  .rstep h4 { font-size: 11px; font-weight: bold; color: #1a1a1a; margin-bottom: 4px; }
+  .rstep p { font-size: 10px; color: #5a5a5a; line-height: 1.5; }
+
+  /* SECOND LIFE */
+  .second-life { background: #2c6e3f; padding: 24px 28px; display: flex; align-items: center; gap: 20px; }
+  .sl-content h2 { font-family: Georgia, serif; font-size: 16px; font-weight: bold; color: #fff; margin-bottom: 7px; line-height: 1.3; }
+  .sl-content p { font-size: 11px; color: #c8e8d4; line-height: 1.65; }
+
+  /* CTA */
+  .cta-block { padding: 26px 30px; text-align: center; background: #fff; border-top: 2px solid #2c6e3f; }
+  .cta-block p { font-size: 12px; color: #3a3a3a; margin-bottom: 14px; line-height: 1.6; }
+  .cta-btn { display: inline-block; background: #2c6e3f; color: #fff; font-size: 11px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; text-decoration: none; padding: 11px 26px; border-radius: 4px; }
+
+  /* WHAT ELSE */
+  .what-else { background: #1a1a1a; padding: 18px; text-align: center; }
+  .what-else p { font-family: Georgia, serif; font-size: 22px; font-style: italic; color: #fff; letter-spacing: 1px; }
+
+  /* FOOTER */
+  .footer { background: #f7f5f0; padding: 20px 28px; text-align: center; border-top: 1px solid #e0ddd6; }
+  .fsoc { display: flex; justify-content: center; gap: 12px; margin-bottom: 12px; }
+  .fsoc a { text-decoration: none; }
+  .fsoc a svg { width: 22px; height: 22px; stroke: #1a1a1a; stroke-width: 1.5; fill: none; display: block; }
+  .flogo { font-family: Georgia, serif; font-size: 13px; font-style: italic; letter-spacing: 3px; color: #1a1a1a; margin-bottom: 12px; display: block; }
+  .footer p { font-size: 9.5px; color: #7a7a7a; line-height: 1.75; }
+  .footer a { color: #2c6e3f; font-size: 9.5px; }
+
+  .divider { height: 1px; background: #e0ddd6; }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- LOGO -->
+  <div class="top-bar">
+    <div class="logo-n"><span>N</span></div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <!-- Recycling arrows SVG -->
+    <div style="margin-bottom:16px;">
+      <svg width="88" height="88" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Arrow 1 (top) -->
+        <path d="M50 6 L60 22 L55.5 22 L62 36 L74 36 L70 29 L80 29 L65 6 Z" fill="#2c6e3f"/>
+        <path d="M80 29 L74 36 L74 29 Z" fill="#2c6e3f"/>
+        <!-- Arrow 2 (bottom-right) -->
+        <path d="M50 6 L60 22 L55.5 22 L62 36 L74 36 L70 29 L80 29 L65 6 Z" fill="#2c6e3f" transform="rotate(120 50 50)"/>
+        <!-- Arrow 3 (bottom-left) -->
+        <path d="M50 6 L60 22 L55.5 22 L62 36 L74 36 L70 29 L80 29 L65 6 Z" fill="#2c6e3f" transform="rotate(240 50 50)"/>
+        <!-- Center N logo -->
+        <circle cx="50" cy="50" r="13" fill="#1a1a1a"/>
+        <text x="50" y="56" text-anchor="middle" font-size="14" font-family="Georgia" font-style="italic" font-weight="bold" fill="#fff">N</text>
+      </svg>
+    </div>
+    <h1>Le recyclage des capsules :<br>tout savoir de A à Z</h1>
+    <p>De votre machine à la prochaine vie de l'aluminium — le parcours complet de vos capsules Nespresso, étape par étape.</p>
+  </div>
+
+  <!-- CYCLE -->
+  <div class="cycle-section">
+    <p class="section-label">De la collecte au recyclage</p>
+    <div class="cycle-grid">
+      <div class="cycle-box">
+        <div class="cnum">1</div>
+        <div class="ctext">
+          <h3>Collecte des capsules usagées</h3>
+          <p>Rassemblez vos capsules dans un sac Nespresso dédié. Collecte en boutique, en point relais ou par sac pré-affranchi à déposer en boîte aux lettres.</p>
+        </div>
+      </div>
+      <div class="cycle-box">
+        <div class="cnum">2</div>
+        <div class="ctext">
+          <h3>Acheminement en centre de tri</h3>
+          <p>Les sacs sont envoyés vers des centres de traitement partenaires, en collaboration avec le groupe Barec — programme actif depuis 1991.</p>
+        </div>
+      </div>
+      <div class="cycle-box">
+        <div class="cnum">3</div>
+        <div class="ctext">
+          <h3>Séparation aluminium / marc</h3>
+          <p>Les capsules sont ouvertes mécaniquement. L'aluminium et le marc de café sont séparés, puis orientés vers leur filière de valorisation respective.</p>
+        </div>
+      </div>
+      <div class="cycle-box">
+        <div class="cnum">4</div>
+        <div class="ctext">
+          <h3>Deuxième vie — Projet Second Life</h3>
+          <p>L'aluminium est fondu en lingots. Le marc devient compost ou énergie. L'aluminium recyclé réapparaît sous forme d'objets du quotidien.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- POURQUOI RECYCLER + IMAGE -->
+  <div class="aaa-section">
+    <div class="aaa-left">
+      <h2>Pourquoi recycler l'aluminium ?</h2>
+      <p class="sub">Un matériau précieux et infini</p>
+      <p>L'aluminium est recyclable à l'infini sans perdre ses propriétés. Recycler une capsule consomme <strong>95 % moins d'énergie</strong> que d'extraire de l'aluminium brut de la nature.</p>
+      <p>Chaque capsule contient environ <strong>1 g d'aluminium</strong> de haute qualité. À l'échelle de millions de capsules consommées chaque jour, chaque gramme collecté représente une économie de ressources considérable.</p>
+      <p>Nespresso collecte et recycle les capsules dans plus de <strong>30 pays</strong> à travers le monde.</p>
+      <div class="cols2">
+        <div>
+          <h4>Europe</h4>
+          <ul>
+            <li>France</li>
+            <li>Suisse</li>
+            <li>Allemagne</li>
+            <li>Espagne</li>
+            <li>Italie</li>
+            <li>Royaume-Uni</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Monde</h4>
+          <ul>
+            <li>États-Unis</li>
+            <li>Canada</li>
+            <li>Australie</li>
+            <li>Japon</li>
+            <li>Brésil</li>
+            <li>+20 pays</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="aaa-right">
+      <div class="aaa-right-box">
+        <!-- Capsule illustration -->
+        <svg width="80" height="110" viewBox="0 0 80 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="20" y="10" width="40" height="12" rx="4" fill="#4a9060" opacity="0.7"/>
+          <path d="M16 22 Q14 60 20 85 Q28 100 40 102 Q52 100 60 85 Q66 60 64 22 Z" fill="#5aaa78" opacity="0.75"/>
+          <path d="M20 22 Q19 58 24 80 Q31 94 40 96 Q49 94 56 80 Q61 58 60 22 Z" fill="#7ac492" opacity="0.5"/>
+          <ellipse cx="40" cy="22" rx="22" ry="5" fill="#3a8050" opacity="0.6"/>
+          <ellipse cx="40" cy="98" rx="12" ry="3" fill="#3a8050" opacity="0.3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHIFFRES -->
+  <div class="carbon-section">
+    <h2>Le recyclage des capsules : les chiffres clés</h2>
+    <p class="csub">Ce que devient votre capsule une fois collectée</p>
+    <div class="carbon-grid">
+      <div class="carbon-left">
+        <h3>Taux de valorisation des matières</h3>
+        <div class="ebar">
+          <div class="elabel">Aluminium recyclé (part recyclée)</div>
+          <div class="erow"><div class="eline" style="width:80%"></div><div class="epct">80 %</div></div>
+        </div>
+        <div class="ebar">
+          <div class="elabel">Marc de café valorisé (compost/énergie)</div>
+          <div class="erow"><div class="eline" style="width:95%;background:#5aaa70;"></div><div class="epct" style="color:#5aaa70;">95 %</div></div>
+        </div>
+        <div class="ebar">
+          <div class="elabel">Énergie économisée vs. extraction brute</div>
+          <div class="erow"><div class="eline" style="width:95%;background:#8cc4a0;"></div><div class="epct" style="color:#8cc4a0;">95 %</div></div>
+        </div>
+        <div class="ebar">
+          <div class="elabel">Aluminium recyclé dans chaque capsule neuve</div>
+          <div class="erow"><div class="eline" style="width:80%;background:#3a7050;"></div><div class="epct" style="color:#3a7050;">80 %</div></div>
+        </div>
+      </div>
+      <div class="carbon-right">
+        <h3>Les engagements concrets</h3>
+        <ul>
+          <li><strong>Éco-conception :</strong> 80 % d'aluminium recyclé dès la fabrication de chaque capsule.</li>
+          <li><strong>Sacs pré-affranchis gratuits :</strong> retour postal sans frais pour tous les clients.</li>
+          <li><strong>+100 points de collecte</strong> en France, accessibles 6 jours sur 7.</li>
+          <li><strong>Second Life :</strong> aluminium recyclé → mobilier, vélos, ustensiles de cuisine.</li>
+          <li><strong>Marc valorisé :</strong> compost agricole, biogaz ou engrais naturel.</li>
+          <li><strong>Objectif 2025 :</strong> 100 % des capsules collectées et recyclées dans les pays partenaires.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMMENT RECYCLER -->
+  <div class="recycle-section">
+    <h2>Comment recycler vos capsules ?</h2>
+    <div class="rsteps">
+      <div class="rstep">
+        <div class="rstep-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h4>En boutique</h4>
+        <p>Déposez vos capsules dans l'une de nos 50 boutiques en France. Sacs de collecte gratuits sur place.</p>
+      </div>
+      <div class="rstep">
+        <div class="rstep-icon">
+          <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h4>Par sac postal</h4>
+        <p>Sac pré-affranchi gratuit à commander en ligne. Déposez-le simplement en boîte aux lettres.</p>
+      </div>
+      <div class="rstep">
+        <div class="rstep-icon">
+          <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h4>En point relais</h4>
+        <p>Plus de 100 000 points partenaires en France. Localisez le plus proche via l'appli Nespresso.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECOND LIFE -->
+  <div class="second-life">
+    <div style="min-width:60px;">
+      <svg width="60" height="60" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="40" cy="40" r="35" stroke="#8ec4a2" stroke-width="1.5" fill="none"/>
+        <path d="M40 12 L47 25 L43.5 25 L49 37 L58 37 L54.5 31 L61 31 L51 12 Z" fill="#fff" opacity="0.9"/>
+        <path d="M40 12 L47 25 L43.5 25 L49 37 L58 37 L54.5 31 L61 31 L51 12 Z" fill="#fff" opacity="0.9" transform="rotate(120 40 40)"/>
+        <path d="M40 12 L47 25 L43.5 25 L49 37 L58 37 L54.5 31 L61 31 L51 12 Z" fill="#fff" opacity="0.9" transform="rotate(240 40 40)"/>
+      </svg>
+    </div>
+    <div class="sl-content">
+      <h2>Donnez une seconde vie à vos capsules</h2>
+      <p>L'aluminium de vos capsules collectées est fondu, purifié et transformé en lingots. Ces lingots alimentent le projet <strong>Second Life</strong> : mobilier urbain, vélos, ustensiles de cuisine… ou retournent dans la fabrication des nouvelles capsules Nespresso. Le marc de café est acheminé vers des filières de compostage ou de production d'énergie renouvelable (biogaz).</p>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block">
+    <p>• <strong>Quoi d'autre ?</strong><br>Commandez dès maintenant votre sac de collecte gratuit et rejoignez les milliers de clients qui agissent pour la planète.</p>
+    <a href="#" class="cta-btn">Commander mon sac gratuit</a>
+  </div>
+
+  <!-- WHAT ELSE -->
+  <div class="what-else">
+    <p>WHAT ELSE ?</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="fsoc">
+      <a href="#" title="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+      <a href="#" title="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+      <a href="#" title="X"><svg viewBox="0 0 24 24"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a>
+    </div>
+    <span class="flogo">NESPRESSO</span>
+    <p>
+      Visuels non contractuels. Suggestion de présentation.<br>
+      • Quoi d'autre ?<br><br>
+      Vous avez reçu cet e-mail en tant que Client Nespresso. Si vous ne souhaitez plus recevoir d'e-mails, <a href="#">cliquez ici</a>.<br>
+      Si vous désirez contacter Nespresso, appelez le <strong>0 800 55 52 53</strong> — Service &amp; appel gratuits<br>
+      (disponibles du lundi au samedi de 8h à 20h, hors 1er mai et jours fériés).<br><br>
+      Conformément à la réglementation, vous disposez d'un droit d'accès, de rectification et de retrait des données<br>
+      vous concernant en vous adressant à Nespresso France — Service Protection des données personnelles — TSA 71623.<br>
+      En cas de réclamation non résolue, vous pouvez vous adresser à la <a href="#">CNIL</a>.
+    </p>
+  </div>
+
+</div>
+</body>
+</html>
