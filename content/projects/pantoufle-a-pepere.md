@@ -14,7 +14,7 @@ tools:
   - Adobe InDesign
   - Figma
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774525156/air_austral_ualfi3.png
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774605494/mkp_pantoufle_uocp81.png
 duration: 2 mois
 status: Terminé
 project_url: ""

@@ -3,11 +3,12 @@ ordre: 4
 title: Affiche Publicitaire - Jus de Fruit n'ALU
 date: 2024-01-15
 contexte: École
-project_type: Affiche publicitaire
+project_type:
+  - Affiche publicitaire
 tools:
   - Adobe Photoshop
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1769578152/Corentin_Basson_Affiche_Nalu_vzj2b6.jpg
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774605078/mkp_nalu_nqpnyn.png
 duration: 1 journée
 status: Terminé
 cibles: Grand public, consommateurs de jus de fruits naturels

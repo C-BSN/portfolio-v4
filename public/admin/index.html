@@ -47,7 +47,7 @@
                   label: 'Contexte',
                   name: 'contexte',
                   widget: 'select',
-                  options: ['École', 'Professionnel', 'Personnel'],
+                  options: ['École', 'Scolaire', 'Professionnel', 'Personnel', 'Alternance', 'Autre'],
                   required: false
                 },
                 { label: 'Contexte (détail)', name: 'contexte_autre', widget: 'text', required: false },
@@ -71,13 +71,6 @@
                   widget: 'list',
                   max: 1,
                   field: { label: 'URL Cloudinary', name: 'url', widget: 'image' },
-                  required: false
-                },
-                {
-                  label: 'Galerie d\'images',
-                  name: 'gallery_images',
-                  widget: 'list',
-                  field: { label: 'Image', name: 'url', widget: 'image' },
                   required: false
                 },
                 { label: 'Durée', name: 'duration', widget: 'string', required: false },

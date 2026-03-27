@@ -4,7 +4,8 @@ date: 2025-07-19T21:24:00.000+04:00
 annonceur: Danone
 contexte: Autre
 contexte_autre: Stage
-project_type: Identité visuelle
+project_type:
+  - Identité visuelle
 tools:
   - WordPress
   - PhotoShop

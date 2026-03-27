@@ -14,7 +14,49 @@ tools:
   - Illustrator
   - v0
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759401478/miniature_2_wffdpv.jpg
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774607393/mkp_kellogs_n2n7pj.png
+duration: 2 mois
+status: Terminé
+project_url: /projects/collaboration-inattendue-kelloggs/landing-page
+cibles: "Cœur de cible : jeunes adultes et adolescents (12-25 ans), fans de
+  Rosé, Bad Bunny et Bruno Mars, actifs sur les réseaux sociaux. Cible
+  principale : jeunes adultes 18-30 ans. Cible secondaire : enfants 6-12 ans et
+  parents 30-45 ans, amateurs de pop culture et de musique."
+strategie_creative: Associer trois céréales iconiques Kellogg's à trois artistes
+  internationaux dans le cadre d'une édition spéciale Saint-Valentin. Bad Bunny
+  pour Frosties (énergie brute et style audacieux), Rosé de BLACKPINK pour Miel
+  Pops (douceur et élégance), Bruno Mars pour Coco Pops (groove, nostalgie et
+  fun). Chaque duo artiste/céréale crée une cohérence visuelle et émotionnelle
+  forte, portée par un univers romantique et festif.
+objectifs_cognitifs:
+  - Faire connaître la collaboration tripartite Kellogg's x Bad Bunny, Rosé et
+    Bruno Mars
+  - Présenter les packagings collector et les produits dérivés de l'édition
+    Saint-Valentin
+  - Mettre en avant les singles exclusifs "Aime-moi" créés pour la collaboration
+objectifs_affectifs:
+  - Créer de la surprise et de l'émotion avec l'association inattendue
+    céréales/pop stars
+  - Générer un sentiment de désir autour des packagings collector et du ticket
+    d'or
+  - Renforcer l'attachement à la marque Kellogg's via un univers romantique et
+    festif
+objectifs_conatifs:
+  - Inciter à l'achat des boîtes collector pour tenter de remporter un ticket
+    d'or
+  - Encourager l'écoute des singles exclusifs via les QR codes sur les packagings
+  - Motiver l'inscription à la newsletter et la participation aux défis TikTok
+    et Instagram
+preuves:
+  - type: PDF
+    description: "Dossier "
+    pdf:
+      - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773398772/Collaboration_inattendue_-3_compressed_rvthq2.pdf
+excerpt: Édition spéciale Saint-Valentin imaginant Kellogg's en collaboration
+  avec Bad Bunny, Rosé (BLACKPINK) et Bruno Mars — trois artistes, trois
+  céréales, trois univers visuels distincts, réunis par un concept de ticket
+  d'or et des singles exclusifs.
+published: true
 gallery:
   - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759398672/Kelloggs_BAD_ir4bme.png
     - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759398675/POCHETTE_VINYLE_BADBUNNY_bfz4oo.png
@@ -25,41 +67,6 @@ gallery:
     - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759398636/Kelloggs_original_Bruno_2_lplw3m.png
     - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759398636/Carte_Ticket_Rose%CC%81_mcx1bj.png
     - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759398671/Carte_ticket_Bruno_hfpie3.png
-duration: 2 mois
-status: Terminé
-project_url: "/projects/collaboration-inattendue-kelloggs/landing-page"
-cibles: "Cœur de cible : jeunes adultes et adolescents (12-25 ans), fans de Rosé,
-  Bad Bunny et Bruno Mars, actifs sur les réseaux sociaux. Cible principale :
-  jeunes adultes 18-30 ans. Cible secondaire : enfants 6-12 ans et parents
-  30-45 ans, amateurs de pop culture et de musique."
-strategie_creative: Associer trois céréales iconiques Kellogg's à trois artistes
-  internationaux dans le cadre d'une édition spéciale Saint-Valentin. Bad Bunny
-  pour Frosties (énergie brute et style audacieux), Rosé de BLACKPINK pour Miel
-  Pops (douceur et élégance), Bruno Mars pour Coco Pops (groove, nostalgie et
-  fun). Chaque duo artiste/céréale crée une cohérence visuelle et émotionnelle
-  forte, portée par un univers romantique et festif.
-objectifs_cognitifs:
-  - Faire connaître la collaboration tripartite Kellogg's x Bad Bunny, Rosé et Bruno Mars
-  - Présenter les packagings collector et les produits dérivés de l'édition Saint-Valentin
-  - Mettre en avant les singles exclusifs "Aime-moi" créés pour la collaboration
-objectifs_affectifs:
-  - Créer de la surprise et de l'émotion avec l'association inattendue céréales/pop stars
-  - Générer un sentiment de désir autour des packagings collector et du ticket d'or
-  - Renforcer l'attachement à la marque Kellogg's via un univers romantique et festif
-objectifs_conatifs:
-  - Inciter à l'achat des boîtes collector pour tenter de remporter un ticket d'or
-  - Encourager l'écoute des singles exclusifs via les QR codes sur les packagings
-  - Motiver l'inscription à la newsletter et la participation aux défis TikTok et Instagram
-preuves:
-  - type: PDF
-    description: "Dossier "
-    pdf:
-      - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773398772/Collaboration_inattendue_-3_compressed_rvthq2.pdf
-excerpt: Édition spéciale Saint-Valentin imaginant Kellogg's en collaboration
-  avec Bad Bunny, Rosé (BLACKPINK) et Bruno Mars — trois artistes, trois
-  céréales, trois univers visuels distincts, réunis par un concept de ticket d'or
-  et des singles exclusifs.
-published: true
 ---
 
 ## Concept du projet

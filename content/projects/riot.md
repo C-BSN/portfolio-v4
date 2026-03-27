@@ -5,16 +5,15 @@ date: 2025-04-25T09:00:00.000+01:00
 annonceur: Riot Games
 contexte: Scolaire
 contexte_autre: ""
-project_type: Analyse stratégique et campagne de communication digitale
+project_type:
+  - Analyse stratégique et campagne de communication digitale
 tools:
   - Adobe Illustrator
   - Adobe Photoshop
   - Figma
   - Google Slides
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1769578152/Corentin_Basson_Affiche_Nalu_vzj2b6.jpg
-gallery:
-  - - /images/projects/riot-games/miniature-riot-games.jpg
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774604388/mkp_riot_bixemd.png
 duration: 2 mois
 status: Terminé
 project_url: ""
@@ -60,6 +59,8 @@ excerpt: Analyse stratégique et conception d'une campagne de communication
   digitale pour Riot Games, axée sur l'e-sport, le storytelling transmédia et
   l'engagement communautaire.
 published: true
+gallery:
+  - - /images/projects/riot-games/miniature-riot-games.jpg
 ---
 ## Le Contexte du Projet
 

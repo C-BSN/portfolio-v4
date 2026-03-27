@@ -18,8 +18,7 @@ tools:
   - Trello
   - Microsoft Teams
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773123049/Sans_titre-1_2_nrvw8e.jpg
-gallery: []
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774607798/mkp_glowday_a8awq1.png
 duration: 5 mois
 status: Terminé
 project_url: ""
@@ -54,6 +53,7 @@ excerpt: Conception de la stratégie de communication et des supports visuels
   pour le Glow Day, une journée d'intégration événementielle organisée par
   l'École du Numérique.
 published: true
+gallery: []
 ---
 
 ## Concept du projet

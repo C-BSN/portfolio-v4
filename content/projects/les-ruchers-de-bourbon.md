@@ -5,7 +5,8 @@ date: 2025-04-25T09:00:00.000+01:00
 annonceur: Les Ruchers de Bourbon
 contexte: Scolaire
 contexte_autre: ""
-project_type: Campagne de communication print
+project_type:
+  - Campagne de communication print
 tools:
   - Adobe Illustrator
   - Adobe Photoshop

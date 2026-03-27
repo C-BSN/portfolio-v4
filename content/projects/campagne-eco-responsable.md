@@ -19,10 +19,7 @@ tools:
   - Adobe Photoshop
   - Cursor
 featured_image:
-  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759481433/Miniature_Air_Autral_bnv7ft.jpg
-gallery:
-  - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759470818/Air_Austral_en5ooz.jpg
-    - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759470981/Affiche_Air_Austral_-_Covoiturage_fzfrlt.jpg
+  - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1774525156/air_austral_ualfi3.png
 duration: 3 semaines
 status: En cours
 project_url: ""
@@ -65,6 +62,9 @@ excerpt: Création d'une identité visuelle complète pour une campagne de
   sensibilisation écologique, incluant logo, affiches, supports digitaux et
   charte graphique.
 published: true
+gallery:
+  - - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759470818/Air_Austral_en5ooz.jpg
+    - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1759470981/Affiche_Air_Austral_-_Covoiturage_fzfrlt.jpg
 ---
 
 ## Le Contexte du Projet
