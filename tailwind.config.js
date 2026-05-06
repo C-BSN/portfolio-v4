@@ -69,6 +69,12 @@ module.exports = {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      boxShadow: {
+        'glow-purple': '0 0 30px rgba(139,92,246,0.4)',
+        'glow-pink': '0 0 30px rgba(236,72,153,0.4)',
+        'glow-orange': '0 0 30px rgba(249,115,22,0.4)',
+        'glass': '0 8px 32px rgba(0,0,0,0.4)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate'), require('@tailwindcss/typography')],

@@ -51,9 +51,19 @@ excerpt: Réalisation d'une couverture photographique pour la soirée de lanceme
   digitale et à la valorisation de l'événement.
 published: true
 gallery:
-  - - /images/projects/yvently/event-photo-1.jpg
-    - /images/projects/yvently/event-photo-2.jpg
-    - /images/projects/yvently/event-photo-3.jpg
+  - - /images/projects/yvently-evenement/Gateau.jpg
+    - /images/projects/yvently-evenement/Glace.jpg
+    - /images/projects/yvently-evenement/Lucas.jpg
+    - /images/projects/yvently-evenement/Lycas-2.jpg
+    - /images/projects/yvently-evenement/Lycas.jpg
+    - /images/projects/yvently-evenement/Vogue-1.jpg
+    - /images/projects/yvently-evenement/Vogue-2.jpg
+    - /images/projects/yvently-evenement/Vogue-3.jpg
+    - /images/projects/yvently-evenement/Vogue-4.jpg
+    - /images/projects/yvently-evenement/Vogue-5.jpg
+    - /images/projects/yvently-evenement/Vogue-6.jpg
+    - /images/projects/yvently-evenement/Vogue-7.jpg
+    - /images/projects/yvently-evenement/Vogue-8.jpg
 ---
 
 ## Le Contexte du Projet
