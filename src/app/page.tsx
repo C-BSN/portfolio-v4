@@ -25,7 +25,7 @@ export default function HomeManga() {
   }
 
   // Get featured projects
-  const cmsProjects = getFeaturedProjects(4)
+  const cmsProjects = getFeaturedProjects(3)
   const projectsData = convertProjectsToCardData(cmsProjects)
 
   // About section data
@@ -160,7 +160,7 @@ export default function HomeManga() {
             CONTACTEZ-MOI
           </NeonTitle>
           <p className="text-xl mb-12 opacity-70" style={{ fontFamily: "'Oswald', sans-serif" }}>
-            Collaborons ensemble pour créer quelque chose d'exceptionnel
+            Collaborons ensemble pour créer quelque chose d&apos;exceptionnel
           </p>
           <Link 
             href="/contact"

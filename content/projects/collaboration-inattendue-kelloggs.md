@@ -1,5 +1,5 @@
 ---
-ordre: 3
+ordre: 1
 title: Collaboration Inattendue - Kellogg's x Artistes Musicaux
 date: 2024-11-15T10:00:00.000Z
 annonceur: Kellogg's

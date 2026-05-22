@@ -22,14 +22,16 @@ export interface ProjectCardData {
 interface ProjectCardProps {
   project: ProjectCardData
   index: number
+  featured?: boolean
 }
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project, index, featured = false }: ProjectCardProps) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHovered, setIsHovered] = useState(false)
   const [mounted, setMounted] = useState(false)
   const { resolvedTheme } = useTheme()
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { setMounted(true) }, [])
 
   const isDark = !mounted || resolvedTheme === 'dark'

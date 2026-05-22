@@ -1,5 +1,5 @@
 ---
-ordre: 8
+ordre: 2
 title: Stratégie de communication & activation événementielle - Glow Day by EDN
 date: 2025-09-01T00:00:00.000Z
 annonceur: École du Numérique – La Réunion
