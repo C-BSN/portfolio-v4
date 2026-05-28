@@ -150,7 +150,6 @@ export default function HomeManga() {
           projects={projectsData}
           title="PROJETS"
           subtitle="Sélection de travaux récents"
-          columns={1}
         />
       )}
 
