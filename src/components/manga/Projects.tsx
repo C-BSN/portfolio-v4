@@ -29,6 +29,7 @@ export default function Projects({ projects, title = "Projets", subtitle = "Sél
 
   return (
     <section className="min-h-screen py-20 px-6 md:px-12 lg:px-24">
+      <div className="max-w-7xl mx-auto">
       {/* Section Title */}
       {(title || subtitle) && (
         <motion.div
@@ -104,6 +105,7 @@ export default function Projects({ projects, title = "Projets", subtitle = "Sél
           ))}
         </div>
       )}
+      </div>
     </section>
   )
 }
