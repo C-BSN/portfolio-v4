@@ -12,9 +12,10 @@ interface ProjectsProps {
   title?: string
   subtitle?: string
   carousel?: boolean
+  columns?: 1 | 2
 }
 
-export default function Projects({ projects, title = "Projets", subtitle = "Sélection de travaux récents", carousel = false }: ProjectsProps) {
+export default function Projects({ projects, title = "Projets", subtitle = "Sélection de travaux récents", carousel = false, columns = 2 }: ProjectsProps) {
   const trackRef = useRef<HTMLDivElement>(null)
   const { resolvedTheme } = useTheme()
   const isDark = resolvedTheme === 'dark'
@@ -93,7 +94,7 @@ export default function Projects({ projects, title = "Projets", subtitle = "Sél
         </div>
       ) : (
         /* Grid mode (default) */
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+        <div className={`grid grid-cols-1 gap-6 md:gap-8 ${columns === 2 ? 'md:grid-cols-2' : ''}`}>
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
