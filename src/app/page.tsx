@@ -146,10 +146,11 @@ export default function HomeManga() {
 
       {/* Projects Section */}
       {projectsData.length > 0 && (
-        <Projects 
-          projects={projectsData} 
+        <Projects
+          projects={projectsData}
           title="PROJETS"
           subtitle="Sélection de travaux récents"
+          carousel
         />
       )}
 
