@@ -16,7 +16,7 @@ tools:
   - Adobe Premiere Pro
   - Adobe Lightroom
 featured_image:
-  - /images/projects/edn-backstage/
+  - /images/projects/edn-backstage/75709B80-F411-4303-920D-A7FE785A1B4D.png
 gallery: []
 duration: ""
 status: Terminé
@@ -58,7 +58,7 @@ objectifs_conatifs:
 preuves:
   - type: URL
     description: Vidéo backstage commerçants partenaires EDN
-    url: ""
+    url: "https://www.instagram.com/reel/DQb0f4IjLtI/?igsh=MXhlbThiaHR1NTNyaA=="
 excerpt: Réalisation d'une vidéo backstage pour les commerçants partenaires de
   l'École du Numérique. Un contenu immersif valorisant les coulisses d'un projet
   étudiant et le lien entre l'EDN et le tissu économique local réunionnais.

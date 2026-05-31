@@ -16,7 +16,8 @@ project_type:
 tools:
   - Adobe Illustrator
   - Adobe Photoshop
-featured_image: []
+featured_image:
+  - /images/projects/udaf/kjbiug.png
 gallery: []
 duration: ""
 status: Terminé

@@ -16,7 +16,7 @@ tools:
   - Adobe Premiere Pro
   - Adobe Lightroom
 featured_image:
-  - /images/projects/edn-interview/
+  - /images/projects/edn-interview/3D5E72B4-5BB7-4CA3-B588-F11921AFBC29.png
 gallery: []
 duration: ""
 status: Terminé
@@ -52,7 +52,7 @@ objectifs_conatifs:
 preuves:
   - type: URL
     description: Vidéo interview étudiants BTS 1ère année
-    url: ""
+    url: "https://www.instagram.com/reel/DX60md5gtns/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA=="
 excerpt: Réalisation d'une vidéo interview donnant la parole aux étudiants de
   1ère année de BTS de l'École du Numérique. Un contenu authentique pensé pour
   valoriser la formation et alimenter la communication digitale de l'école.
