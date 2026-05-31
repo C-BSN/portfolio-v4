@@ -49,6 +49,14 @@ preuves:
     description: Dossier Sponsoring
     pdf:
       - https://res.cloudinary.com/dcrgwzlnc/image/upload/v1773123181/Dossier_sponso_GLOWDAY__oozqyt.pdf
+  - type: PDF
+    description: Devis EDN - Février 2026
+    pdf:
+      - /images/projects/glow-day-edn/Devis EDN - Février 2026.pdf
+  - type: PDF
+    description: Devis D-20250001116
+    pdf:
+      - /images/projects/glow-day-edn/Devis_D-20250001116.pdf
 excerpt: Conception de la stratégie de communication et des supports visuels
   pour le Glow Day, une journée d'intégration événementielle organisée par
   l'École du Numérique.
